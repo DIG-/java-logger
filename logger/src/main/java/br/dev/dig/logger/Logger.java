@@ -50,7 +50,7 @@ public abstract class Logger {
     }
 
     public void verbose(@NotNull final Message message, @Nullable final Throwable t) {
-        verbose(message.generate(), t);
+        log(LEVEL_VERBOSE, message, t);
     }
 
     public void verbose(@Nullable final CharSequence message, @Nullable final Throwable t) {
@@ -94,7 +94,7 @@ public abstract class Logger {
     }
 
     public void debug(@NotNull final Message message, @Nullable final Throwable t) {
-        debug(message.generate(), t);
+        log(LEVEL_DEBUG, message, t);
     }
 
     public void debug(@Nullable final CharSequence message, @Nullable final Throwable t) {
@@ -138,7 +138,7 @@ public abstract class Logger {
     }
 
     public void info(@NotNull final Message message, @Nullable final Throwable t) {
-        info(message.generate(), t);
+        log(LEVEL_INFO, message, t);
     }
 
     public void info(@Nullable final CharSequence message, @Nullable final Throwable t) {
@@ -182,7 +182,7 @@ public abstract class Logger {
     }
 
     public void warning(@NotNull final Message message, @Nullable final Throwable t) {
-        warning(message.generate(), t);
+        log(LEVEL_WARNING, message, t);
     }
 
     public void warning(@Nullable final CharSequence message, @Nullable final Throwable t) {
@@ -226,7 +226,7 @@ public abstract class Logger {
     }
 
     public void error(@NotNull final Message message, @Nullable final Throwable t) {
-        error(message.generate(), t);
+        log(LEVEL_ERROR, message, t);
     }
 
     public void error(@Nullable final CharSequence message, @Nullable final Throwable t) {
@@ -270,11 +270,15 @@ public abstract class Logger {
     }
 
     public void wtf(@NotNull final Message message, @Nullable final Throwable t) {
-        wtf(message.generate(), t);
+        log(LEVEL_ASSERT, message, t);
     }
 
     public void wtf(@Nullable final CharSequence message, @Nullable final Throwable t) {
         log(LEVEL_ASSERT, message, t);
+    }
+
+    protected void log(int level, @NotNull final Message message, @Nullable final Throwable t) {
+        log(level, message.generate(), t);
     }
 
     protected abstract void log(int level, @Nullable final CharSequence message, @Nullable final Throwable t);
