@@ -1,13 +1,19 @@
+buildscript {
+    ext.lib = [
+            "annotations": "org.jetbrains:annotations:20.1.0",
+    ]
+
+    repositories {
+        mavenCentral()
+    }
+}
+
 plugins {
     id "java"
 }
 
 group "br.dev.dig.logger"
 version "0.0.1"
-
-repositories {
-    mavenCentral()
-}
 
 dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.8.1"
