@@ -277,10 +277,10 @@ public abstract class Logger {
         log(LEVEL_ASSERT, message, t);
     }
 
-    protected void log(int level, @NotNull final Message message, @Nullable final Throwable t) {
+    public void log(int level, @NotNull final Message message, @Nullable final Throwable t) {
         log(level, message.generate(), t);
     }
 
-    protected abstract void log(int level, @Nullable final CharSequence message, @Nullable final Throwable t);
+    public abstract void log(int level, @Nullable final CharSequence message, @Nullable final Throwable t);
 
 }

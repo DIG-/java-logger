@@ -5,6 +5,6 @@ import org.jetbrains.annotations.Nullable;
 
 class StubLogger extends Logger {
     @Override
-    protected void log(int level, @Nullable CharSequence message, @Nullable Throwable t) {
+    public void log(int level, @Nullable CharSequence message, @Nullable Throwable t) {
     }
 }
