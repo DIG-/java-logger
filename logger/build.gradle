@@ -6,7 +6,8 @@ plugins {
 
 group "br.dev.dig.logger"
 version "0.0.1"
-java{
+java {
+    withSourcesJar()
     compileJava {
         sourceCompatibility versions.java
         targetCompatibility versions.java
