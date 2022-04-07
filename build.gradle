@@ -1,10 +1,38 @@
 buildscript {
+    final Properties localProp = new Properties()
+    def localPropFile = (new File(rootDir, "local.properties"))
+    if (localPropFile.exists()) {
+        localPropFile.withInputStream { localProp.load(it) }
+    }
+    groovy.lang.Closure findPropertyOrEnvironment = { String key ->
+        findProperty(key) ?: localProp.getProperty(key) ?: System.getenv(key)
+    }
+
+    // This file must be the text version (--armor)
+    String signingFilename = findPropertyOrEnvironment("GPG_SIGNING_KEY_FILE")
+    File signingFile = null
+    if (signingFilename != null) {
+        signingFile = file(signingFilename)
+        if (!signingFile.exists()) {
+            signingFile = new File(rootDir, signingFilename)
+            if (!signingFile.exists()) {
+                signingFile = null
+            }
+        }
+    }
+
     ext.isAndroidEnabled = !(new File(rootDir, "disable-android.gradle")).exists()
     ext.deploy = [
             "central": [
-                    "enabled" : findProperty("MVN_CENTRAL_USERNAME") ?: System.getenv("MVN_CENTRAL_USERNAME") != null,
-                    "username": findProperty("MVN_CENTRAL_USERNAME") ?: System.getenv("MVN_CENTRAL_USERNAME"),
-                    "password": findProperty("MVN_CENTRAL_PASSWORD") ?: System.getenv("MVN_CENTRAL_PASSWORD"),
+                    "enabled" : findPropertyOrEnvironment("MVN_CENTRAL_USERNAME") != null,
+                    "username": findPropertyOrEnvironment("MVN_CENTRAL_USERNAME"),
+                    "password": findPropertyOrEnvironment("MVN_CENTRAL_PASSWORD"),
+            ],
+            "signing": [
+                    "enabled" : signingFile != null && findPropertyOrEnvironment("GPG_SIGNING_KEY_ID") != null && findPropertyOrEnvironment("GPG_SIGNING_PASSWORD") != null,
+                    "secret"  : signingFile?.getText("UTF-8"),
+                    "key_id"  : findPropertyOrEnvironment("GPG_SIGNING_KEY_ID"),
+                    "password": findPropertyOrEnvironment("GPG_SIGNING_PASSWORD"),
             ]
     ]
     ext.versions = [
