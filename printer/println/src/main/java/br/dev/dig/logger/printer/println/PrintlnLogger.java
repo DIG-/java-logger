@@ -82,9 +82,11 @@ public final class PrintlnLogger extends Logger {
         }
 
         public static Formatter simple() {
-            final ArrayList<Style> styles = new ArrayList<>(4);
+            final ArrayList<Style> styles = new ArrayList<>(6);
             styles.add(new ElapsedTime());
-            styles.add(new Constant(" - "));
+            styles.add(new Constant(" ["));
+            styles.add(new TagShort());
+            styles.add(new Constant("] "));
             styles.add(new Message());
             styles.add(new ThrowableMessage());
             return new Formatter(styles);
@@ -92,7 +94,7 @@ public final class PrintlnLogger extends Logger {
 
         public static Formatter parse(@NotNull final String format) {
             final LinkedList<Style> styles = new LinkedList<>();
-            final Pattern pattern = Pattern.compile("(\\$\\{[a-z]+})");
+            final Pattern pattern = Pattern.compile("(\\$\\{[a-z\\-]+})");
             final Matcher matches = pattern.matcher(format);
             int lastEnd = 0;
             while (matches.find()) {
@@ -101,6 +103,8 @@ public final class PrintlnLogger extends Logger {
                 }
                 lastEnd = matches.end();
                 switch (matches.group()) {
+                    case "${tag}" -> styles.add(new Tag());
+                    case "${tag-short}" -> styles.add(new TagShort());
                     case "${date}" -> styles.add(new CurrentDate());
                     case "${time}" -> styles.add(new CurrentTime());
                     case "${elapsed}" -> styles.add(new ElapsedTime());
@@ -126,6 +130,40 @@ public final class PrintlnLogger extends Logger {
             @Override
             public @NotNull String print(int level, @Nullable String tag, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
                 return value;
+            }
+        }
+
+        public static final class Tag implements Style {
+            @Override
+            public @NotNull String print(int level, @Nullable String tag, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
+                final String result;
+                switch (level) {
+                    case Logger.LEVEL_VERBOSE -> result = "VERBOSE";
+                    case Logger.LEVEL_DEBUG -> result = "DEBUG";
+                    case Logger.LEVEL_INFO -> result = "INFO";
+                    case Logger.LEVEL_WARNING -> result = "WARNING";
+                    case Logger.LEVEL_ERROR -> result = "ERROR";
+                    case Logger.LEVEL_ASSERT -> result = "ASSERT";
+                    default -> result = "";
+                }
+                return result;
+            }
+        }
+
+        public static final class TagShort implements Style {
+            @Override
+            public @NotNull String print(int level, @Nullable String tag, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
+                final String result;
+                switch (level) {
+                    case Logger.LEVEL_VERBOSE -> result = "V";
+                    case Logger.LEVEL_DEBUG -> result = "D";
+                    case Logger.LEVEL_INFO -> result = "I";
+                    case Logger.LEVEL_WARNING -> result = "W";
+                    case Logger.LEVEL_ERROR -> result = "E";
+                    case Logger.LEVEL_ASSERT -> result = "A";
+                    default -> result = "";
+                }
+                return result;
             }
         }
 
