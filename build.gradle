@@ -2,9 +2,10 @@ buildscript {
     ext.lib = [
             "annotations": "org.jetbrains:annotations:20.1.0",
     ]
-
-    repositories {
-        mavenCentral()
+    allprojects {
+        repositories {
+            mavenCentral()
+        }
     }
 }
 
