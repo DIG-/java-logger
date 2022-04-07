@@ -11,7 +11,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.LinkedList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public final class PrintlnLogger extends Logger {
@@ -86,7 +88,28 @@ public final class PrintlnLogger extends Logger {
         }
 
         public static Formatter parse(@NotNull final String format) {
-            return new Formatter(Collections.emptyList());
+            final LinkedList<Style> styles = new LinkedList<>();
+            final Pattern pattern = Pattern.compile("(\\$\\{[a-z]+})");
+            final Matcher matches = pattern.matcher(format);
+            int lastEnd = 0;
+            while (matches.find()) {
+                if (lastEnd < matches.start()) {
+                    styles.add(new Constant(format.substring(lastEnd, matches.start())));
+                }
+                lastEnd = matches.end();
+                switch (matches.group()) {
+                    case "${date}" -> styles.add(new CurrentDate());
+                    case "${time}" -> styles.add(new CurrentTime());
+                    case "${elapsed}" -> styles.add(new ElapsedTime());
+                    case "${message}" -> styles.add(new Message());
+                    case "${throwable}" -> styles.add(new ThrowableMessage());
+                    case "${stacktrace}" -> styles.add(new StackTrace());
+                }
+            }
+            if (lastEnd + 1 < format.length()) {
+                styles.add(new Constant(format.substring(lastEnd)));
+            }
+            return new Formatter(new ArrayList<>(styles));
         }
 
         public static final class Constant implements Style {
