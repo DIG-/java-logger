@@ -32,16 +32,19 @@ public final class PrintlnLogger extends Logger {
     }
 
     @NotNull
+    @SuppressWarnings("unused")
     public static PrintlnLogger create(@Nullable final String tag) {
         return new PrintlnLogger(tag, Formatter.simple());
     }
 
     @NotNull
+    @SuppressWarnings("unused")
     public static PrintlnLogger create(@Nullable final String tag, @NotNull final Formatter formatter) {
         return new PrintlnLogger(tag, formatter);
     }
 
     @NotNull
+    @SuppressWarnings("unused")
     public static PrintlnLogger create(@Nullable final String tag, @NotNull final String format) {
         return new PrintlnLogger(tag, Formatter.parse(format));
     }
@@ -50,7 +53,7 @@ public final class PrintlnLogger extends Logger {
     public void log(int level, @Nullable final CharSequence message, @Nullable final Throwable t) {
         final StringBuilder builder = new StringBuilder();
         for (final Formatter.Style style : formatter.styles) {
-            builder.append(style.print(level, start, message, t));
+            builder.append(style.print(level, tag, start, message, t));
         }
         System.out.println(builder);
     }
@@ -68,7 +71,7 @@ public final class PrintlnLogger extends Logger {
 
         public interface Style {
             @NotNull
-            String print(int level, @NotNull final LocalDateTime start, @Nullable final CharSequence message, @Nullable final Throwable t);
+            String print(int level, @Nullable String tag, @NotNull final LocalDateTime start, @Nullable final CharSequence message, @Nullable final Throwable t);
         }
 
         @NotNull
@@ -121,28 +124,28 @@ public final class PrintlnLogger extends Logger {
             }
 
             @Override
-            public @NotNull String print(int level, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
+            public @NotNull String print(int level, @Nullable String tag, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
                 return value;
             }
         }
 
         public static final class CurrentDate implements Style {
             @Override
-            public @NotNull String print(int level, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
+            public @NotNull String print(int level, @Nullable String tag, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
                 return DateTimeFormatter.ISO_LOCAL_DATE.format(LocalDate.now());
             }
         }
 
         public static final class CurrentTime implements Style {
             @Override
-            public @NotNull String print(int level, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
+            public @NotNull String print(int level, @Nullable String tag, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
                 return ISO_LOCAL_TIME.format(LocalTime.now());
             }
         }
 
         public static final class ElapsedTime implements Style {
             @Override
-            public @NotNull String print(int level, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
+            public @NotNull String print(int level, @Nullable String tag, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
                 final Duration diff = Duration.between(start, LocalDateTime.now());
                 final LocalDateTime local = LocalDateTime.ofEpochSecond(diff.getSeconds(), diff.getNano(), ZoneOffset.UTC);
                 // TODO: Check how 24h+ will be showed
@@ -152,7 +155,7 @@ public final class PrintlnLogger extends Logger {
 
         public static final class Message implements Style {
             @Override
-            public @NotNull String print(int level, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
+            public @NotNull String print(int level, @Nullable String tag, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
                 if (message == null) {
                     return "";
                 }
@@ -162,7 +165,7 @@ public final class PrintlnLogger extends Logger {
 
         public static final class ThrowableMessage implements Style {
             @Override
-            public @NotNull String print(int level, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
+            public @NotNull String print(int level, @Nullable String tag, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
                 if (t == null) {
                     return "";
                 }
@@ -176,7 +179,7 @@ public final class PrintlnLogger extends Logger {
 
         public static final class StackTrace implements Style {
             @Override
-            public @NotNull String print(int level, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
+            public @NotNull String print(int level, @Nullable String tag, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
                 if (t == null) {
                     return "";
                 }
