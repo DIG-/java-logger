@@ -3,3 +3,8 @@ include "logger"
 include "filter"
 include "union"
 include "timber"
+include "printer:println"
+
+
+// Rename block
+findProject(":printer:println")?.name = "println"
