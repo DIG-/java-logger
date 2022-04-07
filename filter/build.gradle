@@ -1,12 +1,50 @@
 plugins {
     id "java"
+    id "maven-publish"
+    id "signing"
 }
 
 group "br.dev.dig.logger"
 version "0.0.1"
 
-repositories {
-    mavenCentral()
+publishing {
+    publications {
+        filter(MavenPublication) {
+            from components.java
+            pom {
+                name = "Java Simple Logger Filter"
+                description = "Filter for Java Simple Logger"
+                url = "https://github.com/DIG-/java-logger"
+                scm {
+                    url = "https://github.com/DIG-/java-logger"
+                }
+                licenses {
+                    license {
+                        name = "CC BY-ND 4.0"
+                        url = "https://creativecommons.org/licenses/by-nd/4.0/"
+                    }
+                }
+                developers {
+                    developer {
+                        name = "Gustavo de Oliveira Silva (DIG)"
+                        email = "contato@dig.dev.br"
+                    }
+                }
+            }
+        }
+    }
+    repositories {
+        if (findProperty("MVN_CENTRAL_USERNAME") ?: System.getenv("MVN_CENTRAL_USERNAME") != null) {
+            maven {
+                name = "Central"
+                url = "https://s01.oss.sonatype.org/content/repositories/releases/"
+                credentials {
+                    username = findProperty("MVN_CENTRAL_USERNAME") ?: System.getenv("MVN_CENTRAL_USERNAME")
+                    password = findProperty("MVN_CENTRAL_PASSWORD") ?: System.getenv("MVN_CENTRAL_PASSWORD")
+                }
+            }
+        }
+    }
 }
 
 dependencies {
