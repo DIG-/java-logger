@@ -144,7 +144,7 @@ public final class PrintlnLogger extends Logger {
             @Override
             public @NotNull String print(int level, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
                 final Duration diff = Duration.between(start, LocalDateTime.now());
-                final LocalDateTime local = LocalDateTime.ofInstant(Instant.ofEpochMilli(diff.toMillis()), ZoneId.systemDefault());
+                final LocalDateTime local = LocalDateTime.ofEpochSecond(diff.getSeconds(), diff.getNano(), ZoneOffset.UTC);
                 // TODO: Check how 24h+ will be showed
                 return ISO_LOCAL_TIME.format(local);
             }
