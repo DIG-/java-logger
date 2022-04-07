@@ -47,7 +47,7 @@ publishing {
                 url = "https://s01.oss.sonatype.org/content/repositories/releases/"
                 credentials {
                     username = deploy.central.username
-                    username = deploy.central.password
+                    password = deploy.central.password
                 }
             }
         }
