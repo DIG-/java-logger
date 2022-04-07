@@ -1,5 +1,5 @@
 plugins {
-    id "java"
+    id "java-library"
     id "maven-publish"
     id "signing"
 }
@@ -48,5 +48,5 @@ publishing {
 }
 
 dependencies {
-    implementation lib.annotations
+    api lib.annotations
 }

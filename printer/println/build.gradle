@@ -1,11 +1,11 @@
 plugins {
-    id 'java'
+    id "java-library"
     id "maven-publish"
     id "signing"
 }
 
-group 'br.dev.dig.logger.printer'
-version '0.0.1'
+group "br.dev.dig.logger.printer"
+version "0.0.1"
 
 repositories {
     mavenCentral()
@@ -52,6 +52,6 @@ publishing {
 }
 
 dependencies {
-    implementation lib.annotations
-    implementation project(":logger")
+    api lib.annotations
+    api project(":logger")
 }
