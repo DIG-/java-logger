@@ -1,5 +1,12 @@
 buildscript {
     ext.isAndroidEnabled = !(new File(rootDir, "disable-android.gradle")).exists()
+    ext.deploy = [
+            "central": [
+                    "enabled" : findProperty("MVN_CENTRAL_USERNAME") ?: System.getenv("MVN_CENTRAL_USERNAME") != null,
+                    "username": findProperty("MVN_CENTRAL_USERNAME") ?: System.getenv("MVN_CENTRAL_USERNAME"),
+                    "password": findProperty("MVN_CENTRAL_PASSWORD") ?: System.getenv("MVN_CENTRAL_PASSWORD"),
+            ]
+    ]
     ext.versions = [
             "java": JavaVersion.VERSION_1_8,
     ]

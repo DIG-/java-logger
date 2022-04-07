@@ -41,13 +41,13 @@ publishing {
         }
     }
     repositories {
-        if (findProperty("MVN_CENTRAL_USERNAME") ?: System.getenv("MVN_CENTRAL_USERNAME") != null) {
+        if (deploy.central.enabled) {
             maven {
                 name = "Central"
                 url = "https://s01.oss.sonatype.org/content/repositories/releases/"
                 credentials {
-                    username = findProperty("MVN_CENTRAL_USERNAME") ?: System.getenv("MVN_CENTRAL_USERNAME")
-                    password = findProperty("MVN_CENTRAL_PASSWORD") ?: System.getenv("MVN_CENTRAL_PASSWORD")
+                    username = deploy.central.username
+                    username = deploy.central.password
                 }
             }
         }
