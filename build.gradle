@@ -25,4 +25,6 @@ group "br.dev.dig.logger"
 version "0.0.1"
 
 dependencies {
+    implementation project(":logger")
+    implementation project(":printer:println")
 }
