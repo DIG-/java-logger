@@ -2,4 +2,4 @@ rootProject.name = "Logger"
 include "logger"
 include "filter"
 include "union"
-
+include "timber"
