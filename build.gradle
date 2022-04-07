@@ -1,4 +1,7 @@
 buildscript {
+    ext.versions = [
+            "java": JavaVersion.VERSION_1_8,
+    ]
     ext.lib = [
             "annotations": "org.jetbrains:annotations:20.1.0",
     ]
@@ -26,5 +29,7 @@ version "0.0.1"
 
 dependencies {
     implementation project(":logger")
+    implementation project(":filter")
+    implementation project(":union")
     implementation project(":printer:println")
 }

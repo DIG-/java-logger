@@ -6,6 +6,12 @@ plugins {
 
 group "br.dev.dig.logger"
 version "0.0.1"
+java{
+    compileJava {
+        sourceCompatibility versions.java
+        targetCompatibility versions.java
+    }
+}
 
 publishing {
     publications {

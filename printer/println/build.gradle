@@ -6,9 +6,11 @@ plugins {
 
 group "br.dev.dig.logger.printer"
 version "0.0.1"
-
-repositories {
-    mavenCentral()
+java{
+    compileJava {
+        sourceCompatibility versions.java
+        targetCompatibility versions.java
+    }
 }
 
 publishing {

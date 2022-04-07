@@ -103,14 +103,30 @@ public final class PrintlnLogger extends Logger {
                 }
                 lastEnd = matches.end();
                 switch (matches.group()) {
-                    case "${tag}" -> styles.add(new Tag());
-                    case "${tag-short}" -> styles.add(new TagShort());
-                    case "${date}" -> styles.add(new CurrentDate());
-                    case "${time}" -> styles.add(new CurrentTime());
-                    case "${elapsed}" -> styles.add(new ElapsedTime());
-                    case "${message}" -> styles.add(new Message());
-                    case "${throwable}" -> styles.add(new ThrowableMessage());
-                    case "${stacktrace}" -> styles.add(new StackTrace());
+                    case "${tag}":
+                        styles.add(new Tag());
+                        break;
+                    case "${tag-short}":
+                        styles.add(new TagShort());
+                        break;
+                    case "${date}":
+                        styles.add(new CurrentDate());
+                        break;
+                    case "${time}":
+                        styles.add(new CurrentTime());
+                        break;
+                    case "${elapsed}":
+                        styles.add(new ElapsedTime());
+                        break;
+                    case "${message}":
+                        styles.add(new Message());
+                        break;
+                    case "${throwable}":
+                        styles.add(new ThrowableMessage());
+                        break;
+                    case "${stacktrace}":
+                        styles.add(new StackTrace());
+                        break;
                 }
             }
             if (lastEnd + 1 < format.length()) {
@@ -138,13 +154,27 @@ public final class PrintlnLogger extends Logger {
             public @NotNull String print(int level, @Nullable String tag, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
                 final String result;
                 switch (level) {
-                    case Logger.LEVEL_VERBOSE -> result = "VERBOSE";
-                    case Logger.LEVEL_DEBUG -> result = "DEBUG";
-                    case Logger.LEVEL_INFO -> result = "INFO";
-                    case Logger.LEVEL_WARNING -> result = "WARNING";
-                    case Logger.LEVEL_ERROR -> result = "ERROR";
-                    case Logger.LEVEL_ASSERT -> result = "ASSERT";
-                    default -> result = "";
+                    case Logger.LEVEL_VERBOSE:
+                        result = "VERBOSE";
+                        break;
+                    case Logger.LEVEL_DEBUG:
+                        result = "DEBUG";
+                        break;
+                    case Logger.LEVEL_INFO:
+                        result = "INFO";
+                        break;
+                    case Logger.LEVEL_WARNING:
+                        result = "WARNING";
+                        break;
+                    case Logger.LEVEL_ERROR:
+                        result = "ERROR";
+                        break;
+                    case Logger.LEVEL_ASSERT:
+                        result = "ASSERT";
+                        break;
+                    default:
+                        result = "";
+                        break;
                 }
                 return result;
             }
@@ -155,13 +185,27 @@ public final class PrintlnLogger extends Logger {
             public @NotNull String print(int level, @Nullable String tag, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
                 final String result;
                 switch (level) {
-                    case Logger.LEVEL_VERBOSE -> result = "V";
-                    case Logger.LEVEL_DEBUG -> result = "D";
-                    case Logger.LEVEL_INFO -> result = "I";
-                    case Logger.LEVEL_WARNING -> result = "W";
-                    case Logger.LEVEL_ERROR -> result = "E";
-                    case Logger.LEVEL_ASSERT -> result = "A";
-                    default -> result = "";
+                    case Logger.LEVEL_VERBOSE:
+                        result = "V";
+                        break;
+                    case Logger.LEVEL_DEBUG:
+                        result = "D";
+                        break;
+                    case Logger.LEVEL_INFO:
+                        result = "I";
+                        break;
+                    case Logger.LEVEL_WARNING:
+                        result = "W";
+                        break;
+                    case Logger.LEVEL_ERROR:
+                        result = "E";
+                        break;
+                    case Logger.LEVEL_ASSERT:
+                        result = "A";
+                        break;
+                    default:
+                        result = "";
+                        break;
                 }
                 return result;
             }
