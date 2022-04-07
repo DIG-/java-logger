@@ -2,10 +2,9 @@ rootProject.name = "Logger"
 include "logger"
 include "filter"
 include "union"
-include "printer:timber"
-include "printer:println"
+include "printer:println"; findProject(":printer:println")?.name = "println"
 
-
-// Rename block
-findProject(":printer:println")?.name = "println"
-findProject(":printer:timber")?.name = "timber"
+def isAndroidEnabled = !(new File(rootDir, "disable-android.gradle")).exists()
+if (isAndroidEnabled) {
+    include "printer:timber"; findProject(":printer:timber")?.name = "timber"
+}
