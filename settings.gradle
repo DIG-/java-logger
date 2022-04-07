@@ -2,9 +2,10 @@ rootProject.name = "Logger"
 include "logger"
 include "filter"
 include "union"
-include "timber"
+include "printer:timber"
 include "printer:println"
 
 
 // Rename block
 findProject(":printer:println")?.name = "println"
+findProject(":printer:timber")?.name = "timber"
