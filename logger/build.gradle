@@ -52,6 +52,12 @@ publishing {
             }
         }
     }
+    if (deploy.signing.enabled) {
+        signing {
+            useInMemoryPgpKeys((String) deploy.signing.key_id, (String) deploy.signing.secret, (String) deploy.signing.password)
+            sign publishing.publications.logger
+        }
+    }
 }
 
 dependencies {
