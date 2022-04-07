@@ -166,6 +166,7 @@ gradle-app.setting
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/.name
+local.properties
 
 # Enable dictionary for common user "developer"
 !.idea/dictionaries

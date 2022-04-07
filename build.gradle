@@ -2,9 +2,17 @@ buildscript {
     ext.lib = [
             "annotations": "org.jetbrains:annotations:20.1.0",
     ]
+    repositories {
+        mavenCentral()
+        google()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:7.0.4"
+    }
     allprojects {
         repositories {
             mavenCentral()
+            google()
         }
     }
 }
