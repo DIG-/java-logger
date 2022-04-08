@@ -10,8 +10,11 @@ android {
     defaultConfig {
         minSdk 21
         targetSdk 30
-        versionCode 1
-        versionName "1.0"
+
+        def patch = 0
+
+        versionCode patch + 100 * (versions.logger.minor + 10 * versions.logger.major)
+        versionName versions.logger.pkg + patch
 
         consumerProguardFiles "consumer-rules.pro"
     }

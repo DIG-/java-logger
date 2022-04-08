@@ -37,7 +37,13 @@ buildscript {
     ]
     ext.versions = [
             "java": JavaVersion.VERSION_1_8,
+            "logger":[
+                    "major":"0",
+                    "minor":"1",
+                    "pkg":"",
+            ],
     ]
+    ext.versions.logger.pkg = "${ext.versions.logger.major}.${ext.versions.logger.minor}."
     ext.lib = [
             "annotations": "org.jetbrains:annotations:20.1.0",
     ]

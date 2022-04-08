@@ -5,7 +5,7 @@ plugins {
 }
 
 group "br.dev.dig.logger"
-version "0.0.1"
+version versions.logger.pkg + "0"
 java {
     withSourcesJar()
     compileJava {
