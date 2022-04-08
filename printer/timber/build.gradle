@@ -12,9 +12,9 @@ android {
         targetSdk 30
 
         def patch = 0
-
-        versionCode patch + 100 * (versions.logger.minor + 10 * versions.logger.major)
+        versionCode patch + 100 * (Integer.valueOf(versions.logger.minor) + 10 * Integer.valueOf(versions.logger.major))
         versionName versions.logger.pkg + patch
+        buildConfigField "String", "br_dev_dig_logger_printer_timber_version", "\"" + versionName + "\""
 
         consumerProguardFiles "consumer-rules.pro"
     }
