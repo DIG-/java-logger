@@ -3,6 +3,7 @@ plugins {
     id "maven-publish"
     id "signing"
 }
+apply from: rootDir.toString() + "/pom.gradle"
 
 group "br.dev.dig.logger"
 version versions.logger.pkg + "0"
@@ -16,27 +17,13 @@ java {
 
 publishing {
     publications {
+        //noinspection GroovyAssignabilityCheck
         union(MavenPublication) {
+            //noinspection GroovyAssignabilityCheck
             from components.java
-            pom {
-                name = "Simple Logger Union"
-                description = "Utility to join more than one logger output into Simple Logger"
-                url = "https://github.com/DIG-/java-logger"
-                scm {
-                    url = "https://github.com/DIG-/java-logger"
-                }
-                licenses {
-                    license {
-                        name = "CC BY-ND 4.0"
-                        url = "https://creativecommons.org/licenses/by-nd/4.0/"
-                    }
-                }
-                developers {
-                    developer {
-                        name = "Gustavo de Oliveira Silva (DIG)"
-                        email = "contato@dig.dev.br"
-                    }
-                }
+            pom { pom ->
+                //noinspection GroovyAssignabilityCheck
+                applyPom(pom, "Simple Logger Union", "Utility to join more than one logger output into Simple Logger")
             }
         }
     }

@@ -3,6 +3,7 @@ plugins {
     id "maven-publish"
     id "signing"
 }
+apply from: rootDir.toString() + "/pom.gradle"
 
 group "br.dev.dig.logger.printer"
 version versions.logger.pkg + "0"
@@ -16,27 +17,13 @@ java {
 
 publishing {
     publications {
+        //noinspection GroovyAssignabilityCheck
         println(MavenPublication) {
+            //noinspection GroovyAssignabilityCheck
             from components.java
-            pom {
-                name = "Simple Logger PrintLn"
-                description = "Printer for Simple Logger, using System.out.println()"
-                url = "https://github.com/DIG-/java-logger"
-                scm {
-                    url = "https://github.com/DIG-/java-logger"
-                }
-                licenses {
-                    license {
-                        name = "CC BY-ND 4.0"
-                        url = "https://creativecommons.org/licenses/by-nd/4.0/"
-                    }
-                }
-                developers {
-                    developer {
-                        name = "Gustavo de Oliveira Silva (DIG)"
-                        email = "contato@dig.dev.br"
-                    }
-                }
+            pom { pom ->
+                //noinspection GroovyAssignabilityCheck
+                applyPom(pom, "Simple Logger PrintLn", "Printer for Simple Logger, using System.out.println()")
             }
         }
     }

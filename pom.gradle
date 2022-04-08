@@ -1,0 +1,34 @@
+static def applyPom(final MavenPom pom, final String name, final String description) {
+    final String URL = "https://github.com/DIG-/java-logger"
+    pom.name.set(name)
+    pom.description.set(description)
+    pom.url.set(URL)
+    pom.scm(scm -> scm.url.set(URL))
+    pom.licenses(licenses -> licenses.license(license -> {
+        license.url.set("https://creativecommons.org/licenses/by-nd/4.0/")
+        license.name.set("CC BY-ND 4.0")
+    }))
+    pom.developers(developers -> developers.developer(developer -> {
+        developer.name.set("Gustavo de Oliveira Silva (DIG)")
+        developer.email.set("contato@dig.dev.br")
+    }))
+}
+
+static <T extends Object, U extends Object, V extends Object> void applyPomCast(final T pom, final U name, final V description) {
+    if (!pom instanceof MavenPom) {
+        return
+    }
+    if (!name instanceof String) {
+        return
+    }
+    if (!description instanceof String) {
+        return
+    }
+    applyPom(pom as MavenPom, name as String, description as String)
+}
+
+ext {
+    applyPom = { final Object pom, final String name, final String description ->
+        applyPomCast(pom, name, description)
+    }
+}

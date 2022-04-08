@@ -1,8 +1,8 @@
 rootProject.name = "Logger"
-include "logger"
 include "filter"
-include "union"
+include "logger"
 include "printer:println"; findProject(":printer:println")?.name = "println"
+include "union"
 
 def isAndroidEnabled = !(new File(rootDir, "disable-android.gradle")).exists()
 if (isAndroidEnabled) {
