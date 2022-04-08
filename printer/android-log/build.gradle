@@ -1,0 +1,84 @@
+plugins {
+    id "com.android.library"
+    id "maven-publish"
+    id "signing"
+}
+apply from: "$rootDir/pom.gradle"
+
+// ==================================
+// Patch
+def patch = 0
+// ==================================
+
+def vName = versions.logger.pkg + patch
+android {
+    compileSdk 30
+
+    defaultConfig {
+        minSdk 21
+        targetSdk 30
+
+        versionCode patch + 100 * (Integer.valueOf(versions.logger.minor) + 10 * Integer.valueOf(versions.logger.major))
+        versionName vName
+        buildConfigField "String", "br_dev_dig_logger_printer_android_log_version", "\"" + versionName + "\""
+
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+    }
+    compileOptions {
+        sourceCompatibility versions.java
+        targetCompatibility versions.java
+    }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            //noinspection GroovyAssignabilityCheck
+            logger(MavenPublication) {
+                //noinspection GroovyAssignabilityCheck
+                from components.release
+                groupId "br.dev.dig.logger.printer"
+                version vName
+                artifactId "android-log"
+                pom { pom ->
+                    //noinspection GroovyAssignabilityCheck
+                    applyPom(pom, "Simple Logger Android", "Printer for Simple Logger, using Android native Log")
+                }
+            }
+        }
+        repositories {
+            if (deploy.central.enabled) {
+                maven {
+                    name = "Central"
+                    url = "https://s01.oss.sonatype.org/content/repositories/releases/"
+                    credentials {
+                        username = deploy.central.username
+                        password = deploy.central.password
+                    }
+                }
+            }
+        }
+        if (deploy.signing.enabled) {
+            signing {
+                useInMemoryPgpKeys((String) deploy.signing.key_id, (String) deploy.signing.secret, (String) deploy.signing.password)
+                sign publishing.publications.logger
+            }
+        }
+    }
+}
+
+dependencies {
+    api project(":logger")
+}

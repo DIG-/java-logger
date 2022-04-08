@@ -6,5 +6,6 @@ include "union"
 
 def isAndroidEnabled = !(new File(rootDir, "disable-android.gradle")).exists()
 if (isAndroidEnabled) {
+    include "printer:android-log" ; findProject(":printer:android-log")?.name = "android-log"
     include "printer:timber"; findProject(":printer:timber")?.name = "timber"
 }
