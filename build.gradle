@@ -1,3 +1,5 @@
+import java.util.regex.Pattern
+
 buildscript {
     final Properties localProp = new Properties()
     def localPropFile = (new File(rootDir, "local.properties"))
@@ -86,4 +88,46 @@ dependencies {
     implementation project(":filter")
     implementation project(":union")
     implementation project(":printer:println")
+}
+
+Pattern regex = Pattern.compile("'([a-zA-Z0-9\\-_:]+)'")
+
+task deploy_ToLocal {
+    group = "deploy local"
+    allprojects { pj ->
+        for (tsk in ["deployJavaToLocal", "deployAndroidToLocal"]) {
+            if (pj.getTasksByName(tsk, false).isEmpty()) {
+                continue
+            }
+            def match = regex.matcher(pj.displayName)
+            match.find()
+            def name = match.group()
+            dependsOn "${name.substring(1, name.length() - 1)}:$tsk"
+        }
+    }
+    doLast {
+        println("")
+        println("All projects were uploaded to local")
+        println("-----------------------------------")
+    }
+}
+
+task deploy_ToMavenCentral {
+    group = "deploy central"
+    allprojects { pj ->
+        for (tsk in ["deployJavaToMavenCental", "deployAndroidToMavenCental"]) {
+            if (pj.getTasksByName(tsk, false).isEmpty()) {
+                continue
+            }
+            def match = regex.matcher(pj.displayName)
+            match.find()
+            def name = match.group()
+            dependsOn "${name.substring(1, name.length() - 1)}:$tsk"
+        }
+    }
+    doLast {
+        println("===========================================")
+        println("All projects were uploaded to Maven Central")
+        println("===========================================")
+    }
 }

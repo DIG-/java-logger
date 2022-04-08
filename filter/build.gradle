@@ -9,10 +9,8 @@ group "br.dev.dig.logger"
 version versions.logger.pkg + "0"
 java {
     withSourcesJar()
-    compileJava {
-        sourceCompatibility versions.java
-        targetCompatibility versions.java
-    }
+    sourceCompatibility versions.java
+    targetCompatibility versions.java
 }
 
 publishing {
@@ -45,6 +43,16 @@ publishing {
             sign publishing.publications.filter
         }
     }
+}
+
+task deployJavaToLocal {
+    group = "deploy local"
+    dependsOn ":filter:publishFilterPublicationToMavenLocal"
+}
+
+task deployJavaToMavenCentral {
+    group = "deploy central"
+    dependsOn ":filter:publishFilterPublicationToCentralRepository"
 }
 
 dependencies {

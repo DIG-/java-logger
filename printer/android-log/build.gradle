@@ -46,7 +46,7 @@ afterEvaluate {
     publishing {
         publications {
             //noinspection GroovyAssignabilityCheck
-            logger(MavenPublication) {
+            android(MavenPublication) {
                 //noinspection GroovyAssignabilityCheck
                 from components.release
                 groupId "br.dev.dig.logger.printer"
@@ -73,10 +73,20 @@ afterEvaluate {
         if (deploy.signing.enabled) {
             signing {
                 useInMemoryPgpKeys((String) deploy.signing.key_id, (String) deploy.signing.secret, (String) deploy.signing.password)
-                sign publishing.publications.logger
+                sign publishing.publications.android
             }
         }
     }
+}
+
+task deployAndroidToLocal {
+    group = "deploy local"
+    dependsOn ":printer:android-log:publishAndroidPublicationToMavenLocal"
+}
+
+task deployAndroidToMavenCentral {
+    group = "deploy central"
+    dependsOn ":printer:android-log:publishAndroidPublicationToCentralRepository"
 }
 
 dependencies {
