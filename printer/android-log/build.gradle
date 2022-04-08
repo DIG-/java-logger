@@ -12,11 +12,11 @@ def patch = 0
 
 def vName = versions.logger.pkg + patch
 android {
-    compileSdk 30
+    compileSdk versions.android.compile
 
     defaultConfig {
-        minSdk 21
-        targetSdk 30
+        minSdk versions.android.minimum
+        targetSdk versions.android.target
 
         versionCode patch + 100 * (Integer.valueOf(versions.logger.minor) + 10 * Integer.valueOf(versions.logger.major))
         versionName vName
