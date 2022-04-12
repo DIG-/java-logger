@@ -5,27 +5,15 @@ import android.annotation.SuppressLint;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import br.dev.dig.logger.BaseLogger;
 import br.dev.dig.logger.Logger;
 import timber.log.Timber;
 
-public final class TimberLogger extends Logger {
-
-    @Nullable
-    final String tag;
-
-    public TimberLogger(@Nullable final String tag) {
-        super();
-        this.tag = tag;
-    }
-
-    @NotNull
-    public static TimberLogger create(@Nullable final String tag) {
-        return new TimberLogger(tag);
-    }
+public final class TimberLogger implements BaseLogger {
 
     @Override
-    protected @Nullable String getTag() {
-        return tag;
+    public void log(int level, @Nullable String tag, @NotNull Message message, @Nullable Throwable throwable) {
+        log(level, tag, message.generate(), throwable);
     }
 
     @Override
@@ -38,28 +26,28 @@ public final class TimberLogger extends Logger {
             message = _message.toString();
         }
         switch (level) {
-            case LEVEL_VERBOSE:
-                getTimber().v(throwable, message);
+            case Logger.LEVEL_VERBOSE:
+                getTimber(tag).v(throwable, message);
                 break;
-            case LEVEL_DEBUG:
-                getTimber().d(throwable, message);
+            case Logger.LEVEL_DEBUG:
+                getTimber(tag).d(throwable, message);
                 break;
-            case LEVEL_INFO:
-                getTimber().i(throwable, message);
+            case Logger.LEVEL_INFO:
+                getTimber(tag).i(throwable, message);
                 break;
-            case LEVEL_WARNING:
-                getTimber().w(throwable, message);
+            case Logger.LEVEL_WARNING:
+                getTimber(tag).w(throwable, message);
                 break;
-            case LEVEL_ERROR:
-                getTimber().e(throwable, message);
+            case Logger.LEVEL_ERROR:
+                getTimber(tag).e(throwable, message);
                 break;
-            case LEVEL_ASSERT:
-                getTimber().wtf(throwable, message);
+            case Logger.LEVEL_ASSERT:
+                getTimber(tag).wtf(throwable, message);
                 break;
         }
     }
 
-    private Timber.Tree getTimber() {
+    private Timber.Tree getTimber(String tag) {
         if (tag == null) {
             return Timber.asTree();
         }

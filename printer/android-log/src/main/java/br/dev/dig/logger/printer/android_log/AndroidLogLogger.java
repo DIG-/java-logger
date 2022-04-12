@@ -5,25 +5,14 @@ import android.util.Log;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import br.dev.dig.logger.BaseLogger;
 import br.dev.dig.logger.Logger;
 
-public class AndroidLogLogger extends Logger {
-
-    @NotNull
-    final String tag;
-
-    public AndroidLogLogger(@Nullable final String tag) {
-        super();
-        if (tag == null) {
-            this.tag = "";
-        } else {
-            this.tag = tag;
-        }
-    }
+public class AndroidLogLogger implements BaseLogger {
 
     @Override
-    protected @Nullable String getTag() {
-        return tag;
+    public void log(int level, @Nullable String tag, @NotNull Message message, @Nullable Throwable throwable) {
+        log(level, tag, message.generate(), throwable);
     }
 
     @Override
@@ -35,22 +24,22 @@ public class AndroidLogLogger extends Logger {
             message = _message.toString();
         }
         switch (level) {
-            case LEVEL_VERBOSE:
+            case Logger.LEVEL_VERBOSE:
                 Log.v(tag, message, throwable);
                 break;
-            case LEVEL_DEBUG:
+            case Logger.LEVEL_DEBUG:
                 Log.d(tag, message, throwable);
                 break;
-            case LEVEL_INFO:
+            case Logger.LEVEL_INFO:
                 Log.i(tag, message, throwable);
                 break;
-            case LEVEL_WARNING:
+            case Logger.LEVEL_WARNING:
                 Log.w(tag, message, throwable);
                 break;
-            case LEVEL_ERROR:
+            case Logger.LEVEL_ERROR:
                 Log.e(tag, message, throwable);
                 break;
-            case LEVEL_ASSERT:
+            case Logger.LEVEL_ASSERT:
                 Log.wtf(tag, message, throwable);
                 break;
         }

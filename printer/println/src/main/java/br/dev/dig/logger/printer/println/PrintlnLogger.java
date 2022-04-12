@@ -1,12 +1,15 @@
 package br.dev.dig.logger.printer.println;
 
-import br.dev.dig.logger.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.time.*;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
@@ -15,47 +18,43 @@ import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import br.dev.dig.logger.BaseLogger;
+import br.dev.dig.logger.Logger;
 
-public final class PrintlnLogger extends Logger {
+
+public final class PrintlnLogger implements BaseLogger {
 
     @NotNull
     private final Formatter formatter;
     @NotNull
     private final LocalDateTime start = LocalDateTime.now();
 
+    @SuppressWarnings("unused")
     public PrintlnLogger(@NotNull final Formatter formatter) {
         super();
         this.formatter = formatter;
     }
 
-    @NotNull
     @SuppressWarnings("unused")
-    public static PrintlnLogger create(@Nullable final String tag) {
-        return new PrintlnLogger(Formatter.simple());
+    public PrintlnLogger(@NotNull final String format) {
+        this(Formatter.parse(format));
     }
 
-    @NotNull
     @SuppressWarnings("unused")
-    public static PrintlnLogger create(@Nullable final String tag, @NotNull final Formatter formatter) {
-        return new PrintlnLogger(formatter);
-    }
-
-    @NotNull
-    @SuppressWarnings("unused")
-    public static PrintlnLogger create(@Nullable final String tag, @NotNull final String format) {
-        return new PrintlnLogger(Formatter.parse(format));
+    public PrintlnLogger() {
+        this(Formatter.simple());
     }
 
     @Override
-    protected @Nullable String getTag() {
-        return null;
+    public void log(int level, @Nullable String tag, @NotNull Message message, @Nullable Throwable throwable) {
+        log(level, tag, message.generate(), throwable);
     }
 
     @Override
     public void log(int level, @Nullable String tag, @Nullable CharSequence message, @Nullable Throwable throwable) {
         final StringBuilder builder = new StringBuilder();
         for (final Formatter.Style style : formatter.styles) {
-            builder.append(style.print(level, tag, start, message,throwable));
+            builder.append(style.print(level, tag, start, message, throwable));
         }
         System.out.println(builder);
     }

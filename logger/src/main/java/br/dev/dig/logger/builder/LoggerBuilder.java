@@ -1,71 +1,51 @@
 package br.dev.dig.logger.builder;
 
-import br.dev.dig.logger.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
+import br.dev.dig.logger.BaseLogger;
+import br.dev.dig.logger.Logger;
 
-public class LoggerBuilder {
+public abstract class LoggerBuilder {
 
-    private LoggerBuilder() {
-        throw new RuntimeException("Can not instantiate " + getClass().getCanonicalName());
-    }
-
-    @FunctionalInterface
-    public interface LoggerCreator {
-        @NotNull Logger create(@Nullable final String tag);
-    }
-
-    @Nullable
-    private static HashMap<String, Logger> loggers;
-    @Nullable
-    private static Logger defaultLogger;
     @NotNull
-    private static LoggerCreator creator = tag -> new StubLogger();
+    final private BaseLogger base = getBaseLogger();
 
-    public static synchronized Logger getLogger() {
-        if (defaultLogger == null) {
-            defaultLogger = creator.create(null);
+    @Nullable
+    private Logger common = null;
+
+    @NotNull
+    public final synchronized Logger getLogger() {
+        if (common == null) {
+            common = createLogger(null);
         }
-        return defaultLogger;
+        return common;
     }
 
-    public static synchronized Logger getLogger(@Nullable final String tag) {
+    @NotNull
+    public final synchronized Logger getLogger(@Nullable final String tag) {
         if (tag == null || tag.isEmpty()) {
             return getLogger();
         }
-        if (loggers == null) {
-            loggers = new HashMap<>();
-        }
-        if (loggers.containsKey(tag)) {
-            return loggers.get(tag);
-        }
-
-        final Logger logger = creator.create(tag);
-        loggers.put(tag, logger);
-        return logger;
+        return createLogger(tag);
     }
 
-    public static synchronized void setCreator(@NotNull final LoggerCreator creator) {
-        LoggerBuilder.creator = creator;
-        defaultLogger = null;
+    @NotNull
+    protected abstract BaseLogger getBaseLogger();
+
+    @NotNull
+    protected Logger createLogger(@Nullable final String tag) {
+        return new TaggedLogger(tag, base);
     }
 
-    @SuppressWarnings("unused")
-    public static synchronized void setLogger(@NotNull final Logger logger) {
-        setLogger(logger, null);
-    }
+    protected static final class StubLogger implements BaseLogger{
+        @Override
+        public void log(int level, @Nullable String tag, @NotNull Message message, @Nullable Throwable throwable) {
+        }
 
-    public static synchronized void setLogger(@NotNull final Logger logger, @Nullable String tag) {
-        if (tag == null || tag.isEmpty()) {
-            defaultLogger = logger;
-            return;
+        @Override
+        public void log(int level, @Nullable String tag, @Nullable CharSequence message, @Nullable Throwable throwable) {
         }
-        if (loggers == null) {
-            loggers = new HashMap<>();
-        }
-        loggers.put(tag, logger);
     }
 
 }

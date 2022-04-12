@@ -1,12 +1,23 @@
 package br.dev.dig.logger;
 
+import org.jetbrains.annotations.NotNull;
+
+import br.dev.dig.logger.builder.LoggerBuilder;
 import br.dev.dig.logger.printer.println.PrintlnLogger;
 
 public class Main {
 
+    static final LoggerBuilder builder = new LoggerBuilder(){
+        @Override
+        protected @NotNull BaseLogger getBaseLogger() {
+            return new PrintlnLogger();
+        }
+    };
+
     public static void main(String[] args) {
-        Logger.setCreator(PrintlnLogger::create);
-        final Logger log = Logger.getInstance();
+        final Logger log = Logger.getInstance(builder);
+        // or
+        // final Logger log = builder.getLogger();
         log.debug("Test one");
         try {
             Thread.sleep(100);
