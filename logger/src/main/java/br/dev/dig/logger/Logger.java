@@ -1,11 +1,12 @@
 package br.dev.dig.logger;
 
-import br.dev.dig.logger.builder.LoggerBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import br.dev.dig.logger.builder.LoggerBuilder;
+
 @SuppressWarnings("unused")
-public abstract class Logger {
+public abstract class Logger implements BaseLogger {
 
     public static final int LEVEL_VERBOSE = 1;
     public static final int LEVEL_DEBUG = 2;
@@ -16,8 +17,7 @@ public abstract class Logger {
     public static final int LEVEL_NONE = 7;
 
     @FunctionalInterface
-    public interface Message {
-        @NotNull CharSequence generate();
+    public interface Message extends BaseLogger.Message {
     }
 
     @NotNull
@@ -50,11 +50,11 @@ public abstract class Logger {
     }
 
     public void verbose(@NotNull final Message message, @Nullable final Throwable t) {
-        log(LEVEL_VERBOSE, message, t);
+        log(LEVEL_VERBOSE, getTag(), message, t);
     }
 
     public void verbose(@Nullable final CharSequence message, @Nullable final Throwable t) {
-        log(LEVEL_VERBOSE, message, t);
+        log(LEVEL_VERBOSE, getTag(), message, t);
     }
 
     //  Reduced
@@ -94,11 +94,11 @@ public abstract class Logger {
     }
 
     public void debug(@NotNull final Message message, @Nullable final Throwable t) {
-        log(LEVEL_DEBUG, message, t);
+        log(LEVEL_DEBUG, getTag(), message, t);
     }
 
     public void debug(@Nullable final CharSequence message, @Nullable final Throwable t) {
-        log(LEVEL_DEBUG, message, t);
+        log(LEVEL_DEBUG, getTag(), message, t);
     }
 
     //  Reduced
@@ -138,11 +138,11 @@ public abstract class Logger {
     }
 
     public void info(@NotNull final Message message, @Nullable final Throwable t) {
-        log(LEVEL_INFO, message, t);
+        log(LEVEL_INFO, getTag(), message, t);
     }
 
     public void info(@Nullable final CharSequence message, @Nullable final Throwable t) {
-        log(LEVEL_INFO, message, t);
+        log(LEVEL_INFO, getTag(), message, t);
     }
 
     //  Reduced
@@ -182,11 +182,11 @@ public abstract class Logger {
     }
 
     public void warning(@NotNull final Message message, @Nullable final Throwable t) {
-        log(LEVEL_WARNING, message, t);
+        log(LEVEL_WARNING, getTag(), message, t);
     }
 
     public void warning(@Nullable final CharSequence message, @Nullable final Throwable t) {
-        log(LEVEL_WARNING, message, t);
+        log(LEVEL_WARNING, getTag(), message, t);
     }
 
     //  Reduced
@@ -226,11 +226,11 @@ public abstract class Logger {
     }
 
     public void error(@NotNull final Message message, @Nullable final Throwable t) {
-        log(LEVEL_ERROR, message, t);
+        log(LEVEL_ERROR, getTag(), message, t);
     }
 
     public void error(@Nullable final CharSequence message, @Nullable final Throwable t) {
-        log(LEVEL_ERROR, message, t);
+        log(LEVEL_ERROR, getTag(), message, t);
     }
 
     //  Reduced
@@ -270,17 +270,19 @@ public abstract class Logger {
     }
 
     public void wtf(@NotNull final Message message, @Nullable final Throwable t) {
-        log(LEVEL_ASSERT, message, t);
+        log(LEVEL_ASSERT, getTag(), message, t);
     }
 
     public void wtf(@Nullable final CharSequence message, @Nullable final Throwable t) {
-        log(LEVEL_ASSERT, message, t);
+        log(LEVEL_ASSERT, getTag(), message, t);
     }
 
-    public void log(int level, @NotNull final Message message, @Nullable final Throwable t) {
-        log(level, message.generate(), t);
-    }
+    @Nullable
+    protected abstract String getTag();
 
-    public abstract void log(int level, @Nullable final CharSequence message, @Nullable final Throwable t);
+    @Override
+    public void log(int level, @Nullable final String tag, @NotNull final BaseLogger.Message message, @Nullable final Throwable throwable) {
+        log(level, tag, message.generate(), throwable);
+    }
 
 }

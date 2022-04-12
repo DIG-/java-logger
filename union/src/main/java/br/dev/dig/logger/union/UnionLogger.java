@@ -1,6 +1,5 @@
 package br.dev.dig.logger.union;
 
-import br.dev.dig.logger.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -8,23 +7,25 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-public class UnionLogger extends Logger {
+import br.dev.dig.logger.BaseLogger;
+
+public class UnionLogger implements BaseLogger {
 
     @NotNull
-    final LinkedList<Logger> loggers;
+    final LinkedList<BaseLogger> loggers;
 
-    protected UnionLogger(@NotNull final Collection<Logger> loggers) {
+    protected UnionLogger(@NotNull final Collection<BaseLogger> loggers) {
         super();
         if (loggers instanceof LinkedList) {
-            this.loggers = (LinkedList<Logger>) loggers;
+            this.loggers = (LinkedList<BaseLogger>) loggers;
         } else {
             this.loggers = new LinkedList<>(loggers);
         }
     }
 
-    public static UnionLogger create(@NotNull final Logger... loggers) {
+    public static UnionLogger create(@NotNull final BaseLogger... loggers) {
         UnionLogger output = new UnionLogger(new LinkedList<>());
-        for (final Logger logger : loggers) {
+        for (final BaseLogger logger : loggers) {
             if (logger instanceof UnionLogger) {
                 final UnionLogger union = (UnionLogger) logger;
                 union.addAll(output.loggers);
@@ -36,9 +37,9 @@ public class UnionLogger extends Logger {
         return output;
     }
 
-    public static UnionLogger create(@NotNull final Collection<Logger> loggers) {
+    public static UnionLogger create(@NotNull final Collection<BaseLogger> loggers) {
         UnionLogger output = new UnionLogger(new LinkedList<>());
-        for (final Logger logger : loggers) {
+        for (final BaseLogger logger : loggers) {
             if (logger instanceof UnionLogger) {
                 final UnionLogger union = (UnionLogger) logger;
                 union.addAll(output.loggers);
@@ -50,33 +51,33 @@ public class UnionLogger extends Logger {
         return output;
     }
 
-    public void add(@NotNull final Logger logger) {
+    public void add(@NotNull final BaseLogger logger) {
         loggers.add(logger);
     }
 
-    public void addAll(@NotNull final Collection<Logger> logger) {
+    public void addAll(@NotNull final Collection<BaseLogger> logger) {
         loggers.addAll(logger);
     }
 
-    public boolean remove(@NotNull final Logger logger) {
+    public boolean remove(@NotNull final BaseLogger logger) {
         return loggers.remove(logger);
     }
 
-    public List<Logger> getLoggers() {
+    public List<BaseLogger> getLoggers() {
         return loggers;
     }
 
     @Override
-    public void log(int level, @NotNull Message message, @Nullable Throwable t) {
-        for (final Logger logger : loggers) {
-            logger.log(level, message, t);
+    public void log(int level, @Nullable String tag, @NotNull Message message, @Nullable Throwable throwable) {
+        for (final BaseLogger logger : loggers) {
+            logger.log(level, tag, message, throwable);
         }
     }
 
     @Override
-    public void log(int level, @Nullable CharSequence message, @Nullable Throwable t) {
-        for (final Logger logger : loggers) {
-            logger.log(level, message, t);
+    public void log(int level, @Nullable String tag, @Nullable CharSequence message, @Nullable Throwable throwable) {
+        for (final BaseLogger logger : loggers) {
+            logger.log(level, tag, message, throwable);
         }
     }
 }

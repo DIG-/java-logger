@@ -1,31 +1,32 @@
 package br.dev.dig.logger.filter;
 
-import br.dev.dig.logger.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class FilterLogger extends Logger {
+import br.dev.dig.logger.BaseLogger;
+
+public class FilterLogger implements BaseLogger {
     @NotNull
-    final Logger parent;
+    final BaseLogger parent;
     final int level;
 
-    public FilterLogger(int minimum, @NotNull final Logger parent) {
+    public FilterLogger(int minimum, @NotNull final BaseLogger parent) {
         super();
         this.level = minimum;
         this.parent = parent;
     }
 
     @Override
-    public void log(int level, @NotNull Message message, @Nullable Throwable t) {
+    public void log(int level, @Nullable String tag, @NotNull Message message, @Nullable Throwable throwable) {
         if (level >= this.level) {
-            parent.log(level, message, t);
+            parent.log(level, tag, message, throwable);
         }
     }
 
     @Override
-    public void log(int level, @Nullable CharSequence message, @Nullable Throwable t) {
+    public void log(int level, @Nullable String tag, @Nullable CharSequence message, @Nullable Throwable throwable) {
         if (level >= this.level) {
-            parent.log(level, message, t);
+            parent.log(level, tag, message, throwable);
         }
     }
 }

@@ -1,8 +1,11 @@
 package br.dev.dig.logger.printer.timber;
 
-import br.dev.dig.logger.Logger;
+import android.annotation.SuppressLint;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import br.dev.dig.logger.Logger;
 import timber.log.Timber;
 
 public final class TimberLogger extends Logger {
@@ -21,7 +24,13 @@ public final class TimberLogger extends Logger {
     }
 
     @Override
-    public void log(int level, @Nullable final CharSequence _message, @Nullable final Throwable t) {
+    protected @Nullable String getTag() {
+        return tag;
+    }
+
+    @Override
+    @SuppressLint("TimberExceptionLogging")
+    public void log(int level, @Nullable final String tag, @Nullable final CharSequence _message, @Nullable final Throwable throwable) {
         final String message;
         if (_message == null) {
             message = null;
@@ -30,22 +39,22 @@ public final class TimberLogger extends Logger {
         }
         switch (level) {
             case LEVEL_VERBOSE:
-                getTimber().v(t, message);
+                getTimber().v(throwable, message);
                 break;
             case LEVEL_DEBUG:
-                getTimber().d(t, message);
+                getTimber().d(throwable, message);
                 break;
             case LEVEL_INFO:
-                getTimber().i(t, message);
+                getTimber().i(throwable, message);
                 break;
             case LEVEL_WARNING:
-                getTimber().w(t, message);
+                getTimber().w(throwable, message);
                 break;
             case LEVEL_ERROR:
-                getTimber().e(t, message);
+                getTimber().e(throwable, message);
                 break;
             case LEVEL_ASSERT:
-                getTimber().wtf(t, message);
+                getTimber().wtf(throwable, message);
                 break;
         }
     }

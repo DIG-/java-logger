@@ -22,7 +22,12 @@ public class AndroidLogLogger extends Logger {
     }
 
     @Override
-    public void log(int level, @Nullable CharSequence _message, @Nullable Throwable t) {
+    protected @Nullable String getTag() {
+        return tag;
+    }
+
+    @Override
+    public void log(int level, @Nullable String tag, @Nullable CharSequence _message, @Nullable Throwable throwable) {
         final String message;
         if (_message == null) {
             message = "";
@@ -31,22 +36,22 @@ public class AndroidLogLogger extends Logger {
         }
         switch (level) {
             case LEVEL_VERBOSE:
-                Log.v(tag, message, t);
+                Log.v(tag, message, throwable);
                 break;
             case LEVEL_DEBUG:
-                Log.d(tag, message, t);
+                Log.d(tag, message, throwable);
                 break;
             case LEVEL_INFO:
-                Log.i(tag, message, t);
+                Log.i(tag, message, throwable);
                 break;
             case LEVEL_WARNING:
-                Log.w(tag, message, t);
+                Log.w(tag, message, throwable);
                 break;
             case LEVEL_ERROR:
-                Log.e(tag, message, t);
+                Log.e(tag, message, throwable);
                 break;
             case LEVEL_ASSERT:
-                Log.wtf(tag, message, t);
+                Log.wtf(tag, message, throwable);
                 break;
         }
     }

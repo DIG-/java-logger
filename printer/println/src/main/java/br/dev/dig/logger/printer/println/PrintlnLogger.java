@@ -20,40 +20,42 @@ public final class PrintlnLogger extends Logger {
 
     @NotNull
     private final Formatter formatter;
-    @Nullable
-    private final String tag;
     @NotNull
     private final LocalDateTime start = LocalDateTime.now();
 
-    public PrintlnLogger(@Nullable final String tag, @NotNull final Formatter formatter) {
+    public PrintlnLogger(@NotNull final Formatter formatter) {
         super();
-        this.tag = tag;
         this.formatter = formatter;
     }
 
     @NotNull
     @SuppressWarnings("unused")
     public static PrintlnLogger create(@Nullable final String tag) {
-        return new PrintlnLogger(tag, Formatter.simple());
+        return new PrintlnLogger(Formatter.simple());
     }
 
     @NotNull
     @SuppressWarnings("unused")
     public static PrintlnLogger create(@Nullable final String tag, @NotNull final Formatter formatter) {
-        return new PrintlnLogger(tag, formatter);
+        return new PrintlnLogger(formatter);
     }
 
     @NotNull
     @SuppressWarnings("unused")
     public static PrintlnLogger create(@Nullable final String tag, @NotNull final String format) {
-        return new PrintlnLogger(tag, Formatter.parse(format));
+        return new PrintlnLogger(Formatter.parse(format));
     }
 
     @Override
-    public void log(int level, @Nullable final CharSequence message, @Nullable final Throwable t) {
+    protected @Nullable String getTag() {
+        return null;
+    }
+
+    @Override
+    public void log(int level, @Nullable String tag, @Nullable CharSequence message, @Nullable Throwable throwable) {
         final StringBuilder builder = new StringBuilder();
         for (final Formatter.Style style : formatter.styles) {
-            builder.append(style.print(level, tag, start, message, t));
+            builder.append(style.print(level, tag, start, message,throwable));
         }
         System.out.println(builder);
     }
