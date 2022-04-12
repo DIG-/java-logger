@@ -5,7 +5,7 @@ import org.jetbrains.annotations.Nullable;
 
 public interface BaseLogger {
     @FunctionalInterface
-    public interface Message {
+    interface Message {
         @NotNull CharSequence generate();
     }
 
