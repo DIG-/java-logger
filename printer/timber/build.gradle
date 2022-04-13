@@ -91,5 +91,5 @@ task deployAndroidToMavenCentral {
 
 dependencies {
     api project(":logger")
-    implementation "com.jakewharton.timber:timber:5.0.0"
+    api "com.jakewharton.timber:timber:5.0.0"
 }
