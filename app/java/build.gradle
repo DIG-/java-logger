@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+}
+
+group "br.dev.dig.logger.app"
+version versions.logger.pkg + "0"
+
+java {
+    sourceCompatibility = versions.java
+    targetCompatibility = versions.java
+}
+
+dependencies {
+    implementation project(":logger")
+    implementation project(":filter")
+    implementation project(":union")
+    implementation project(":printer:println")
+}

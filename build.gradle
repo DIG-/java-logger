@@ -73,25 +73,6 @@ buildscript {
     }
 }
 
-plugins {
-    id "java"
-}
-
-group "br.dev.dig.logger"
-version "0.0.1"
-
-java {
-    sourceCompatibility = versions.java
-    targetCompatibility = versions.java
-}
-
-dependencies {
-    implementation project(":logger")
-    implementation project(":filter")
-    implementation project(":union")
-    implementation project(":printer:println")
-}
-
 Pattern regex = Pattern.compile("'([a-zA-Z0-9\\-_:]+)'")
 
 task deploy_ToLocal {

@@ -1,15 +1,18 @@
-package br.dev.dig.logger;
+package br.dev.dig.logger.app.java;
 
 import org.jetbrains.annotations.NotNull;
 
+import br.dev.dig.logger.BaseLogger;
+import br.dev.dig.logger.Logger;
 import br.dev.dig.logger.builder.LoggerBuilder;
 import br.dev.dig.logger.printer.println.PrintlnLogger;
 
-public class Main {
+public class MainClass {
 
-    static final LoggerBuilder builder = new LoggerBuilder(){
+    static final LoggerBuilder builder = new LoggerBuilder() {
         @Override
-        protected @NotNull BaseLogger getBaseLogger() {
+        @NotNull
+        protected BaseLogger getBaseLogger() {
             return new PrintlnLogger();
         }
     };

@@ -1,8 +1,9 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Simple PrintLn" type="Application" factoryName="Application">
-    <option name="ALTERNATIVE_JRE_PATH" value="14" />
-    <option name="MAIN_CLASS_NAME" value="br.dev.dig.logger.Main" />
-    <module name="Logger.main" />
+    <option name="ALTERNATIVE_JRE_PATH" value="Embedded JDK" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <option name="MAIN_CLASS_NAME" value="br.dev.dig.logger.app.java.MainClass" />
+    <module name="Logger.app.java" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
