@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import br.dev.dig.logger.BaseLogger;
 import br.dev.dig.logger.Logger;
 
-public class AndroidLogLogger implements BaseLogger {
+public final class AndroidLogLogger implements BaseLogger {
 
     @Override
     public void log(int level, @Nullable String tag, @NotNull Message message, @Nullable Throwable throwable) {
