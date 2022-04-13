@@ -9,13 +9,12 @@ import java.util.List;
 
 import br.dev.dig.logger.BaseLogger;
 
-public class UnionLogger implements BaseLogger {
+public final class UnionLogger implements BaseLogger {
 
     @NotNull
     final LinkedList<BaseLogger> loggers;
 
     protected UnionLogger(@NotNull final Collection<BaseLogger> loggers) {
-        super();
         if (loggers instanceof LinkedList) {
             this.loggers = (LinkedList<BaseLogger>) loggers;
         } else {
