@@ -8,6 +8,8 @@ import br.dev.dig.logger.Logger;
 
 public abstract class LoggerBuilder {
 
+    final private static String DEFAULT_LOGGER_TAG = "Log";
+
     @NotNull
     final private BaseLogger base = getBaseLogger();
 
@@ -17,7 +19,7 @@ public abstract class LoggerBuilder {
     @NotNull
     public final synchronized Logger getLogger() {
         if (common == null) {
-            common = createLogger(null);
+            common = createLogger(DEFAULT_LOGGER_TAG);
         }
         return common;
     }
@@ -38,7 +40,7 @@ public abstract class LoggerBuilder {
         return new TaggedLogger(tag, base);
     }
 
-    public static final class StubLogger implements BaseLogger{
+    public static final class StubLogger implements BaseLogger {
         @Override
         public void log(int level, @Nullable String tag, @NotNull Message message, @Nullable Throwable throwable) {
         }
