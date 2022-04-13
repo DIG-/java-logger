@@ -46,9 +46,10 @@ buildscript {
             ],
             android : [
                     "minimum": 21,
-                    "compile": 30,
-                    "target" : 30,
+                    "compile": 31,
+                    "target" : 31,
             ],
+            kotlin  : "1.5.31",
     ]
     ext.versions.logger.pkg = "${ext.versions.logger.major}.${ext.versions.logger.minor}."
     ext.lib = [
@@ -62,6 +63,7 @@ buildscript {
         if (isAndroidEnabled) {
             classpath "com.android.tools.build:gradle:7.1.3"
         }
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
     }
     allprojects {
         repositories {
