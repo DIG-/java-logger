@@ -16,7 +16,7 @@ java {
 publishing {
     publications {
         //noinspection GroovyAssignabilityCheck
-        union(MavenPublication) {
+        java(MavenPublication) {
             //noinspection GroovyAssignabilityCheck
             from components.java
             pom { pom ->
@@ -40,19 +40,19 @@ publishing {
     if (deploy.signing.enabled) {
         signing {
             useInMemoryPgpKeys((String) deploy.signing.key_id, (String) deploy.signing.secret, (String) deploy.signing.password)
-            sign publishing.publications.union
+            sign publishing.publications.java
         }
     }
 }
 
 task deployJavaToLocal {
     group = "deploy local"
-    dependsOn ":union:publishUnionPublicationToMavenLocal"
+    dependsOn ":union:publishJavaPublicationToMavenLocal"
 }
 
 task deployJavaToMavenCentral {
     group = "deploy central"
-    dependsOn ":union:publishUnionPublicationToCentralRepository"
+    dependsOn ":union:publishJavaPublicationToCentralRepository"
 }
 
 dependencies {
