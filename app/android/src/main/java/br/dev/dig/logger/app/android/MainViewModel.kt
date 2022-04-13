@@ -10,6 +10,7 @@ import br.dev.dig.logger.BaseLogger
 import br.dev.dig.logger.Logger
 import br.dev.dig.logger.builder.LoggerBuilder
 import br.dev.dig.logger.printer.android_log.AndroidLogLogger
+import br.dev.dig.logger.printer.stub.StubLogger
 import br.dev.dig.logger.printer.timber.TimberLogger
 import br.dev.dig.logger.union.UnionLogger
 

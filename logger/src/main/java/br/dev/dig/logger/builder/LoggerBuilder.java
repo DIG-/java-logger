@@ -40,14 +40,4 @@ public abstract class LoggerBuilder {
         return new TaggedLogger(tag, base);
     }
 
-    public static final class StubLogger implements BaseLogger {
-        @Override
-        public void log(int level, @Nullable String tag, @NotNull Message message, @Nullable Throwable throwable) {
-        }
-
-        @Override
-        public void log(int level, @Nullable String tag, @Nullable CharSequence message, @Nullable Throwable throwable) {
-        }
-    }
-
 }
