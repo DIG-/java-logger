@@ -84,9 +84,14 @@ task deployAndroidToLocal {
     dependsOn ":printer:timber:publishAndroidPublicationToMavenLocal"
 }
 
+task _deployAndroidToMavenCentral {
+    dependsOn ":printer:timber:publishAndroidPublicationToCentralRepository"
+}
+
 task deployAndroidToMavenCentral {
     group = "deploy central"
-    dependsOn ":printer:timber:publishAndroidPublicationToCentralRepository"
+    dependsOn "checkMavenCentral"
+    finalizedBy "_deployAndroidToMavenCentral"
 }
 
 dependencies {

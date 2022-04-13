@@ -50,9 +50,14 @@ task deployJavaToLocal {
     dependsOn ":logger:publishJavaPublicationToMavenLocal"
 }
 
+task _deployJavaToMavenCentral {
+    dependsOn ":logger:publishJavaPublicationToCentralRepository"
+}
+
 task deployJavaToMavenCentral {
     group = "deploy central"
-    dependsOn ":logger:publishJavaPublicationToCentralRepository"
+    dependsOn "checkMavenCentral"
+    finalizedBy "_deployJavaToMavenCentral"
 }
 
 dependencies {

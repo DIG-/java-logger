@@ -84,9 +84,14 @@ task deployAndroidToLocal {
     dependsOn ":printer:android-log:publishAndroidPublicationToMavenLocal"
 }
 
+task _deployAndroidToMavenCentral {
+    dependsOn ":printer:android-log:publishAndroidPublicationToCentralRepository"
+}
+
 task deployAndroidToMavenCentral {
     group = "deploy central"
-    dependsOn ":printer:android-log:publishAndroidPublicationToCentralRepository"
+    dependsOn "checkMavenCentral"
+    finalizedBy "_deployAndroidToMavenCentral"
 }
 
 dependencies {

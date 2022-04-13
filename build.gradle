@@ -95,10 +95,23 @@ task deploy_ToLocal {
     }
 }
 
+allprojects {
+    task checkMavenCentral {
+        doLast {
+            if (!deploy.central.enabled || !deploy.signing.enabled) {
+                if (!deploy.central.enabled)
+                    throw new RuntimeException("Maven central is not configured")
+                throw new RuntimeException("Signing is not configured")
+            }
+        }
+    }
+}
+
 task deploy_ToMavenCentral {
     group = "deploy central"
+    dependsOn "checkMavenCentral"
     allprojects { pj ->
-        for (tsk in ["deployJavaToMavenCental", "deployAndroidToMavenCental"]) {
+        for (tsk in ["deployJavaToMavenCentral", "deployAndroidToMavenCentral"]) {
             if (pj.getTasksByName(tsk, false).isEmpty()) {
                 continue
             }
