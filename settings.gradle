@@ -1,5 +1,6 @@
 rootProject.name = "Logger"
 include "app:java"
+include "async"
 include "filter"
 include "logger"
 include "printer:println"; findProject(":printer:println")?.name = "println"

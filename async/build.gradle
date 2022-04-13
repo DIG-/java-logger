@@ -1,0 +1,61 @@
+plugins {
+    id "java-library"
+    id "maven-publish"
+    id "signing"
+}
+apply from: rootDir.toString() + "/pom.gradle"
+
+group "br.dev.dig.logger"
+version versions.logger.pkg + "0"
+java {
+    withSourcesJar()
+    sourceCompatibility versions.java
+    targetCompatibility versions.java
+}
+
+publishing {
+    publications {
+        //noinspection GroovyAssignabilityCheck
+        module(MavenPublication) {
+            //noinspection GroovyAssignabilityCheck
+            from components.java
+            pom { pom ->
+                //noinspection GroovyAssignabilityCheck
+                applyPom(pom, "Simple Logger Async", "Dispatch log event in other Executor, to not block caller thread.")
+            }
+        }
+    }
+    repositories {
+        if (deploy.central.enabled) {
+            maven {
+                name = "Central"
+                url = "https://s01.oss.sonatype.org/content/repositories/releases/"
+                credentials {
+                    username = deploy.central.username
+                    password = deploy.central.password
+                }
+            }
+        }
+    }
+    if (deploy.signing.enabled) {
+        signing {
+            useInMemoryPgpKeys((String) deploy.signing.key_id, (String) deploy.signing.secret, (String) deploy.signing.password)
+            sign publishing.publications.module
+        }
+    }
+}
+
+task deployJavaToLocal {
+    group = "deploy local"
+    dependsOn ":async:publishModulePublicationToMavenLocal"
+}
+
+task deployJavaToMavenCentral {
+    group = "deploy central"
+    dependsOn ":async:publishModulePublicationToCentralRepository"
+}
+
+dependencies {
+    api lib.annotations
+    api project(":logger")
+}
