@@ -38,22 +38,31 @@ buildscript {
             ]
     ]
     ext.versions = [
-            "java"  : JavaVersion.VERSION_1_8,
-            "logger": [
+            "java"   : JavaVersion.VERSION_1_8,
+            "logger" : [
                     "major": "0",
                     "minor": "2",
                     "pkg"  : "",
             ],
-            android : [
+            "android": [
                     "minimum": 21,
                     "compile": 31,
                     "target" : 31,
             ],
-            kotlin  : "1.5.31",
+            "kotlin" : "1.5.31",
+            "junit"  : "5.7.1",
+            "mockito":"4.4.0",
     ]
     ext.versions.logger.pkg = "${ext.versions.logger.major}.${ext.versions.logger.minor}."
     ext.lib = [
             "annotations": "org.jetbrains:annotations:20.1.0",
+            "test"       : [
+                    "junit": "org.junit.jupiter:junit-jupiter:${versions.junit}",
+                    "mockito":[
+                            "bom":"org.mockito:mockito-bom:${versions.mockito}",
+                            "junit":"org.mockito:mockito-junit-jupiter",
+                    ],
+            ]
     ]
     repositories {
         mavenCentral()
