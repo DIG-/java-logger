@@ -1,16 +1,21 @@
-package br.dev.dig.logger;
+package br.dev.dig.logger.async;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.util.concurrent.Executor;
+
+import br.dev.dig.logger.BaseLogger;
 
 public final class AsyncLogger implements BaseLogger {
 
     @NotNull
-    private final BaseLogger target;
+    @VisibleForTesting
+    final BaseLogger target;
     @NotNull
-    private final Executor executor;
+    @VisibleForTesting
+    final Executor executor;
 
     public AsyncLogger(@NotNull final BaseLogger target, @NotNull final Executor executor) {
         this.target = target;
