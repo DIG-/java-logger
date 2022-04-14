@@ -1,5 +1,11 @@
 Changelog
 =========
+x.y.z
+-----
+- Updated package of AsyncLogger
+- UnitTest for AsyncLogger
+- UnitTest for FilterLogger
+- UnitTest for UnionLogger
 
 0.2.0
 -----
