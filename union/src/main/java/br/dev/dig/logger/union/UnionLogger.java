@@ -12,14 +12,10 @@ import br.dev.dig.logger.BaseLogger;
 public final class UnionLogger implements BaseLogger {
 
     @NotNull
-    final LinkedList<BaseLogger> loggers;
+    private final LinkedList<BaseLogger> loggers;
 
-    protected UnionLogger(@NotNull final Collection<BaseLogger> loggers) {
-        if (loggers instanceof LinkedList) {
-            this.loggers = (LinkedList<BaseLogger>) loggers;
-        } else {
-            this.loggers = new LinkedList<>(loggers);
-        }
+    protected UnionLogger(@NotNull final LinkedList<BaseLogger> loggers) {
+        this.loggers = loggers;
     }
 
     public static UnionLogger create(@NotNull final BaseLogger... loggers) {
