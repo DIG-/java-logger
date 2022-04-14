@@ -2,6 +2,7 @@ package br.dev.dig.logger.builder;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import br.dev.dig.logger.BaseLogger;
 import br.dev.dig.logger.Logger;
@@ -14,7 +15,8 @@ public abstract class LoggerBuilder {
     final private BaseLogger base = getBaseLogger();
 
     @Nullable
-    private Logger common = null;
+    @VisibleForTesting
+    protected Logger common = null;
 
     @NotNull
     public final synchronized Logger getLogger() {
