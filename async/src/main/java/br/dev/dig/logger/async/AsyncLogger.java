@@ -1,9 +1,11 @@
-package br.dev.dig.logger;
+package br.dev.dig.logger.async;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.Executor;
+
+import br.dev.dig.logger.BaseLogger;
 
 public final class AsyncLogger implements BaseLogger {
 
