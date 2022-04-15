@@ -63,4 +63,26 @@ class LoggerBuilderTest {
         Assertions.assertEquals(builder.common, builder.getLogger(""));
     }
 
+    @Test
+    void fromLogger_withoutTag() {
+        final Logger first = builder.getLogger();
+        Assertions.assertNotNull(first);
+        final Logger last = Logger.getInstance(builder);
+        Assertions.assertNotNull(last);
+        Assertions.assertEquals(first, last);
+        Assertions.assertEquals(LoggerBuilder.DEFAULT_LOGGER_TAG, ((TaggedLogger) last).getTag());
+    }
+
+    @Test
+    void fromLogger_withTag() {
+        final String tag = UUID.randomUUID().toString();
+        final Logger first = builder.getLogger(tag);
+        Assertions.assertNotNull(first);
+        Assertions.assertEquals(tag, ((TaggedLogger) first).getTag());
+
+        final Logger last = Logger.getInstance(builder, tag);
+        Assertions.assertNotNull(last);
+        Assertions.assertEquals(tag, ((TaggedLogger) last).getTag());
+    }
+
 }

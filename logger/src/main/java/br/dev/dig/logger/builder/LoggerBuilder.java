@@ -9,7 +9,8 @@ import br.dev.dig.logger.Logger;
 
 public abstract class LoggerBuilder {
 
-    final private static String DEFAULT_LOGGER_TAG = "Log";
+    @VisibleForTesting
+    final protected static String DEFAULT_LOGGER_TAG = "Log";
 
     @NotNull
     final private BaseLogger base = getBaseLogger();
