@@ -36,11 +36,9 @@ class CachedLoggerBuilderTest extends LoggerBuilderTest {
     }
 
     @Test
-    void checkNullTag2() {
+    void checkNullCreator() {
         final CachedLoggerBuilder builder = (CachedLoggerBuilder) this.builder;
-        builder.getLogger();
-        Assertions.assertEquals(builder.common, builder.getLogger(null));
-        Assertions.assertEquals(builder.common, builder.getLogger(""));
+        Assertions.assertNotNull(builder.createLogger(null));
     }
 
 }
