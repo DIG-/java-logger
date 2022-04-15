@@ -2,6 +2,7 @@ package br.dev.dig.logger.printer.println;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.time.LocalDateTime;
 
@@ -11,9 +12,11 @@ import br.dev.dig.logger.BaseLogger;
 public final class PrintlnLogger implements BaseLogger {
 
     @NotNull
-    private final PrintlnFormatter formatter;
+    @VisibleForTesting
+    final PrintlnFormatter formatter;
     @NotNull
-    private final LocalDateTime start = LocalDateTime.now();
+    @VisibleForTesting
+    final LocalDateTime start = LocalDateTime.now();
 
     @SuppressWarnings("unused")
     public PrintlnLogger(@NotNull final PrintlnFormatter formatter) {
