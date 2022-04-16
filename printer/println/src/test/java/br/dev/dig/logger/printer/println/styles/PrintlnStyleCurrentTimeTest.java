@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.regex.Pattern;
 
-class PrintlnStyleCurrentDateTest {
+class PrintlnStyleCurrentTimeTest {
 
-    final PrintlnStyleCurrentDate style = new PrintlnStyleCurrentDate();
+    final PrintlnStyleCurrentTime style = new PrintlnStyleCurrentTime();
 
     @Test
     void log_NotNullOrEmpty() {
@@ -18,9 +18,11 @@ class PrintlnStyleCurrentDateTest {
 
     @Test
     void log_Format() {
-        final String output = PrintlnStyleUtil.randomPrint(style);
-        final Pattern pattern = Pattern.compile("^[\\d]{4}-[\\d]{2}-[\\d]{2}$");
-        Assertions.assertTrue(pattern.matcher(output).matches());
+        final Pattern pattern = Pattern.compile("^[\\d]{2}:[\\d]{2}:[\\d]{2}(\\.[\\d]{3})$");
+        for (int i = 0; i < 10; i++) {
+            final String output = PrintlnStyleUtil.randomPrint(style);
+            Assertions.assertTrue(pattern.matcher(output).matches());
+        }
     }
 
 }
