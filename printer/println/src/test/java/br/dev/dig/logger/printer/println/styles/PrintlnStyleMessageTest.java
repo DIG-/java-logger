@@ -9,7 +9,8 @@ import java.time.LocalDateTime;
 class PrintlnStyleMessageTest extends PrintlnStyleCommon<PrintlnStyleMessage> {
 
     @Override
-    @NotNull PrintlnStyleMessage create() {
+    @NotNull
+    PrintlnStyleMessage create() {
         return new PrintlnStyleMessage();
     }
 
