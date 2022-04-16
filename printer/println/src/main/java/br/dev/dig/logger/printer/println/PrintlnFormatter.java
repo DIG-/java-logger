@@ -81,7 +81,7 @@ public class PrintlnFormatter {
                     break;
             }
         }
-        if (lastEnd + 1 < format.length()) {
+        if (lastEnd < format.length()) {
             styles.add(new PrintlnStyleConstant(format.substring(lastEnd)));
         }
         return new PrintlnFormatter(new ArrayList<>(styles));
