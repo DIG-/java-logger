@@ -1,22 +1,24 @@
 package br.dev.dig.logger.printer.println.styles;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.UUID;
+class PrintlnStyleConstantTest extends PrintlnStyleCommon<PrintlnStyleConstant> {
 
-@ExtendWith(MockitoExtension.class)
-class PrintlnStyleConstantTest {
+    String constant;
 
-    private final String constant = UUID.randomUUID().toString();
+    @Override
+    @NotNull
+    PrintlnStyleConstant create() {
+        constant = randString();
+        return new PrintlnStyleConstant(constant);
+    }
 
     @Test
-    void log() {
-        final PrintlnStyleConstant style = new PrintlnStyleConstant(constant);
+    void log_Constant() {
         for (int i = 0; i < 10; i++) {
-            Assertions.assertEquals(constant, PrintlnStyleUtil.randomPrint(style));
+            Assertions.assertEquals(constant, randomPrint(style));
         }
     }
 

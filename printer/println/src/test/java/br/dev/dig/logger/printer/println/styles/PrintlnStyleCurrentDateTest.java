@@ -1,24 +1,22 @@
 package br.dev.dig.logger.printer.println.styles;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.regex.Pattern;
 
-class PrintlnStyleCurrentDateTest {
+class PrintlnStyleCurrentDateTest extends PrintlnStyleCommon<PrintlnStyleCurrentDate> {
 
-    final PrintlnStyleCurrentDate style = new PrintlnStyleCurrentDate();
-
-    @Test
-    void log_NotNullOrEmpty() {
-        final String output = PrintlnStyleUtil.randomPrint(style);
-        Assertions.assertNotNull(output);
-        Assertions.assertFalse(output.isEmpty());
+    @Override
+    @NotNull
+    PrintlnStyleCurrentDate create() {
+        return new PrintlnStyleCurrentDate();
     }
 
     @Test
     void log_Format() {
-        final String output = PrintlnStyleUtil.randomPrint(style);
+        final String output = randomPrint(style);
         final Pattern pattern = Pattern.compile("^[\\d]{4}-[\\d]{2}-[\\d]{2}$");
         Assertions.assertTrue(pattern.matcher(output).matches());
     }
