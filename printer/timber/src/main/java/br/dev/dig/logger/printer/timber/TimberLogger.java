@@ -9,7 +9,7 @@ import br.dev.dig.logger.BaseLogger;
 import br.dev.dig.logger.Logger;
 import timber.log.Timber;
 
-public final class TimberLogger implements BaseLogger {
+public class TimberLogger implements BaseLogger {
 
     @Override
     public void log(int level, @Nullable String tag, @NotNull Message message, @Nullable Throwable throwable) {
@@ -47,7 +47,7 @@ public final class TimberLogger implements BaseLogger {
         }
     }
 
-    private Timber.Tree getTimber(String tag) {
+    Timber.Tree getTimber(String tag) {
         if (tag == null) {
             return Timber.asTree();
         }

@@ -1,7 +1,5 @@
 package br.dev.dig.logger.printer.android_log;
 
-import android.util.Log;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -10,6 +8,16 @@ import br.dev.dig.logger.Logger;
 
 public final class AndroidLogLogger implements BaseLogger {
 
+    private final LogWrapper wrapper;
+
+    protected AndroidLogLogger(@NotNull final LogWrapper wrapper) {
+        this.wrapper = wrapper;
+    }
+
+    public AndroidLogLogger() {
+        this(new LogWrapper());
+    }
+
     @Override
     public void log(int level, @Nullable String tag, @NotNull Message message, @Nullable Throwable throwable) {
         log(level, tag, message.generate(), throwable);
@@ -17,31 +25,32 @@ public final class AndroidLogLogger implements BaseLogger {
 
     @Override
     public void log(int level, @Nullable String tag, @Nullable CharSequence _message, @Nullable Throwable throwable) {
-        final String message;
+        final CharSequence message;
         if (_message == null) {
             message = "";
         } else {
-            message = _message.toString();
+            message = _message;
         }
         switch (level) {
             case Logger.LEVEL_VERBOSE:
-                Log.v(tag, message, throwable);
+                wrapper.v(tag, message, throwable);
                 break;
             case Logger.LEVEL_DEBUG:
-                Log.d(tag, message, throwable);
+                wrapper.d(tag, message, throwable);
                 break;
             case Logger.LEVEL_INFO:
-                Log.i(tag, message, throwable);
+                wrapper.i(tag, message, throwable);
                 break;
             case Logger.LEVEL_WARNING:
-                Log.w(tag, message, throwable);
+                wrapper.w(tag, message, throwable);
                 break;
             case Logger.LEVEL_ERROR:
-                Log.e(tag, message, throwable);
+                wrapper.e(tag, message, throwable);
                 break;
             case Logger.LEVEL_ASSERT:
-                Log.wtf(tag, message, throwable);
+                wrapper.wtf(tag, message, throwable);
                 break;
         }
     }
+
 }
