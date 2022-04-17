@@ -14,6 +14,11 @@ class PrintlnStyleThrowableMessageTest extends PrintlnStyleCommon<PrintlnStyleTh
         return new PrintlnStyleThrowableMessage();
     }
 
+    @Override
+    void log_NotNullOrEmpty() {
+        // Handled next tests
+    }
+
     @Test
     void log_Null() {
         final String output = style.print(randInt(), randString(), LocalDateTime.now(), randString(), null);

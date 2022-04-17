@@ -14,6 +14,11 @@ class PrintlnStyleStackTraceTest extends PrintlnStyleCommon<PrintlnStyleStackTra
         return new PrintlnStyleStackTrace();
     }
 
+    @Override
+    void log_NotNullOrEmpty() {
+        // Handled next tests
+    }
+
     @Test
     void log_Null() {
         final String output = style.print(randInt(), randString(), LocalDateTime.now(), randString(), null);
