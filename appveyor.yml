@@ -17,4 +17,4 @@ build_script:
 
 test_script:
   - sh: ./gradlew test --console plain
-  - sh: ./gradlew :app:java:MainClass.main\() --console plain
+  - sh: ./gradlew :app:java:MainClass.main\(\) --console plain
