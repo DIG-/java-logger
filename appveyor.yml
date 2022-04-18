@@ -8,7 +8,7 @@ before_build:
   - sh: java -version
 
 build_script:
-  - sh: ./gradlew deployJavaToLocal
+  - sh: ./gradlew deployJavaToLocal --console plain
 
 test_script:
-  - sh: ./gradlew test
+  - sh: ./gradlew test  --console plain
