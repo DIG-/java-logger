@@ -1,9 +1,18 @@
 Simple Logger for Java and Android
 ==================================
-- Make log proccess easier
+[![AppVeyor](https://img.shields.io/appveyor/build/DIG-/java-logger/main?logo=appveyor&logoColor=dddddd)](https://ci.appveyor.com/project/DIG-/java-logger/branch/main)
+[![AppVeyor tests](https://img.shields.io/appveyor/tests/DIG-/java-logger/main?logo=appveyor&logoColor=dddddd)](https://ci.appveyor.com/project/DIG-/java-logger/branch/main)
+[![Maven Central](https://img.shields.io/maven-central/v/br.dev.dig.logger/logger?label=maven)](https://search.maven.org/search?q=g:br.dev.dig.logger*)
+[![License](https://img.shields.io/static/v1?label=license&message=CC%20BY-ND%204.0&color=blue)](https://creativecommons.org/licenses/by-nd/4.0/)
+
+![Windows - Supported](https://img.shields.io/badge/windows-supported-success?logo=windows&logoColor=dddddd)
+![Linux - Supported](https://img.shields.io/badge/linux-supported-success?logo=linux&logoColor=dddddd)
+![MacOS - Partial](https://img.shields.io/badge/macos-partial-orange?logo=apple&logoColor=dddddd)
+
+- Make log process easier
 - Logs with scope (and tag)
 - Reduced boilerplate
-- Purelly written in Java
+- Purely written in Java
 - Integrate with others Log system
 
 Reason
@@ -70,6 +79,6 @@ Utilities are chainable. Comparing to tree structure, Printers are leafs and Uti
 License
 =======
 [CC BY-ND 4.0](https://creativecommons.org/licenses/by-nd/4.0/)
-- You can use and redist freely.
+- You can use and re-dist freely.
 - You can also modify, but only for yourself.
 - You can use it as a part of your project, but without modifications in this project.
