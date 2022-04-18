@@ -6,9 +6,10 @@ image: Ubuntu2004
 stack: jdk 11
 before_build:
   - sh: java -version
+  - sh: touch ./disable-android.gradle # AppVeyor does not support Android
 
 build_script:
-  - sh: ./gradlew deployJavaToLocal --console plain
+  - sh: ./gradlew deploy_ToLocal --console plain
 
 test_script:
   - sh: ./gradlew test  --console plain
