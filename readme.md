@@ -55,7 +55,7 @@ val log = Logger.getInstance(MainLoggerBuilder, "tag")
 
 Logger Printers
 ===============
-Can be found in folder `printer` or doing some [maven search](https://mvnrepository.com/artifact/br.dev.dig.logger.printer) for group `br.dev.dig.logger.printer`.
+Can be found in folder `printer` or doing some [maven search](https://search.maven.org/search?q=g:br.dev.dig.logger.printer) for group `br.dev.dig.logger.printer`.
 
 | Package       | Class                 | Description |
 |---------------|-----------------------|-------------|
@@ -66,7 +66,7 @@ Can be found in folder `printer` or doing some [maven search](https://mvnreposit
 
 Utilities
 =========
-Some utilities that can help or improve Log operations. All of them are under group `br.dev.dig.logger` ([search]((https://mvnrepository.com/artifact/br.dev.dig.logger))).
+Some utilities that can help or improve Log operations. All of them are under group `br.dev.dig.logger` ([search]((https://search.maven.org/search?q=g:br.dev.dig.logger))).
 
 Utilities are chainable. Comparing to tree structure, Printers are leafs and Utilities are branch.
 
