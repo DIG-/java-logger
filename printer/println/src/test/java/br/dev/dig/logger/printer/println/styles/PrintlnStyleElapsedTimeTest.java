@@ -46,8 +46,7 @@ class PrintlnStyleElapsedTimeTest extends PrintlnStyleCommon<PrintlnStyleElapsed
         Assertions.assertNotNull(output);
         Assertions.assertEquals("16:16:09.000", output);
     }
-/*
-// Fix to show more than 24 hours
+
     @Test
     void log_ExactAbove24Hours() {
         final LocalDate dateStart = LocalDate.now();
@@ -58,5 +57,5 @@ class PrintlnStyleElapsedTimeTest extends PrintlnStyleCommon<PrintlnStyleElapsed
         Assertions.assertNotNull(output);
         Assertions.assertEquals("40:16:09.000", output);
     }
-*/
+
 }

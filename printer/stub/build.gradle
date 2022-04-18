@@ -50,11 +50,11 @@ publishing {
 
 task deployJavaToLocal {
     group = "deploy local"
-    dependsOn ":printer:println:publishJavaPublicationToMavenLocal"
+    dependsOn ":printer:stub:publishJavaPublicationToMavenLocal"
 }
 
 task _deployJavaToMavenCentral {
-    dependsOn ":printer:println:publishJavaPublicationToCentralRepository"
+    dependsOn ":printer:stub:publishJavaPublicationToCentralRepository"
 }
 
 task deployJavaToMavenCentral {
