@@ -5,7 +5,7 @@ skip_branch_with_pr: true
 image: Ubuntu2004
 stack: jdk 11
 cache:
-  - /home/appveyor/.gradle/wrapper/dists -> gradle/wrapper/gradle-wrapper.properties
+  - ~/.gradle/ -> gradle/wrapper/gradle-wrapper.properties
 
 before_build:
   - sh: java -version
