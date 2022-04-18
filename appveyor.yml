@@ -6,5 +6,5 @@ image: Ubuntu2004
 stack: jdk 11
 before_build:
   - sh: java -version
-build:
-  verbosity: minimal
+build_script:
+  - sh: ./gradlew deployJavaToLocal
