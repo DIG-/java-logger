@@ -17,4 +17,6 @@ build_script:
 
 test_script:
   - sh: ./gradlew test --console plain
-  - sh: ./gradlew :app:java:MainClass.main\(\) --console plain
+
+after_test:
+  - sh: find "$APPVEYOR_BUILD_FOLDER" -type f -name 'TEST*.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID"
