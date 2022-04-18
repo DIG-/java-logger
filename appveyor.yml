@@ -5,7 +5,6 @@ branches:
   only:
     - main
     - develop
-    - test/ci
     - /rc\/([\d\w\-\.]+)/
 skip_branch_with_pr: true
 image: Ubuntu2004
