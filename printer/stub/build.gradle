@@ -12,6 +12,9 @@ java {
     sourceCompatibility versions.java
     targetCompatibility versions.java
 }
+test {
+    useJUnitPlatform()
+}
 
 publishing {
     publications {
@@ -63,4 +66,6 @@ task deployJavaToMavenCentral {
 dependencies {
     api lib.annotations
     api project(":logger")
+
+    testImplementation lib.test.junit
 }

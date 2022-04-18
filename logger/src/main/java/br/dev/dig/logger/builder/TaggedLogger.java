@@ -2,6 +2,7 @@ package br.dev.dig.logger.builder;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import br.dev.dig.logger.BaseLogger;
 import br.dev.dig.logger.Logger;
@@ -9,9 +10,11 @@ import br.dev.dig.logger.Logger;
 class TaggedLogger extends Logger {
 
     @Nullable
-    private final String tag;
+    @VisibleForTesting
+    final String tag;
     @NotNull
-    private final BaseLogger base;
+    @VisibleForTesting
+    final BaseLogger base;
 
     TaggedLogger(@Nullable final String tag, @NotNull final BaseLogger base) {
         super();

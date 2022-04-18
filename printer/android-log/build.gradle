@@ -2,6 +2,7 @@ plugins {
     id "com.android.library"
     id "maven-publish"
     id "signing"
+    id "de.mannodermaus.android-junit5"
 }
 apply from: "$rootDir/pom.gradle"
 
@@ -24,6 +25,9 @@ android {
 
         consumerProguardFiles "consumer-rules.pro"
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 
     buildTypes {
         release {
@@ -41,6 +45,7 @@ android {
         }
     }
 }
+
 
 afterEvaluate {
     publishing {
@@ -96,4 +101,8 @@ task deployAndroidToMavenCentral {
 
 dependencies {
     api project(":logger")
+
+    testImplementation platform(lib.test.mockito.bom)
+    testImplementation lib.test.junit
+    testImplementation lib.test.mockito.junit
 }
