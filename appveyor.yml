@@ -10,6 +10,7 @@ cache:
 before_build:
   - sh: java -version
   - sh: touch ./disable-android.gradle # AppVeyor does not support Android
+  - sh: ./gradlew --version --console plain
 
 build_script:
   - sh: ./gradlew deploy_ToLocal --console plain
