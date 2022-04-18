@@ -40,8 +40,8 @@ buildscript {
     ext.versions = [
             "java"   : JavaVersion.VERSION_1_8,
             "logger" : [
-                    "major": "0",
-                    "minor": "2",
+                    "major": "1",
+                    "minor": "0",
                     "pkg"  : "",
             ],
             "android": [
