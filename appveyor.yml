@@ -1,0 +1,27 @@
+version: "0.2.0-{build}"
+skip_tags: true
+clone_depth: 1
+branches:
+  only:
+    - main
+    - develop
+    - /rc\/([\d\w\-\.]+)/
+skip_branch_with_pr: true
+image: Ubuntu2004
+stack: jdk 11
+cache:
+  - ~/.gradle/ -> gradle/wrapper/gradle-wrapper.properties
+
+before_build:
+  - sh: java -version
+  - sh: touch ./disable-android.gradle # AppVeyor does not support Android
+  - sh: ./gradlew --version --console plain
+
+build_script:
+  - sh: ./gradlew deploy_ToLocal --console plain
+
+test_script:
+  - sh: ./gradlew test --console plain
+
+after_test:
+  - sh: find "$APPVEYOR_BUILD_FOLDER" -type f -name "TEST*.xml" -print0 | xargs -0 -I "{}" curl -F "file=@{}" "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID"
