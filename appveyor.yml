@@ -5,14 +5,12 @@ skip_branch_with_pr: true
 image: Ubuntu2004
 stack: jdk 11
 cache:
-  - ~/.gradle/wrapper/dists -> gradle/wrapper/gradle-wrapper.properties
+  - /home/appveyor/.gradle/wrapper/dists -> gradle/wrapper/gradle-wrapper.properties
 
 before_build:
   - sh: java -version
   - sh: touch ./disable-android.gradle # AppVeyor does not support Android
-  - sh: pwd
-  - sh: ./gradlew --version --console plain
-  - sh: ls ~/.gradle/wrapper
+  - sh: ./gradlew --version --daemon --console plain
 
 build_script:
   - sh: ./gradlew deploy_ToLocal --console plain
