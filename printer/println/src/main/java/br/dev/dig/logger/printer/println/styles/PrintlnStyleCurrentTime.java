@@ -2,6 +2,7 @@ package br.dev.dig.logger.printer.println.styles;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -21,8 +22,15 @@ public class PrintlnStyleCurrentTime implements PrintlnFormatter.Style {
             .optionalStart()
             .appendFraction(ChronoField.MILLI_OF_SECOND, 3, 3, true)
             .toFormatter();
+
     @Override
     public @NotNull String print(int level, @Nullable String tag, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
-        return ISO_LOCAL_TIME.format(LocalTime.now());
+        return format(LocalTime.now());
+    }
+
+    @NotNull
+    @VisibleForTesting
+    String format(@NotNull final LocalTime time) {
+        return ISO_LOCAL_TIME.format(time);
     }
 }
