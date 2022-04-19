@@ -1,8 +1,9 @@
 package br.dev.dig.logger.filter;
 
-import br.dev.dig.logger.BaseLogger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import br.dev.dig.logger.BaseLogger;
 
 public final class FilterLogger implements BaseLogger {
     @NotNull

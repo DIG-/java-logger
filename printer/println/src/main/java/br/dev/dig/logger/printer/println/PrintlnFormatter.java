@@ -14,10 +14,10 @@ import br.dev.dig.logger.printer.println.styles.PrintlnStyleCurrentDate;
 import br.dev.dig.logger.printer.println.styles.PrintlnStyleCurrentTime;
 import br.dev.dig.logger.printer.println.styles.PrintlnStyleElapsedTime;
 import br.dev.dig.logger.printer.println.styles.PrintlnStyleMessage;
+import br.dev.dig.logger.printer.println.styles.PrintlnStyleStackTrace;
 import br.dev.dig.logger.printer.println.styles.PrintlnStyleTag;
 import br.dev.dig.logger.printer.println.styles.PrintlnStyleTagShort;
 import br.dev.dig.logger.printer.println.styles.PrintlnStyleThrowableMessage;
-import br.dev.dig.logger.printer.println.styles.PrintlnStyleStackTrace;
 
 public class PrintlnFormatter {
 

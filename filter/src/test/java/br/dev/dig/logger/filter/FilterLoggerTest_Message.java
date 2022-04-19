@@ -132,7 +132,7 @@ class FilterLoggerTest_Message {
         log(logger, false, false, false, false, false, false);
         Mockito.verify(parent, Mockito.never()).log(Mockito.anyInt(), Mockito.anyString(), Mockito.any(BaseLogger.Message.class), Mockito.any(Throwable.class));
     }
-    
+
     private void log(@NotNull final BaseLogger logger, boolean verbose, boolean debug, boolean info, boolean warning, boolean error, boolean wtf) {
         final String tag = UUID.randomUUID().toString();
         final Logger.Message message = () -> UUID.randomUUID().toString();
