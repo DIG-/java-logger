@@ -52,20 +52,25 @@ public class FirebaseCrashlyticsLogger implements BaseLogger {
             }
         }
         if (!propagate && throwable != null) {
-            builder.append("\nCaused by:");
-            Throwable cause = throwable;
-            while (cause != null) {
-                builder.append("\n  ").append(cause);
-                if (cause.getCause() == cause) {
-                    break;
-                }
-                cause = cause.getCause();
-            }
+            appendThrowableCauses(builder, throwable);
         }
         if (builder.length() <= 0) {
             builder.append("Empty message");
         }
         return builder.toString();
+    }
+
+    void appendThrowableCauses(@NotNull final StringBuilder builder, @NotNull final Throwable start) {
+        builder.append("\nCaused by:");
+        Throwable cause = start;
+        while (cause != null) {
+            builder.append("\n  ").append(cause);
+            // By JVM it is impossible, but I want warranty
+            if (cause.getCause() == cause) {
+                break;
+            }
+            cause = cause.getCause();
+        }
     }
 
     @VisibleForTesting
