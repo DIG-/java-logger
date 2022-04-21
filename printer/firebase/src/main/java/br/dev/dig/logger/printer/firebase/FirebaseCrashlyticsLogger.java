@@ -15,9 +15,15 @@ public class FirebaseCrashlyticsLogger implements BaseLogger {
 
     @NotNull
     public final FirebaseCrashlytics crashlytics;
+    private final boolean propagate;
+
+    public FirebaseCrashlyticsLogger(@NotNull final FirebaseCrashlytics crashlytics, final boolean useThrowableAsCause) {
+        this.crashlytics = crashlytics;
+        this.propagate = useThrowableAsCause;
+    }
 
     public FirebaseCrashlyticsLogger(@NotNull final FirebaseCrashlytics crashlytics) {
-        this.crashlytics = crashlytics;
+        this(crashlytics, false);
     }
 
     @Override
@@ -27,20 +33,34 @@ public class FirebaseCrashlyticsLogger implements BaseLogger {
 
     @Override
     public void log(int level, @Nullable String tag, @Nullable CharSequence message, @Nullable Throwable throwable) {
-        crashlytics.recordException(
-            clearStackTrace(
-                getExceptionByLevel(level,
-                    formatMessage(tag, message), throwable)));
+        crashlytics.recordException(clearStackTrace(getExceptionByLevel(level, formatMessage(tag, message, throwable), propagate ? throwable : null)));
     }
 
     @NotNull
-    String formatMessage(final @Nullable String tag, @Nullable final CharSequence message) {
+    String formatMessage(final @Nullable String tag, @Nullable final CharSequence message, @Nullable final Throwable throwable) {
         final StringBuilder builder = new StringBuilder();
         if (tag != null && !tag.isEmpty()) {
             builder.append(tag).append(": ");
         }
         if (message != null && message.length() > 0) {
             builder.append(message);
+        } else if (builder.length() > 0) {
+            if (throwable != null) {
+                builder.append(throwable);
+            } else {
+                builder.append("Empty message");
+            }
+        }
+        if (!propagate && throwable != null) {
+            builder.append("\nCaused by:");
+            Throwable cause = throwable;
+            while (cause != null) {
+                builder.append("\n  ").append(cause);
+                if (cause.getCause() == cause) {
+                    break;
+                }
+                cause = cause.getCause();
+            }
         }
         if (builder.length() <= 0) {
             builder.append("Empty message");
