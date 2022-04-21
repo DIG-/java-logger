@@ -14,7 +14,7 @@ import br.dev.dig.logger.Logger;
 public class FirebaseCrashlyticsLogger implements BaseLogger {
 
     @NotNull
-    private final FirebaseCrashlytics crashlytics;
+    public final FirebaseCrashlytics crashlytics;
 
     public FirebaseCrashlyticsLogger(@NotNull final FirebaseCrashlytics crashlytics) {
         this.crashlytics = crashlytics;
@@ -27,7 +27,10 @@ public class FirebaseCrashlyticsLogger implements BaseLogger {
 
     @Override
     public void log(int level, @Nullable String tag, @Nullable CharSequence message, @Nullable Throwable throwable) {
-        crashlytics.recordException(clearStackTrace(getExceptionByLevel(level, formatMessage(tag, message), throwable)));
+        crashlytics.recordException(
+            clearStackTrace(
+                getExceptionByLevel(level,
+                    formatMessage(tag, message), throwable)));
     }
 
     @NotNull
