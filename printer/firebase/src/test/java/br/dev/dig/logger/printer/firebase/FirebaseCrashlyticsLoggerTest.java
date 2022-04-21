@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -58,6 +59,46 @@ class FirebaseCrashlyticsLoggerTest {
         reset(spy);
         spy.log(Logger.LEVEL_ASSERT, tag, message, null);
         verify(spy).log(eq(Logger.LEVEL_ASSERT), eq(tag), eq(content), isNull());
+    }
+
+    @Test
+    void check_getExceptionByLevel() {
+        final String message = UUID.randomUUID().toString();
+        final Throwable throwable = new RuntimeException();
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_VERBOSE, null, null) instanceof FirebaseCrashlyticsLogger.Verbose);
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_VERBOSE, message, null) instanceof FirebaseCrashlyticsLogger.Verbose);
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_VERBOSE, null, throwable) instanceof FirebaseCrashlyticsLogger.Verbose);
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_VERBOSE, message, throwable) instanceof FirebaseCrashlyticsLogger.Verbose);
+
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_DEBUG, null, null) instanceof FirebaseCrashlyticsLogger.Debug);
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_DEBUG, message, null) instanceof FirebaseCrashlyticsLogger.Debug);
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_DEBUG, null, throwable) instanceof FirebaseCrashlyticsLogger.Debug);
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_DEBUG, message, throwable) instanceof FirebaseCrashlyticsLogger.Debug);
+
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_INFO, null, null) instanceof FirebaseCrashlyticsLogger.Info);
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_INFO, message, null) instanceof FirebaseCrashlyticsLogger.Info);
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_INFO, null, throwable) instanceof FirebaseCrashlyticsLogger.Info);
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_INFO, message, throwable) instanceof FirebaseCrashlyticsLogger.Info);
+
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_WARNING, null, null) instanceof FirebaseCrashlyticsLogger.Warning);
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_WARNING, message, null) instanceof FirebaseCrashlyticsLogger.Warning);
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_WARNING, null, throwable) instanceof FirebaseCrashlyticsLogger.Warning);
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_WARNING, message, throwable) instanceof FirebaseCrashlyticsLogger.Warning);
+
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_ERROR, null, null) instanceof FirebaseCrashlyticsLogger.Error);
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_ERROR, message, null) instanceof FirebaseCrashlyticsLogger.Error);
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_ERROR, null, throwable) instanceof FirebaseCrashlyticsLogger.Error);
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_ERROR, message, throwable) instanceof FirebaseCrashlyticsLogger.Error);
+
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_ASSERT, null, null) instanceof FirebaseCrashlyticsLogger.Assert);
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_ASSERT, message, null) instanceof FirebaseCrashlyticsLogger.Assert);
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_ASSERT, null, throwable) instanceof FirebaseCrashlyticsLogger.Assert);
+        Assertions.assertTrue(logger.getExceptionByLevel(Logger.LEVEL_ASSERT, message, throwable) instanceof FirebaseCrashlyticsLogger.Assert);
+
+        Assertions.assertTrue(logger.getExceptionByLevel(99, null, null) instanceof FirebaseCrashlyticsLogger.Assert);
+        Assertions.assertTrue(logger.getExceptionByLevel(99, message, null) instanceof FirebaseCrashlyticsLogger.Assert);
+        Assertions.assertTrue(logger.getExceptionByLevel(99, null, throwable) instanceof FirebaseCrashlyticsLogger.Assert);
+        Assertions.assertTrue(logger.getExceptionByLevel(99, message, throwable) instanceof FirebaseCrashlyticsLogger.Assert);
     }
 
 }
