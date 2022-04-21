@@ -19,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.UUID;
 
+import br.dev.dig.logger.BaseLogger;
 import br.dev.dig.logger.Logger;
 
 @ExtendWith(MockitoExtension.class)
@@ -112,6 +113,25 @@ class FirebaseCrashlyticsLoggerTest {
         Assertions.assertTrue(logger.formatMessage(tag, null, throwable).startsWith(tag + ": " + throwable));
         Assertions.assertTrue(logger.formatMessage(tag, message, throwable).startsWith(tag + ": " + message));
         Assertions.assertTrue(logger.formatMessage(tag, message, throwable).contains(throwable.toString()));
+    }
+
+    @Test
+    void check_clearStackTrace() {
+        final Throwable throwable = logger.getExceptionByLevel(Logger.LEVEL_VERBOSE, null, null);
+        final Throwable clear = logger.clearStackTrace(throwable);
+        int count = 0;
+        for (final StackTraceElement element : clear.getStackTrace()) {
+            try {
+                final Class<?> clazz = Class.forName(element.getClassName());
+                Assertions.assertFalse(BaseLogger.class.isAssignableFrom(clazz));
+                Assertions.assertFalse(Logger.class.isAssignableFrom(clazz));
+            } catch (ClassNotFoundException e) {
+                break;
+            }
+            count++;
+            if (count >= 5)
+                break;
+        }
     }
 
 }
