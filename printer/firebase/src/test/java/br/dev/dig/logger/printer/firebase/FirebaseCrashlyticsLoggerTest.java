@@ -101,4 +101,17 @@ class FirebaseCrashlyticsLoggerTest {
         Assertions.assertTrue(logger.getExceptionByLevel(99, message, throwable) instanceof FirebaseCrashlyticsLogger.Assert);
     }
 
+    @Test
+    void format_WithoutPropagation() {
+        final String tag = UUID.randomUUID().toString();
+        final String message = UUID.randomUUID().toString();
+        final Throwable throwable = new RuntimeException(UUID.randomUUID().toString());
+        Assertions.assertEquals("Empty message", logger.formatMessage(null, null, null));
+        Assertions.assertEquals(tag + ": Empty message", logger.formatMessage(tag, null, null));
+        Assertions.assertEquals(tag + ": " + message, logger.formatMessage(tag, message, null));
+        Assertions.assertTrue(logger.formatMessage(tag, null, throwable).startsWith(tag + ": " + throwable));
+        Assertions.assertTrue(logger.formatMessage(tag, message, throwable).startsWith(tag + ": " + message));
+        Assertions.assertTrue(logger.formatMessage(tag, message, throwable).contains(throwable.toString()));
+    }
+
 }
