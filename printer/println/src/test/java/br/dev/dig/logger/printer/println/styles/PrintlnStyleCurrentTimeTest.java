@@ -4,9 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.Month;
 import java.util.regex.Pattern;
 
 class PrintlnStyleCurrentTimeTest extends PrintlnStyleCommon<PrintlnStyleCurrentTime> {
@@ -28,7 +26,7 @@ class PrintlnStyleCurrentTimeTest extends PrintlnStyleCommon<PrintlnStyleCurrent
 
     @Test
     void log_Exact() {
-        final String output = style.format(LocalTime.of(21,57,3));
+        final String output = style.format(LocalTime.of(21, 57, 3));
         Assertions.assertNotNull(output);
         Assertions.assertEquals("21:57:03.000", output);
     }

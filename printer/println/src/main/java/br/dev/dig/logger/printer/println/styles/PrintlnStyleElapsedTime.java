@@ -16,13 +16,13 @@ import br.dev.dig.logger.printer.println.PrintlnFormatter;
 
 public final class PrintlnStyleElapsedTime implements PrintlnFormatter.Style {
     static final DateTimeFormatter ISO_LOCAL_TIME = new DateTimeFormatterBuilder()
-            .appendLiteral(':')
-            .appendValue(ChronoField.MINUTE_OF_HOUR, 2)
-            .appendLiteral(':')
-            .appendValue(ChronoField.SECOND_OF_MINUTE, 2)
-            .optionalStart()
-            .appendFraction(ChronoField.MILLI_OF_SECOND, 3, 3, true)
-            .toFormatter();
+        .appendLiteral(':')
+        .appendValue(ChronoField.MINUTE_OF_HOUR, 2)
+        .appendLiteral(':')
+        .appendValue(ChronoField.SECOND_OF_MINUTE, 2)
+        .optionalStart()
+        .appendFraction(ChronoField.MILLI_OF_SECOND, 3, 3, true)
+        .toFormatter();
 
 
     @Override

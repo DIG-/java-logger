@@ -11,5 +11,6 @@ def isAndroidEnabled = !(new File(rootDir, "disable-android.gradle")).exists()
 if (isAndroidEnabled) {
     include "app:android"
     include "printer:android-log"; findProject(":printer:android-log")?.name = "android-log"
+    include "printer:firebase"; findProject(":printer:firebase")?.name = "firebase"
     include "printer:timber"; findProject(":printer:timber")?.name = "timber"
 }

@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
 
         <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/opt_timber"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                android:layout_marginStart="16dp"
-                android:paddingEnd="8dp"
-                android:text="Timber"
-                android:layout_weight="1" />
+            android:id="@+id/opt_timber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:layout_marginStart="16dp"
+            android:paddingEnd="8dp"
+            android:text="Timber"
+            android:layout_weight="1" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/opt_android_log"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:paddingEnd="16dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                android:text="Android Log"
-                android:layout_weight="1" />
+            android:id="@+id/opt_android_log"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:text="Android Log"
+            android:layout_weight="1" />
 
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
-            android:id="@+id/trigger_log"
-            style="@style/ThemeOverlay.Material3.Button.ElevatedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="Trigger log" />
+        android:id="@+id/trigger_log"
+        style="@style/ThemeOverlay.Material3.Button.ElevatedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Trigger log" />
 
 </LinearLayout>

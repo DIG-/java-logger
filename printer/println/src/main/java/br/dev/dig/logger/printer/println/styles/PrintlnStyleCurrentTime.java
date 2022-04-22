@@ -14,14 +14,14 @@ import br.dev.dig.logger.printer.println.PrintlnFormatter;
 
 public class PrintlnStyleCurrentTime implements PrintlnFormatter.Style {
     static final DateTimeFormatter ISO_LOCAL_TIME = new DateTimeFormatterBuilder()
-            .appendValue(ChronoField.HOUR_OF_DAY, 2)
-            .appendLiteral(':')
-            .appendValue(ChronoField.MINUTE_OF_HOUR, 2)
-            .appendLiteral(':')
-            .appendValue(ChronoField.SECOND_OF_MINUTE, 2)
-            .optionalStart()
-            .appendFraction(ChronoField.MILLI_OF_SECOND, 3, 3, true)
-            .toFormatter();
+        .appendValue(ChronoField.HOUR_OF_DAY, 2)
+        .appendLiteral(':')
+        .appendValue(ChronoField.MINUTE_OF_HOUR, 2)
+        .appendLiteral(':')
+        .appendValue(ChronoField.SECOND_OF_MINUTE, 2)
+        .optionalStart()
+        .appendFraction(ChronoField.MILLI_OF_SECOND, 3, 3, true)
+        .toFormatter();
 
     @Override
     public @NotNull String print(int level, @Nullable String tag, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
