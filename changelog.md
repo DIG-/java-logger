@@ -1,5 +1,9 @@
 Changelog
 =========
+1.0.0-a
+-----
+- Added Firebase Crashlytics
+
 1.0.0
 -----
 - Updated package of AsyncLogger
