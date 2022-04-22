@@ -1,4 +1,4 @@
-version: "0.2.0-{build}"
+version: "1.0.0-{build}"
 skip_tags: true
 clone_depth: 1
 branches:
@@ -10,10 +10,11 @@ skip_branch_with_pr: true
 image: Ubuntu2004
 stack: jdk 11
 cache:
-  - ~/.gradle/ -> gradle/wrapper/gradle-wrapper.properties
+  - $HOME/.gradle/wrapper/dists -> gradle/wrapper/gradle-wrapper.properties
 
 before_build:
   - sh: java -version
+  - sh: echo "$HOME potato"
   - sh: touch ./disable-android.gradle # AppVeyor does not support Android
   - sh: ./gradlew --version --console plain
 
