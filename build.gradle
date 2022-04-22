@@ -50,7 +50,7 @@ buildscript {
                     "target" : 31,
             ],
             "kotlin" : "1.5.31",
-            "junit"  : "5.7.1",
+            "junit"  : "5.8.2",
             "mockito":"4.4.0",
     ]
     ext.versions.logger.pkg = "${ext.versions.logger.major}.${ext.versions.logger.minor}."

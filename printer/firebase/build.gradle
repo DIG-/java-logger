@@ -1,0 +1,110 @@
+plugins {
+    id "com.android.library"
+    id "maven-publish"
+    id "signing"
+    id "de.mannodermaus.android-junit5"
+}
+apply from: "$rootDir/pom.gradle"
+
+// ==================================
+// Patch
+def patch = 0
+// ==================================
+
+def vName = versions.logger.pkg + patch
+android {
+    compileSdk versions.android.compile
+
+    defaultConfig {
+        minSdk versions.android.minimum
+        targetSdk versions.android.target
+
+        versionCode patch + 100 * (Integer.valueOf(versions.logger.minor) + 10 * Integer.valueOf(versions.logger.major))
+        versionName vName
+        buildConfigField "String", "br_dev_dig_logger_printer_android_log_version", "\"" + versionName + "\""
+
+        consumerProguardFiles "consumer-rules.pro"
+    }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+    }
+    compileOptions {
+        sourceCompatibility versions.java
+        targetCompatibility versions.java
+    }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
+}
+
+
+afterEvaluate {
+    publishing {
+        publications {
+            //noinspection GroovyAssignabilityCheck
+            android(MavenPublication) {
+                //noinspection GroovyAssignabilityCheck
+                from components.release
+                groupId "br.dev.dig.logger.printer"
+                version vName
+                artifactId "firebase"
+                pom { pom ->
+                    //noinspection GroovyAssignabilityCheck
+                    applyPom(pom, "Simple Gateway to Firebase", "Printer for Simple Logger, using Firebase Crashlytics")
+                }
+            }
+        }
+        repositories {
+            if (deploy.central.enabled) {
+                maven {
+                    name = "Central"
+                    url = "https://s01.oss.sonatype.org/content/repositories/releases/"
+                    credentials {
+                        username = deploy.central.username
+                        password = deploy.central.password
+                    }
+                }
+            }
+        }
+        if (deploy.signing.enabled) {
+            signing {
+                useInMemoryPgpKeys((String) deploy.signing.key_id, (String) deploy.signing.secret, (String) deploy.signing.password)
+                sign publishing.publications.android
+            }
+        }
+    }
+}
+
+task deployAndroidToLocal {
+    group = "deploy local"
+    dependsOn ":printer:firebase:publishAndroidPublicationToMavenLocal"
+}
+
+task _deployAndroidToMavenCentral {
+    dependsOn ":printer:firebase:publishAndroidPublicationToCentralRepository"
+}
+
+task deployAndroidToMavenCentral {
+    group = "deploy central"
+    dependsOn "checkMavenCentral"
+    finalizedBy "_deployAndroidToMavenCentral"
+}
+
+dependencies {
+    api project(":logger")
+    api platform("com.google.firebase:firebase-bom:28.4.2")
+    api "com.google.firebase:firebase-crashlytics"
+
+    testImplementation platform(lib.test.mockito.bom)
+    testImplementation lib.test.junit
+    testImplementation lib.test.mockito.junit
+}
