@@ -8,11 +8,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Closeable;
-import java.security.InvalidParameterException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import br.dev.dig.logger.Logger;
+import br.dev.dig.logger.intrinsics.Intrinsics;
 import br.dev.dig.logger.printer.println.PrintlnFormatter;
 import br.dev.dig.logger.printer.println.styles.PrintlnStyleConstant;
 import br.dev.dig.logger.printer.println.styles.PrintlnStyleMessage;
@@ -31,7 +31,7 @@ public class SystemWindowsLogLogger extends SystemLogLogger implements Closeable
         private Formatter() {
         }
 
-        public static PrintlnFormatter simple() {
+        public static @NotNull PrintlnFormatter simple() {
             return new PrintlnFormatter(Arrays.asList(
                 new PrintlnStyleTag(),
                 new PrintlnStyleConstant(": "),
@@ -49,19 +49,13 @@ public class SystemWindowsLogLogger extends SystemLogLogger implements Closeable
     @NotNull
     final LocalDateTime start = LocalDateTime.now();
 
-    @SuppressWarnings("ConstantConditions")
     public SystemWindowsLogLogger(@NotNull final String appName, @NotNull PrintlnFormatter formatter) {
-        if (appName == null) {
-            throw new InvalidParameterException("ApplicationName must not be null");
-        }
-        if (formatter == null) {
-            throw new InvalidParameterException("Formatter must not be null");
-        }
+        Intrinsics.parameterNotNull(appName, "ApplicationName must not be null");
+        this.formatter = Intrinsics.parameterNotNull(formatter, "Formatter must not be null");
         handle = Advapi32.INSTANCE.RegisterEventSource(null, appName);
         if (handle == null) {
             throw new RuntimeException(Kernel32Util.getLastErrorMessage());
         }
-        this.formatter = formatter;
     }
 
     @Override
