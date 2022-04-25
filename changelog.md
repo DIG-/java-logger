@@ -1,5 +1,9 @@
 Changelog
 =========
+x.y.z
+-----
+- Added SystemLogLogger
+
 1.0.0-a
 -----
 - Added Firebase Crashlytics
