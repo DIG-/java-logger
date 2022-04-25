@@ -11,30 +11,20 @@ import br.dev.dig.logger.printer.println.PrintlnFormatter;
 public final class PrintlnStyleTagShort implements PrintlnFormatter.Style {
     @Override
     public @NotNull String print(int level, @Nullable String tag, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
-        final String result;
         switch (level) {
             case Logger.LEVEL_VERBOSE:
-                result = "V";
-                break;
+                return "V";
             case Logger.LEVEL_DEBUG:
-                result = "D";
-                break;
+                return "D";
             case Logger.LEVEL_INFO:
-                result = "I";
-                break;
+                return "I";
             case Logger.LEVEL_WARNING:
-                result = "W";
-                break;
+                return "W";
             case Logger.LEVEL_ERROR:
-                result = "E";
-                break;
+                return "E";
             case Logger.LEVEL_ASSERT:
-                result = "A";
-                break;
-            default:
-                result = "";
-                break;
+                return "A";
         }
-        return result;
+        return "";
     }
 }
