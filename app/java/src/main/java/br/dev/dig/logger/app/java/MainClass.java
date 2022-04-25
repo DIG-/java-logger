@@ -6,6 +6,8 @@ import br.dev.dig.logger.BaseLogger;
 import br.dev.dig.logger.Logger;
 import br.dev.dig.logger.builder.LoggerBuilder;
 import br.dev.dig.logger.printer.println.PrintlnLogger;
+import br.dev.dig.logger.printer.system.SystemLogLogger;
+import br.dev.dig.logger.union.UnionLogger;
 
 public class MainClass {
 
@@ -13,7 +15,7 @@ public class MainClass {
         @Override
         @NotNull
         protected BaseLogger getBaseLogger() {
-            return new PrintlnLogger();
+            return UnionLogger.create(new PrintlnLogger(), new SystemLogLogger.Builder().setAppName("SimpleLogger").build());
         }
     };
 

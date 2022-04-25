@@ -15,4 +15,5 @@ dependencies {
     implementation project(":filter")
     implementation project(":union")
     implementation project(":printer:println")
+    implementation project(":printer:system-log")
 }
