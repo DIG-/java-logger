@@ -3,6 +3,7 @@ package br.dev.dig.logger.printer.println;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.security.InvalidParameterException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -45,6 +46,10 @@ public class PrintlnFormatter {
     }
 
     public static PrintlnFormatter parse(@NotNull final String format) {
+        //noinspection ConstantConditions
+        if (format == null) {
+            throw new InvalidParameterException("Format must not be null");
+        }
         final LinkedList<Style> styles = new LinkedList<>();
         final Pattern pattern = Pattern.compile("(\\$\\{[a-z\\-]+})");
         final Matcher matches = pattern.matcher(format);
@@ -89,6 +94,10 @@ public class PrintlnFormatter {
 
     @NotNull
     public CharSequence format(@NotNull final LocalDateTime start, int level, @Nullable final String tag, @Nullable final CharSequence message, @Nullable final Throwable throwable) {
+        //noinspection ConstantConditions
+        if (start == null) {
+            throw new InvalidParameterException("Start LocalDateTime must not be null");
+        }
         final StringBuilder builder = new StringBuilder();
         for (final PrintlnFormatter.Style style : styles) {
             builder.append(style.print(level, tag, start, message, throwable));

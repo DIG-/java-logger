@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.VisibleForTesting;
 
+import java.security.InvalidParameterException;
 import java.time.LocalDateTime;
 
 import br.dev.dig.logger.BaseLogger;
@@ -18,9 +19,11 @@ public final class PrintlnLogger implements BaseLogger {
     @VisibleForTesting
     final LocalDateTime start = LocalDateTime.now();
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "ConstantConditions"})
     public PrintlnLogger(@NotNull final PrintlnFormatter formatter) {
-        super();
+        if (formatter == null) {
+            throw new InvalidParameterException("Formatter must not be null");
+        }
         this.formatter = formatter;
     }
 
@@ -45,6 +48,10 @@ public final class PrintlnLogger implements BaseLogger {
     }
 
     private void print(@NotNull CharSequence message) {
+        //noinspection ConstantConditions
+        if (message == null) {
+            throw new InvalidParameterException("Message must not be null");
+        }
         System.out.println(message);
     }
 

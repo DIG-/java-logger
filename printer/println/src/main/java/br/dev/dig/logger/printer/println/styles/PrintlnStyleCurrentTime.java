@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.VisibleForTesting;
 
+import java.security.InvalidParameterException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -31,6 +32,10 @@ public class PrintlnStyleCurrentTime implements PrintlnFormatter.Style {
     @NotNull
     @VisibleForTesting
     String format(@NotNull final LocalTime time) {
+        //noinspection ConstantConditions
+        if (time == null) {
+            throw new InvalidParameterException("LocalTime must not be null");
+        }
         return ISO_LOCAL_TIME.format(time);
     }
 }
