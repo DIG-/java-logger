@@ -11,10 +11,10 @@ image: Ubuntu2004
 stack: jdk 11
 cache:
   - $HOME/.gradle/wrapper/dists -> gradle/wrapper/gradle-wrapper.properties
+  - $HOME/.gradle/caches/jar-* -> build.gradle
 
 before_build:
   - sh: java -version
-  - sh: echo "$HOME potato"
   - sh: touch ./disable-android.gradle # AppVeyor does not support Android
   - sh: ./gradlew --version --console plain
 
