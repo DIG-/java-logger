@@ -8,6 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import br.dev.dig.logger.BaseLogger;
 import br.dev.dig.logger.printer.println.PrintlnFormatter;
 import br.dev.dig.logger.printer.stub.StubLogger;
+import br.dev.dig.logger.printer.system.unix.UnixLogLogger;
 import br.dev.dig.logger.printer.system.windows.WindowsLogLogger;
 
 public abstract class SystemLogLogger implements BaseLogger {
@@ -18,6 +19,9 @@ public abstract class SystemLogLogger implements BaseLogger {
         String appName;
         @NotNull
         PrintlnFormatter windowsFormatter = WindowsLogLogger.Formatter.simple();
+        @NotNull
+        PrintlnFormatter unixFormatter = UnixLogLogger.Formatter.simple();
+        int unixFacility = UnixLogLogger.Facility.USER;
 
         @Nullable
         public String getAppName() {
@@ -39,10 +43,31 @@ public abstract class SystemLogLogger implements BaseLogger {
             return this;
         }
 
+        @NotNull
+        public PrintlnFormatter getUnixFormatter() {
+            return unixFormatter;
+        }
+
+        public Builder setUnixFormatter(@NotNull final PrintlnFormatter unixFormatter) {
+            this.unixFormatter = unixFormatter;
+            return this;
+        }
+
+        public int getUnixFacility() {
+            return unixFacility;
+        }
+
+        public Builder setUnixFacility(final int unixFacility) {
+            this.unixFacility = unixFacility;
+            return this;
+        }
+
         @SuppressWarnings("ConstantConditions")
         public BaseLogger build() {
             if (Platform.isWindows()) {
                 return new WindowsLogLogger(appName, windowsFormatter);
+            } else if (Platform.isLinux()) {
+                return new UnixLogLogger(appName, unixFormatter, unixFacility);
             }
             return new StubLogger();
         }
