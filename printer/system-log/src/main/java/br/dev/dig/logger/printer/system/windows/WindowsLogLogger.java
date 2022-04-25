@@ -21,10 +21,10 @@ import br.dev.dig.logger.printer.system.SystemLogLogger;
 
 public class WindowsLogLogger extends SystemLogLogger implements Closeable {
 
-    private final static int STATUS_SEVERITY_WARNING = 0x2;
-    private final static int STATUS_SEVERITY_SUCCESS = 0x0;
-    private final static int STATUS_SEVERITY_INFORMATIONAL = 0x1;
-    private final static int STATUS_SEVERITY_ERROR = 0x3;
+    private final static int STATUS_SEVERITY_WARNING = 0x02;
+    private final static int STATUS_SEVERITY_SUCCESS = 0x00;
+    private final static int STATUS_SEVERITY_INFORMATIONAL = 0x04;
+    private final static int STATUS_SEVERITY_ERROR = 0x01;
 
     public static abstract class Formatter {
         private Formatter() {
