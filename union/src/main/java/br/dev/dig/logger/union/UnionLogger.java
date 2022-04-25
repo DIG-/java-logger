@@ -3,6 +3,7 @@ package br.dev.dig.logger.union;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.security.InvalidParameterException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,7 +15,11 @@ public final class UnionLogger implements BaseLogger {
     @NotNull
     private final LinkedList<BaseLogger> loggers;
 
+    @SuppressWarnings("ConstantConditions")
     protected UnionLogger(@NotNull final LinkedList<BaseLogger> loggers) {
+        if (loggers == null) {
+            throw new InvalidParameterException("List of BaseLogger must not be null");
+        }
         this.loggers = loggers;
     }
 
