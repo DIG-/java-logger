@@ -103,6 +103,7 @@ dependencies {
     api project(":logger")
     api platform("com.google.firebase:firebase-bom:28.4.2")
     api "com.google.firebase:firebase-crashlytics"
+    implementation project(":intrinsics")
 
     testImplementation platform(lib.test.mockito.bom)
     testImplementation lib.test.junit

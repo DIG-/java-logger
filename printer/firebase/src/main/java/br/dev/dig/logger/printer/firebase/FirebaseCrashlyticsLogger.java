@@ -6,11 +6,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.VisibleForTesting;
 
-import java.security.InvalidParameterException;
 import java.util.Arrays;
 
 import br.dev.dig.logger.BaseLogger;
 import br.dev.dig.logger.Logger;
+import br.dev.dig.logger.intrinsics.Intrinsics;
 
 public class FirebaseCrashlyticsLogger implements BaseLogger {
 
@@ -18,12 +18,8 @@ public class FirebaseCrashlyticsLogger implements BaseLogger {
     public final FirebaseCrashlytics crashlytics;
     private final boolean propagate;
 
-    @SuppressWarnings("ConstantConditions")
     public FirebaseCrashlyticsLogger(@NotNull final FirebaseCrashlytics crashlytics, final boolean useThrowableAsCause) {
-        if (crashlytics == null) {
-            throw new InvalidParameterException("FirebaseCrashlytics must not be null");
-        }
-        this.crashlytics = crashlytics;
+        this.crashlytics = Intrinsics.parameterNotNull(crashlytics, "FirebaseCrashlytics must not be null");
         this.propagate = useThrowableAsCause;
     }
 
