@@ -3,6 +3,8 @@ package br.dev.dig.logger.printer.android_log;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.security.InvalidParameterException;
+
 import br.dev.dig.logger.BaseLogger;
 import br.dev.dig.logger.Logger;
 
@@ -10,7 +12,11 @@ public final class AndroidLogLogger implements BaseLogger {
 
     private final LogWrapper wrapper;
 
+    @SuppressWarnings("ConstantConditions")
     protected AndroidLogLogger(@NotNull final LogWrapper wrapper) {
+        if (wrapper == null) {
+            throw new InvalidParameterException("LogWrapper must not be null");
+        }
         this.wrapper = wrapper;
     }
 
