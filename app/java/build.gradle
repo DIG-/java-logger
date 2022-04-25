@@ -9,10 +9,24 @@ java {
     sourceCompatibility = versions.java
     targetCompatibility = versions.java
 }
+jar {
+    exclude("META-INF/AL2.0")
+    exclude("META-INF/LGPL2.1")
+    exclude("META-INF/LICENSE")
+    manifest {
+        attributes "Main-Class": "br.dev.dig.logger.app.java.MainClass"
+    }
+
+    dependsOn ":generateAllJavaJars"
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
 
 dependencies {
     implementation project(":logger")
     implementation project(":filter")
     implementation project(":union")
     implementation project(":printer:println")
+    implementation project(":printer:system-log")
 }
