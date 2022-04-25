@@ -5,7 +5,7 @@ plugins {
 }
 apply from: rootDir.toString() + "/pom.gradle"
 
-group "br.dev.dig.logger.printer"
+group "br.dev.dig.logger"
 version versions.logger.pkg + "0"
 java {
     withSourcesJar()
@@ -24,7 +24,7 @@ publishing {
             from components.java
             pom { pom ->
                 //noinspection GroovyAssignabilityCheck
-                applyPom(pom, "Simple Logger PrintLn", "Printer for Simple Logger, using System.out.println()")
+                applyPom(pom, "Simple Logger helper functions", "Helper functions for Simple Logger")
             }
         }
     }
@@ -50,11 +50,11 @@ publishing {
 
 task deployJavaToLocal {
     group = "deploy local"
-    dependsOn ":printer:println:publishJavaPublicationToMavenLocal"
+    dependsOn ":intrinsics:publishJavaPublicationToMavenLocal"
 }
 
 task _deployJavaToMavenCentral {
-    dependsOn ":printer:println:publishJavaPublicationToCentralRepository"
+    dependsOn ":intrinsics:publishJavaPublicationToCentralRepository"
 }
 
 task deployJavaToMavenCentral {
@@ -66,7 +66,6 @@ task deployJavaToMavenCentral {
 dependencies {
     api lib.annotations
     api project(":logger")
-    implementation project(":intrinsics")
 
     testImplementation platform(lib.test.mockito.bom)
     testImplementation lib.test.junit

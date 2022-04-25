@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 import br.dev.dig.logger.BaseLogger;
 import br.dev.dig.logger.Logger;
+import br.dev.dig.logger.intrinsics.Intrinsics;
 
 public class FirebaseCrashlyticsLogger implements BaseLogger {
 
@@ -18,7 +19,7 @@ public class FirebaseCrashlyticsLogger implements BaseLogger {
     private final boolean propagate;
 
     public FirebaseCrashlyticsLogger(@NotNull final FirebaseCrashlytics crashlytics, final boolean useThrowableAsCause) {
-        this.crashlytics = crashlytics;
+        this.crashlytics = Intrinsics.parameterNotNull(crashlytics, "FirebaseCrashlytics must not be null");
         this.propagate = useThrowableAsCause;
     }
 

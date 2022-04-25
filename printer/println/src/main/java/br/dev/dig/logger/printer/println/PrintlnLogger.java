@@ -7,6 +7,7 @@ import org.jetbrains.annotations.VisibleForTesting;
 import java.time.LocalDateTime;
 
 import br.dev.dig.logger.BaseLogger;
+import br.dev.dig.logger.intrinsics.Intrinsics;
 
 
 public final class PrintlnLogger implements BaseLogger {
@@ -18,10 +19,8 @@ public final class PrintlnLogger implements BaseLogger {
     @VisibleForTesting
     final LocalDateTime start = LocalDateTime.now();
 
-    @SuppressWarnings("unused")
     public PrintlnLogger(@NotNull final PrintlnFormatter formatter) {
-        super();
-        this.formatter = formatter;
+        this.formatter = Intrinsics.parameterNotNull(formatter, "Formatter must not be null");
     }
 
     @SuppressWarnings("unused")
@@ -45,7 +44,7 @@ public final class PrintlnLogger implements BaseLogger {
     }
 
     private void print(@NotNull CharSequence message) {
-        System.out.println(message);
+        System.out.println(Intrinsics.parameterNotNull(message, "Message must not be null"));
     }
 
 }

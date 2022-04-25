@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.dev.dig.logger.BaseLogger;
+import br.dev.dig.logger.intrinsics.Intrinsics;
 
 public final class UnionLogger implements BaseLogger {
 
@@ -15,7 +16,7 @@ public final class UnionLogger implements BaseLogger {
     private final LinkedList<BaseLogger> loggers;
 
     protected UnionLogger(@NotNull final LinkedList<BaseLogger> loggers) {
-        this.loggers = loggers;
+        this.loggers = Intrinsics.parameterNotNull(loggers, "List of BaseLogger must not be null");
     }
 
     public static UnionLogger create(@NotNull final BaseLogger... loggers) {

@@ -26,7 +26,7 @@ class FilterLoggerTest {
     void assertParent() {
         Assertions.assertNotNull(parent);
         final FilterLogger logger = new FilterLogger(Logger.LEVEL_VERBOSE, parent);
-        Assertions.assertEquals(parent, logger.parent);
+        Assertions.assertEquals(parent, logger.target);
     }
 
     @Test

@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 import java.util.Locale;
 
+import br.dev.dig.logger.intrinsics.Intrinsics;
 import br.dev.dig.logger.printer.println.PrintlnFormatter;
 
 public final class PrintlnStyleElapsedTime implements PrintlnFormatter.Style {
@@ -33,7 +34,7 @@ public final class PrintlnStyleElapsedTime implements PrintlnFormatter.Style {
     @NotNull
     @VisibleForTesting
     String format(@NotNull final LocalDateTime start, @NotNull final LocalDateTime current) {
-        final Duration diff = Duration.between(start, current);
+        final Duration diff = Duration.between(Intrinsics.parameterNotNull(start, "Start LocalDateTime must not be null"), Intrinsics.parameterNotNull(current, "Current LocalDateTime must not be null"));
         final LocalDateTime time = LocalDateTime.ofEpochSecond(diff.getSeconds(), diff.getNano(), ZoneOffset.UTC);
         return String.format(Locale.US, "%02d%s", diff.getSeconds() / (60 * 60), ISO_LOCAL_TIME.format(time));
     }

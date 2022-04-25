@@ -3,10 +3,12 @@ package br.dev.dig.logger.printer.system.unix;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.security.InvalidParameterException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import br.dev.dig.logger.Logger;
+import br.dev.dig.logger.intrinsics.Intrinsics;
 import br.dev.dig.logger.printer.println.PrintlnFormatter;
 import br.dev.dig.logger.printer.println.styles.PrintlnStyleConstant;
 import br.dev.dig.logger.printer.println.styles.PrintlnStyleMessage;
@@ -39,7 +41,7 @@ public class SystemUnixLogLogger extends SystemLogLogger implements AutoCloseabl
         private Formatter() {
         }
 
-        public static PrintlnFormatter simple() {
+        public static @NotNull PrintlnFormatter simple() {
             return new PrintlnFormatter(Arrays.asList(
                 new PrintlnStyleMessage(),
                 new PrintlnStyleConstant(" "),
@@ -67,7 +69,13 @@ public class SystemUnixLogLogger extends SystemLogLogger implements AutoCloseabl
     final int facility;
 
     public SystemUnixLogLogger(@NotNull final String appName, @NotNull PrintlnFormatter formatter, final int facility) {
-        this.formatter = formatter;
+        Intrinsics.parameterNotNull(appName, "ApplicationName must not be null");
+        this.formatter = Intrinsics.parameterNotNull(formatter, "Formatter must not be null");
+        if (facility < 0 || facility > 184) {
+            throw new InvalidParameterException("Invalid facility range");
+        } else if ((facility >> 3) << 3 != facility) {
+            throw new InvalidParameterException("Invalid facility value");
+        }
         this.facility = facility;
         GLibC.INSTANCE.openlog(appName, 0, facility);
     }

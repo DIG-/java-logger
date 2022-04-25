@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import br.dev.dig.logger.BaseLogger;
+import br.dev.dig.logger.intrinsics.Intrinsics;
 import br.dev.dig.logger.printer.println.PrintlnFormatter;
 import br.dev.dig.logger.printer.stub.StubLogger;
 import br.dev.dig.logger.printer.system.unix.SystemUnixLogLogger;
@@ -15,15 +16,23 @@ public abstract class SystemLogLogger implements BaseLogger {
 
     @SuppressWarnings("unused")
     public static class Builder {
-        @Nullable
+        @NotNull
         String appName;
-        @NotNull
-        PrintlnFormatter windowsFormatter = SystemWindowsLogLogger.Formatter.simple();
-        @NotNull
+        @Nullable
+        PrintlnFormatter windowsFormatter;
+        @Nullable
         PrintlnFormatter unixFormatter = SystemUnixLogLogger.Formatter.simple();
         int unixFacility = SystemUnixLogLogger.Facility.USER;
 
-        @Nullable
+        public Builder(@NotNull final String applicationName) {
+            this.appName = Intrinsics.parameterNotNull(applicationName, "ApplicationName must not be null");
+        }
+
+        public Builder() {
+            this("SimpleLogger");
+        }
+
+        @NotNull
         public String getAppName() {
             return appName;
         }
@@ -33,7 +42,7 @@ public abstract class SystemLogLogger implements BaseLogger {
             return this;
         }
 
-        @NotNull
+        @Nullable
         public PrintlnFormatter getWindowsFormatter() {
             return windowsFormatter;
         }
@@ -43,7 +52,7 @@ public abstract class SystemLogLogger implements BaseLogger {
             return this;
         }
 
-        @NotNull
+        @Nullable
         public PrintlnFormatter getUnixFormatter() {
             return unixFormatter;
         }
@@ -62,12 +71,11 @@ public abstract class SystemLogLogger implements BaseLogger {
             return this;
         }
 
-        @SuppressWarnings("ConstantConditions")
         public BaseLogger build() {
             if (Platform.isWindows()) {
-                return new SystemWindowsLogLogger(appName, windowsFormatter);
+                return new SystemWindowsLogLogger(appName, Intrinsics.ifIsNull(windowsFormatter, SystemWindowsLogLogger.Formatter::simple));
             } else if (Platform.isLinux() || Platform.isFreeBSD() || Platform.isOpenBSD() || Platform.isGNU()) {
-                return new SystemUnixLogLogger(appName, unixFormatter, unixFacility);
+                return new SystemUnixLogLogger(appName, Intrinsics.ifIsNull(unixFormatter, SystemUnixLogLogger.Formatter::simple), unixFacility);
             }
             return new StubLogger();
         }

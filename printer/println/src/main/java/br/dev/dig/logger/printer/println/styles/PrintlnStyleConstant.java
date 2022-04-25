@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDateTime;
 
+import br.dev.dig.logger.intrinsics.Intrinsics;
 import br.dev.dig.logger.printer.println.PrintlnFormatter;
 
 public final class PrintlnStyleConstant implements PrintlnFormatter.Style {
@@ -12,7 +13,7 @@ public final class PrintlnStyleConstant implements PrintlnFormatter.Style {
     private final String value;
 
     public PrintlnStyleConstant(@NotNull final String value) {
-        this.value = value;
+        this.value = Intrinsics.parameterNotNull(value, "Value must not be null");
     }
 
     @Override
