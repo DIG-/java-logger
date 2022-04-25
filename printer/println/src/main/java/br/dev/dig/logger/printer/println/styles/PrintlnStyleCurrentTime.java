@@ -4,13 +4,13 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.VisibleForTesting;
 
-import java.security.InvalidParameterException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 
+import br.dev.dig.logger.intrinsics.Intrinsics;
 import br.dev.dig.logger.printer.println.PrintlnFormatter;
 
 public class PrintlnStyleCurrentTime implements PrintlnFormatter.Style {
@@ -32,10 +32,6 @@ public class PrintlnStyleCurrentTime implements PrintlnFormatter.Style {
     @NotNull
     @VisibleForTesting
     String format(@NotNull final LocalTime time) {
-        //noinspection ConstantConditions
-        if (time == null) {
-            throw new InvalidParameterException("LocalTime must not be null");
-        }
-        return ISO_LOCAL_TIME.format(time);
+        return ISO_LOCAL_TIME.format(Intrinsics.parameterNotNull(time, "LocalTime must not be null"));
     }
 }

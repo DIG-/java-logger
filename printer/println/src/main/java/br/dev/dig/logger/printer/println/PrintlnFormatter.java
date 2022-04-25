@@ -6,10 +6,12 @@ import org.jetbrains.annotations.Nullable;
 import java.security.InvalidParameterException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import br.dev.dig.logger.intrinsics.Intrinsics;
 import br.dev.dig.logger.printer.println.styles.PrintlnStyleConstant;
 import br.dev.dig.logger.printer.println.styles.PrintlnStyleCurrentDate;
 import br.dev.dig.logger.printer.println.styles.PrintlnStyleCurrentTime;
@@ -31,25 +33,22 @@ public class PrintlnFormatter {
     public Iterable<Style> styles;
 
     public PrintlnFormatter(@NotNull Iterable<Style> styles) {
-        this.styles = styles;
+        this.styles = Intrinsics.parameterNotNull(styles, "Styles list must not be null");
     }
 
     public static PrintlnFormatter simple() {
-        final ArrayList<Style> styles = new ArrayList<>(6);
-        styles.add(new PrintlnStyleElapsedTime());
-        styles.add(new PrintlnStyleConstant(" ["));
-        styles.add(new PrintlnStyleTagShort());
-        styles.add(new PrintlnStyleConstant("] "));
-        styles.add(new PrintlnStyleMessage());
-        styles.add(new PrintlnStyleThrowableMessage());
-        return new PrintlnFormatter(styles);
+        return new PrintlnFormatter(Arrays.asList(
+            new PrintlnStyleElapsedTime(),
+            new PrintlnStyleConstant(" ["),
+            new PrintlnStyleTagShort(),
+            new PrintlnStyleConstant("] "),
+            new PrintlnStyleMessage(),
+            new PrintlnStyleThrowableMessage()
+        ));
     }
 
     public static PrintlnFormatter parse(@NotNull final String format) {
-        //noinspection ConstantConditions
-        if (format == null) {
-            throw new InvalidParameterException("Format must not be null");
-        }
+        Intrinsics.parameterNotNull(format,"Format must not be null");
         final LinkedList<Style> styles = new LinkedList<>();
         final Pattern pattern = Pattern.compile("(\\$\\{[a-z\\-]+})");
         final Matcher matches = pattern.matcher(format);
@@ -94,10 +93,7 @@ public class PrintlnFormatter {
 
     @NotNull
     public CharSequence format(@NotNull final LocalDateTime start, int level, @Nullable final String tag, @Nullable final CharSequence message, @Nullable final Throwable throwable) {
-        //noinspection ConstantConditions
-        if (start == null) {
-            throw new InvalidParameterException("Start LocalDateTime must not be null");
-        }
+        Intrinsics.parameterNotNull(start, "Start LocalDateTime must not be null");
         final StringBuilder builder = new StringBuilder();
         for (final PrintlnFormatter.Style style : styles) {
             builder.append(style.print(level, tag, start, message, throwable));
