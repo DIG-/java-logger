@@ -9,9 +9,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.Closeable;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 import br.dev.dig.logger.Logger;
 import br.dev.dig.logger.printer.println.PrintlnFormatter;
+import br.dev.dig.logger.printer.println.styles.PrintlnStyleConstant;
+import br.dev.dig.logger.printer.println.styles.PrintlnStyleMessage;
+import br.dev.dig.logger.printer.println.styles.PrintlnStyleTag;
+import br.dev.dig.logger.printer.println.styles.PrintlnStyleThrowableMessage;
 import br.dev.dig.logger.printer.system.SystemLogLogger;
 
 public class WindowsLogLogger extends SystemLogLogger implements Closeable {
@@ -20,6 +25,21 @@ public class WindowsLogLogger extends SystemLogLogger implements Closeable {
     private final static int STATUS_SEVERITY_SUCCESS = 0x0;
     private final static int STATUS_SEVERITY_INFORMATIONAL = 0x1;
     private final static int STATUS_SEVERITY_ERROR = 0x3;
+
+    public static abstract class Formatter {
+        private Formatter() {
+        }
+
+        public static PrintlnFormatter simple() {
+            return new PrintlnFormatter(Arrays.asList(
+                new PrintlnStyleTag(),
+                new PrintlnStyleConstant(": "),
+                new PrintlnStyleMessage(),
+                new PrintlnStyleConstant(" "),
+                new PrintlnStyleThrowableMessage()
+            ));
+        }
+    }
 
     @NotNull
     final WinNT.HANDLE handle;
