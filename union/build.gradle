@@ -66,6 +66,7 @@ task deployJavaToMavenCentral {
 dependencies {
     api project(":logger")
     api lib.annotations
+    implementation project(":intrinsics")
 
     testImplementation platform(lib.test.mockito.bom)
     testImplementation lib.test.junit

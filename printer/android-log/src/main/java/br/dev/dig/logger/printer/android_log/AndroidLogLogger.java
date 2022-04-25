@@ -5,13 +5,14 @@ import org.jetbrains.annotations.Nullable;
 
 import br.dev.dig.logger.BaseLogger;
 import br.dev.dig.logger.Logger;
+import br.dev.dig.logger.intrinsics.Intrinsics;
 
 public final class AndroidLogLogger implements BaseLogger {
 
     private final LogWrapper wrapper;
 
     protected AndroidLogLogger(@NotNull final LogWrapper wrapper) {
-        this.wrapper = wrapper;
+        this.wrapper = Intrinsics.parameterNotNull(wrapper, "LogWrapper must not be null");
     }
 
     public AndroidLogLogger() {

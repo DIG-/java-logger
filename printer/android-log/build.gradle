@@ -101,6 +101,7 @@ task deployAndroidToMavenCentral {
 
 dependencies {
     api project(":logger")
+    implementation project(":intrinsics")
 
     testImplementation platform(lib.test.mockito.bom)
     testImplementation lib.test.junit

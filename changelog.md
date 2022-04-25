@@ -1,5 +1,10 @@
 Changelog
 =========
+1.1.0
+-----
+- Added SystemLogLogger
+- Added null check while instantiating class
+
 1.0.0-a
 -----
 - Added Firebase Crashlytics

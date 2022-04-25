@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 
+import br.dev.dig.logger.intrinsics.Intrinsics;
 import br.dev.dig.logger.printer.println.PrintlnFormatter;
 
 public class PrintlnStyleCurrentTime implements PrintlnFormatter.Style {
@@ -31,6 +32,6 @@ public class PrintlnStyleCurrentTime implements PrintlnFormatter.Style {
     @NotNull
     @VisibleForTesting
     String format(@NotNull final LocalTime time) {
-        return ISO_LOCAL_TIME.format(time);
+        return ISO_LOCAL_TIME.format(Intrinsics.parameterNotNull(time, "LocalTime must not be null"));
     }
 }
