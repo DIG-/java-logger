@@ -5,6 +5,7 @@ include ":filter"
 include ":logger"
 include ":printer:println"; findProject(":printer:println")?.name = "println"
 include ":printer:stub"; findProject(":printer:stub")?.name = "stub"
+include ":printer:system-log"; findProject(":printer:system-log")?.name = "system-log"
 include ":union"
 
 def isAndroidEnabled = !(new File(rootDir, "disable-android.gradle")).exists()
