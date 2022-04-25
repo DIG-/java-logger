@@ -66,7 +66,7 @@ public abstract class SystemLogLogger implements BaseLogger {
         public BaseLogger build() {
             if (Platform.isWindows()) {
                 return new WindowsLogLogger(appName, windowsFormatter);
-            } else if (Platform.isLinux()) {
+            } else if (Platform.isLinux() || Platform.isFreeBSD() || Platform.isOpenBSD() || Platform.isGNU()) {
                 return new UnixLogLogger(appName, unixFormatter, unixFacility);
             }
             return new StubLogger();
