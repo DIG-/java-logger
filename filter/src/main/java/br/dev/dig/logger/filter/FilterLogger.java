@@ -7,22 +7,19 @@ import java.security.InvalidParameterException;
 
 import br.dev.dig.logger.BaseLogger;
 import br.dev.dig.logger.Logger;
+import br.dev.dig.logger.intrinsics.Intrinsics;
 
 public final class FilterLogger implements BaseLogger {
     @NotNull
     final BaseLogger target;
     final int level;
 
-    @SuppressWarnings("ConstantConditions")
     public FilterLogger(int minimum, @NotNull final BaseLogger target) {
         if (minimum < Logger.LEVEL_VERBOSE || minimum > Logger.LEVEL_NONE) {
             throw new InvalidParameterException("Minimum must be between `Logger.LEVEL_VERBOSE` and `Logger.LEVEL_NONE`.");
         }
-        if (target == null) {
-            throw new InvalidParameterException("Target BaseLogger must not be null");
-        }
         this.level = minimum;
-        this.target = target;
+        this.target = Intrinsics.parameterNotNull(target, "Target BaseLogger must not be null");
     }
 
     @Override
