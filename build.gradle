@@ -51,16 +51,20 @@ buildscript {
             ],
             "kotlin" : "1.5.31",
             "junit"  : "5.8.2",
-            "mockito":"4.4.0",
+            "mockito": "4.4.0",
     ]
     ext.versions.logger.pkg = "${ext.versions.logger.major}.${ext.versions.logger.minor}."
     ext.lib = [
             "annotations": "org.jetbrains:annotations:20.1.0",
+            "jna"        : [
+                    "core"    : "net.java.dev.jna:jna:5.10.0",
+                    "platform": "net.java.dev.jna:jna-platform:5.10.0",
+            ],
             "test"       : [
-                    "junit": "org.junit.jupiter:junit-jupiter:${versions.junit}",
-                    "mockito":[
-                            "bom":"org.mockito:mockito-bom:${versions.mockito}",
-                            "junit":"org.mockito:mockito-junit-jupiter",
+                    "junit"  : "org.junit.jupiter:junit-jupiter:${versions.junit}",
+                    "mockito": [
+                            "bom"  : "org.mockito:mockito-bom:${versions.mockito}",
+                            "junit": "org.mockito:mockito-junit-jupiter",
                     ],
             ]
     ]

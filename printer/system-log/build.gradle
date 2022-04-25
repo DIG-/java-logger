@@ -67,6 +67,8 @@ dependencies {
     api lib.annotations
     api project(":logger")
     api project(":printer:stub")
+    implementation lib.jna.core
+    implementation lib.jna.platform
 
     testImplementation lib.test.junit
 }
