@@ -13,7 +13,7 @@ import br.dev.dig.logger.printer.println.styles.PrintlnStyleMessage;
 import br.dev.dig.logger.printer.println.styles.PrintlnStyleThrowableMessage;
 import br.dev.dig.logger.printer.system.SystemLogLogger;
 
-public class UnixLogLogger extends SystemLogLogger implements AutoCloseable {
+public class SystemUnixLogLogger extends SystemLogLogger implements AutoCloseable {
 
     @SuppressWarnings("unused")
     public static abstract class Facility {
@@ -66,7 +66,7 @@ public class UnixLogLogger extends SystemLogLogger implements AutoCloseable {
     final LocalDateTime start = LocalDateTime.now();
     final int facility;
 
-    public UnixLogLogger(@NotNull final String appName, @NotNull PrintlnFormatter formatter, final int facility) {
+    public SystemUnixLogLogger(@NotNull final String appName, @NotNull PrintlnFormatter formatter, final int facility) {
         this.formatter = formatter;
         this.facility = facility;
         GLibC.INSTANCE.openlog(appName, 0, facility);

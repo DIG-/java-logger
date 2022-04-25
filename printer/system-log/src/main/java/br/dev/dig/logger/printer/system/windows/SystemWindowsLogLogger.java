@@ -19,7 +19,7 @@ import br.dev.dig.logger.printer.println.styles.PrintlnStyleTag;
 import br.dev.dig.logger.printer.println.styles.PrintlnStyleThrowableMessage;
 import br.dev.dig.logger.printer.system.SystemLogLogger;
 
-public class WindowsLogLogger extends SystemLogLogger implements Closeable {
+public class SystemWindowsLogLogger extends SystemLogLogger implements Closeable {
 
     private final static int STATUS_SEVERITY_WARNING = 0x02;
     private final static int STATUS_SEVERITY_SUCCESS = 0x00;
@@ -48,7 +48,7 @@ public class WindowsLogLogger extends SystemLogLogger implements Closeable {
     @NotNull
     final LocalDateTime start = LocalDateTime.now();
 
-    public WindowsLogLogger(@NotNull final String appName, @NotNull PrintlnFormatter formatter) {
+    public SystemWindowsLogLogger(@NotNull final String appName, @NotNull PrintlnFormatter formatter) {
         handle = Advapi32.INSTANCE.RegisterEventSource(null, appName);
         if (handle == null) {
             throw new RuntimeException(Kernel32Util.getLastErrorMessage());

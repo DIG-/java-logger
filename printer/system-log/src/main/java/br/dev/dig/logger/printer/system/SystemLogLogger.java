@@ -8,8 +8,8 @@ import org.jetbrains.annotations.Nullable;
 import br.dev.dig.logger.BaseLogger;
 import br.dev.dig.logger.printer.println.PrintlnFormatter;
 import br.dev.dig.logger.printer.stub.StubLogger;
-import br.dev.dig.logger.printer.system.unix.UnixLogLogger;
-import br.dev.dig.logger.printer.system.windows.WindowsLogLogger;
+import br.dev.dig.logger.printer.system.unix.SystemUnixLogLogger;
+import br.dev.dig.logger.printer.system.windows.SystemWindowsLogLogger;
 
 public abstract class SystemLogLogger implements BaseLogger {
 
@@ -18,10 +18,10 @@ public abstract class SystemLogLogger implements BaseLogger {
         @Nullable
         String appName;
         @NotNull
-        PrintlnFormatter windowsFormatter = WindowsLogLogger.Formatter.simple();
+        PrintlnFormatter windowsFormatter = SystemWindowsLogLogger.Formatter.simple();
         @NotNull
-        PrintlnFormatter unixFormatter = UnixLogLogger.Formatter.simple();
-        int unixFacility = UnixLogLogger.Facility.USER;
+        PrintlnFormatter unixFormatter = SystemUnixLogLogger.Formatter.simple();
+        int unixFacility = SystemUnixLogLogger.Facility.USER;
 
         @Nullable
         public String getAppName() {
@@ -65,9 +65,9 @@ public abstract class SystemLogLogger implements BaseLogger {
         @SuppressWarnings("ConstantConditions")
         public BaseLogger build() {
             if (Platform.isWindows()) {
-                return new WindowsLogLogger(appName, windowsFormatter);
+                return new SystemWindowsLogLogger(appName, windowsFormatter);
             } else if (Platform.isLinux() || Platform.isFreeBSD() || Platform.isOpenBSD() || Platform.isGNU()) {
-                return new UnixLogLogger(appName, unixFormatter, unixFacility);
+                return new SystemUnixLogLogger(appName, unixFormatter, unixFacility);
             }
             return new StubLogger();
         }
