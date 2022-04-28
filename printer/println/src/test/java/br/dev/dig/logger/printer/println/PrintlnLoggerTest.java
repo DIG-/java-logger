@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import br.dev.dig.logger.Logger;
+import br.dev.dig.logger.printer.formatter.LoggerFormatter;
 
 @ExtendWith(MockitoExtension.class)
 class PrintlnLoggerTest {
@@ -57,7 +58,7 @@ class PrintlnLoggerTest {
         Assertions.assertNotNull(second.start);
         Assertions.assertNotNull(second.formatter);
 
-        final PrintlnFormatter formatter = PrintlnFormatter.parse("2");
+        final LoggerFormatter formatter = LoggerFormatter.parse("2");
         final PrintlnLogger last = new PrintlnLogger(formatter);
         Assertions.assertNotNull(last.start);
         Assertions.assertNotNull(last.formatter);
