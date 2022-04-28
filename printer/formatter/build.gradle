@@ -67,5 +67,7 @@ dependencies {
     api lib.annotations
     implementation project(":intrinsics")
 
+    testImplementation platform(lib.test.mockito.bom)
     testImplementation lib.test.junit
+    testImplementation lib.test.mockito.junit
 }

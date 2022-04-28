@@ -1,4 +1,4 @@
-package br.dev.dig.logger.printer.println.styles;
+package br.dev.dig.logger.printer.formatter.styles;
 
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-class PrintlnStyleStackTraceTest extends PrintlnStyleCommon<PrintlnStyleStackTrace> {
+class LoggerFormatStyleStackTraceTest extends LoggerFormatStyleCommon<LoggerFormatStyleStackTrace> {
 
     @Override
     @NotNull
-    PrintlnStyleStackTrace create() {
-        return new PrintlnStyleStackTrace();
+    LoggerFormatStyleStackTrace create() {
+        return new LoggerFormatStyleStackTrace();
     }
 
     @Override
@@ -21,7 +21,7 @@ class PrintlnStyleStackTraceTest extends PrintlnStyleCommon<PrintlnStyleStackTra
 
     @Test
     void log_Null() {
-        final String output = style.print(randInt(), randString(), LocalDateTime.now(), randString(), null);
+        final String output = style.print(LocalDateTime.now(), randInt(), randString(), randString(), null);
         Assertions.assertNotNull(output);
         Assertions.assertEquals("", output);
     }
@@ -30,7 +30,7 @@ class PrintlnStyleStackTraceTest extends PrintlnStyleCommon<PrintlnStyleStackTra
     void log_StackTrace() {
         final String message = randString();
         final Throwable throwable = new RuntimeException(message);
-        final String output = style.print(randInt(), randString(), LocalDateTime.now(), randString(), throwable);
+        final String output = style.print(LocalDateTime.now(), randInt(), randString(), randString(), throwable);
         Assertions.assertNotNull(output);
         Assertions.assertTrue(output.contains("RuntimeException"));
         Assertions.assertTrue(output.contains(message));

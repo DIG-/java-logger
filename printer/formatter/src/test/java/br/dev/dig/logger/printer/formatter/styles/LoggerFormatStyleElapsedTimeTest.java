@@ -1,4 +1,4 @@
-package br.dev.dig.logger.printer.println.styles;
+package br.dev.dig.logger.printer.formatter.styles;
 
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
@@ -9,12 +9,12 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.regex.Pattern;
 
-class PrintlnStyleElapsedTimeTest extends PrintlnStyleCommon<PrintlnStyleElapsedTime> {
+class LoggerFormatStyleElapsedTimeTest extends LoggerFormatStyleCommon<LoggerFormatStyleElapsedTime> {
 
     @Override
     @NotNull
-    PrintlnStyleElapsedTime create() {
-        return new PrintlnStyleElapsedTime();
+    LoggerFormatStyleElapsedTime create() {
+        return new LoggerFormatStyleElapsedTime();
     }
 
     @Test
