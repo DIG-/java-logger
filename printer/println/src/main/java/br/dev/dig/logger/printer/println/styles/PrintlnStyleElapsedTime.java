@@ -15,6 +15,8 @@ import java.util.Locale;
 import br.dev.dig.logger.intrinsics.Intrinsics;
 import br.dev.dig.logger.printer.println.PrintlnFormatter;
 
+@Deprecated
+// Use LoggerFormatter
 public final class PrintlnStyleElapsedTime implements PrintlnFormatter.Style {
     static final DateTimeFormatter ISO_LOCAL_TIME = new DateTimeFormatterBuilder()
         .appendLiteral(':')
@@ -27,7 +29,7 @@ public final class PrintlnStyleElapsedTime implements PrintlnFormatter.Style {
 
 
     @Override
-    public @NotNull String print(int level, @Nullable String tag, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
+    public @NotNull String print(@NotNull LocalDateTime start, int level, @Nullable String tag, @Nullable CharSequence message, @Nullable Throwable t) {
         return format(start, LocalDateTime.now());
     }
 

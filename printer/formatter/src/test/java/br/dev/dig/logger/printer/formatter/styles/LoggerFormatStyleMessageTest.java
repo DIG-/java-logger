@@ -1,4 +1,4 @@
-package br.dev.dig.logger.printer.println.styles;
+package br.dev.dig.logger.printer.formatter.styles;
 
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
@@ -6,17 +6,17 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-class PrintlnStyleMessageTest extends PrintlnStyleCommon<PrintlnStyleMessage> {
+class LoggerFormatStyleMessageTest extends LoggerFormatStyleCommon<LoggerFormatStyleMessage> {
 
     @Override
     @NotNull
-    PrintlnStyleMessage create() {
-        return new PrintlnStyleMessage();
+    LoggerFormatStyleMessage create() {
+        return new LoggerFormatStyleMessage();
     }
 
     @Test
     void log_Null() {
-        final String output = style.print(randInt(), randString(), LocalDateTime.now(), null, randThrowable());
+        final String output = style.print(LocalDateTime.now(), randInt(), randString(), null, randThrowable());
         Assertions.assertNotNull(output);
         Assertions.assertEquals("", output);
     }
@@ -24,7 +24,7 @@ class PrintlnStyleMessageTest extends PrintlnStyleCommon<PrintlnStyleMessage> {
     @Test
     void log_Message() {
         final String message = randString();
-        final String output = style.print(randInt(), randString(), LocalDateTime.now(), message, randThrowable());
+        final String output = style.print(LocalDateTime.now(), randInt(), randString(), message, randThrowable());
         Assertions.assertNotNull(output);
         Assertions.assertEquals(message, output);
     }

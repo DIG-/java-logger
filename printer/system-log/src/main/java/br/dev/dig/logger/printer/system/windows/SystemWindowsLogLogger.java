@@ -13,11 +13,11 @@ import java.util.Arrays;
 
 import br.dev.dig.logger.Logger;
 import br.dev.dig.logger.intrinsics.Intrinsics;
-import br.dev.dig.logger.printer.println.PrintlnFormatter;
-import br.dev.dig.logger.printer.println.styles.PrintlnStyleConstant;
-import br.dev.dig.logger.printer.println.styles.PrintlnStyleMessage;
-import br.dev.dig.logger.printer.println.styles.PrintlnStyleTag;
-import br.dev.dig.logger.printer.println.styles.PrintlnStyleThrowableMessage;
+import br.dev.dig.logger.printer.formatter.LoggerFormatter;
+import br.dev.dig.logger.printer.formatter.styles.LoggerFormatStyleConstant;
+import br.dev.dig.logger.printer.formatter.styles.LoggerFormatStyleMessage;
+import br.dev.dig.logger.printer.formatter.styles.LoggerFormatStyleTag;
+import br.dev.dig.logger.printer.formatter.styles.LoggerFormatStyleThrowableMessage;
 import br.dev.dig.logger.printer.system.SystemLogLogger;
 
 public class SystemWindowsLogLogger extends SystemLogLogger implements Closeable {
@@ -31,13 +31,13 @@ public class SystemWindowsLogLogger extends SystemLogLogger implements Closeable
         private Formatter() {
         }
 
-        public static @NotNull PrintlnFormatter simple() {
-            return new PrintlnFormatter(Arrays.asList(
-                new PrintlnStyleTag(),
-                new PrintlnStyleConstant(": "),
-                new PrintlnStyleMessage(),
-                new PrintlnStyleConstant(" "),
-                new PrintlnStyleThrowableMessage()
+        public static @NotNull LoggerFormatter simple() {
+            return new LoggerFormatter(Arrays.asList(
+                new LoggerFormatStyleTag(),
+                new LoggerFormatStyleConstant(": "),
+                new LoggerFormatStyleMessage(),
+                new LoggerFormatStyleConstant(" "),
+                new LoggerFormatStyleThrowableMessage()
             ));
         }
     }
@@ -45,11 +45,11 @@ public class SystemWindowsLogLogger extends SystemLogLogger implements Closeable
     @NotNull
     final WinNT.HANDLE handle;
     @NotNull
-    final PrintlnFormatter formatter;
+    final LoggerFormatter formatter;
     @NotNull
     final LocalDateTime start = LocalDateTime.now();
 
-    public SystemWindowsLogLogger(@NotNull final String appName, @NotNull PrintlnFormatter formatter) {
+    public SystemWindowsLogLogger(@NotNull final String appName, @NotNull LoggerFormatter formatter) {
         Intrinsics.parameterNotNull(appName, "ApplicationName must not be null");
         this.formatter = Intrinsics.parameterNotNull(formatter, "Formatter must not be null");
         handle = Advapi32.INSTANCE.RegisterEventSource(null, appName);

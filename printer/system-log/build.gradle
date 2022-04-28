@@ -66,7 +66,7 @@ task deployJavaToMavenCentral {
 dependencies {
     api lib.annotations
     api project(":logger")
-    api project(":printer:println")
+    implementation project(":printer:formatter")
     implementation project(":printer:stub")
     implementation project(":intrinsics")
     implementation lib.jna.core

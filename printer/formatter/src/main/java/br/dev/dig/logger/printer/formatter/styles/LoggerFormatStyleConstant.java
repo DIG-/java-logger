@@ -1,4 +1,4 @@
-package br.dev.dig.logger.printer.println.styles;
+package br.dev.dig.logger.printer.formatter.styles;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -6,15 +6,13 @@ import org.jetbrains.annotations.Nullable;
 import java.time.LocalDateTime;
 
 import br.dev.dig.logger.intrinsics.Intrinsics;
-import br.dev.dig.logger.printer.println.PrintlnFormatter;
+import br.dev.dig.logger.printer.formatter.LoggerFormatter;
 
-@Deprecated
-// Use LoggerFormatter
-public final class PrintlnStyleConstant implements PrintlnFormatter.Style {
+public final class LoggerFormatStyleConstant implements LoggerFormatter.Style {
     @NotNull
     private final String value;
 
-    public PrintlnStyleConstant(@NotNull final String value) {
+    public LoggerFormatStyleConstant(@NotNull final String value) {
         this.value = Intrinsics.parameterNotNull(value, "Value must not be null");
     }
 

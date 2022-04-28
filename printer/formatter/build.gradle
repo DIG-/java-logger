@@ -24,7 +24,7 @@ publishing {
             from components.java
             pom { pom ->
                 //noinspection GroovyAssignabilityCheck
-                applyPom(pom, "Simple Logger PrintLn", "Printer for Simple Logger, using System.out.println()")
+                applyPom(pom, "Simple Logger Formatter", "Common formatter for printers")
             }
         }
     }
@@ -50,11 +50,11 @@ publishing {
 
 task deployJavaToLocal {
     group = "deploy local"
-    dependsOn ":printer:println:publishJavaPublicationToMavenLocal"
+    dependsOn ":printer:formatter:publishJavaPublicationToMavenLocal"
 }
 
 task _deployJavaToMavenCentral {
-    dependsOn ":printer:println:publishJavaPublicationToCentralRepository"
+    dependsOn ":printer:formatter:publishJavaPublicationToCentralRepository"
 }
 
 task deployJavaToMavenCentral {
@@ -65,9 +65,7 @@ task deployJavaToMavenCentral {
 
 dependencies {
     api lib.annotations
-    api project(":logger")
     implementation project(":intrinsics")
-    implementation project(":printer:formatter")
 
     testImplementation platform(lib.test.mockito.bom)
     testImplementation lib.test.junit
