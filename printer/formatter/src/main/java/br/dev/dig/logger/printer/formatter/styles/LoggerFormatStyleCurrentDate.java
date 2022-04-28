@@ -1,4 +1,4 @@
-package br.dev.dig.logger.printer.println.styles;
+package br.dev.dig.logger.printer.formatter.styles;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -9,11 +9,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import br.dev.dig.logger.intrinsics.Intrinsics;
-import br.dev.dig.logger.printer.println.PrintlnFormatter;
+import br.dev.dig.logger.printer.formatter.LoggerFormatter;
 
-@Deprecated
-// Use LoggerFormatter
-public final class PrintlnStyleCurrentDate implements PrintlnFormatter.Style {
+public final class LoggerFormatStyleCurrentDate implements LoggerFormatter.Style {
     @Override
     public @NotNull String print(@NotNull LocalDateTime start, int level, @Nullable String tag, @Nullable CharSequence message, @Nullable Throwable t) {
         return format(LocalDate.now());

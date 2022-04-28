@@ -1,18 +1,18 @@
-package br.dev.dig.logger.printer.println.styles;
+package br.dev.dig.logger.printer.formatter.styles;
 
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class PrintlnStyleConstantTest extends PrintlnStyleCommon<PrintlnStyleConstant> {
+class LoggerFormatStyleConstantTest extends LoggerFormatStyleCommon<LoggerFormatStyleConstant> {
 
     String constant;
 
     @Override
     @NotNull
-    PrintlnStyleConstant create() {
+    LoggerFormatStyleConstant create() {
         constant = randString();
-        return new PrintlnStyleConstant(constant);
+        return new LoggerFormatStyleConstant(constant);
     }
 
     @Test

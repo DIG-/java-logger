@@ -1,4 +1,4 @@
-package br.dev.dig.logger.printer.println.styles;
+package br.dev.dig.logger.printer.formatter.styles;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -11,11 +11,9 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 
 import br.dev.dig.logger.intrinsics.Intrinsics;
-import br.dev.dig.logger.printer.println.PrintlnFormatter;
+import br.dev.dig.logger.printer.formatter.LoggerFormatter;
 
-@Deprecated
-// Use LoggerFormatter
-public class PrintlnStyleCurrentTime implements PrintlnFormatter.Style {
+public class LoggerFormatStyleCurrentTime implements LoggerFormatter.Style {
     static final DateTimeFormatter ISO_LOCAL_TIME = new DateTimeFormatterBuilder()
         .appendValue(ChronoField.HOUR_OF_DAY, 2)
         .appendLiteral(':')
