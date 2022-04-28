@@ -13,6 +13,8 @@ import java.time.temporal.ChronoField;
 import br.dev.dig.logger.intrinsics.Intrinsics;
 import br.dev.dig.logger.printer.println.PrintlnFormatter;
 
+@Deprecated
+// Use LoggerFormatter
 public class PrintlnStyleCurrentTime implements PrintlnFormatter.Style {
     static final DateTimeFormatter ISO_LOCAL_TIME = new DateTimeFormatterBuilder()
         .appendValue(ChronoField.HOUR_OF_DAY, 2)
@@ -25,7 +27,7 @@ public class PrintlnStyleCurrentTime implements PrintlnFormatter.Style {
         .toFormatter();
 
     @Override
-    public @NotNull String print(int level, @Nullable String tag, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
+    public @NotNull String print(@NotNull LocalDateTime start, int level, @Nullable String tag, @Nullable CharSequence message, @Nullable Throwable t) {
         return format(LocalTime.now());
     }
 
