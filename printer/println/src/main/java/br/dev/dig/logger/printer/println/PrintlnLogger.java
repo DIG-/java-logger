@@ -45,7 +45,7 @@ public final class PrintlnLogger implements BaseLogger {
 
     @SuppressWarnings("unused")
     public PrintlnLogger(@NotNull final String format) {
-        this(LoggerFormatter.parse(format));
+        this(new LoggerFormatter.Builder().add(format).build());
     }
 
     @SuppressWarnings("unused")
