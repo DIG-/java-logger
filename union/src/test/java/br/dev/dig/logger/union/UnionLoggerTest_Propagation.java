@@ -30,7 +30,7 @@ class UnionLoggerTest_Propagation {
     @Test
     void testSingle_Message() {
         Assertions.assertNotNull(parent_1);
-        final UnionLogger logger = UnionLogger.create(parent_1);
+        final UnionLogger logger = new UnionLogger.Builder().add(parent_1).build();
         final String tag = UUID.randomUUID().toString();
         final Logger.Message message = () -> UUID.randomUUID().toString();
         final Throwable throwable = new RuntimeException();
@@ -63,7 +63,7 @@ class UnionLoggerTest_Propagation {
     void testDuo_Message() {
         Assertions.assertNotNull(parent_1);
         Assertions.assertNotNull(parent_2);
-        final UnionLogger logger = UnionLogger.create(parent_1, parent_2);
+        final UnionLogger logger = new UnionLogger.Builder().add(parent_1, parent_2).build();
         final String tag = UUID.randomUUID().toString();
         final Logger.Message message = () -> UUID.randomUUID().toString();
         final Throwable throwable = new RuntimeException();
@@ -106,7 +106,7 @@ class UnionLoggerTest_Propagation {
     @Test
     void testSingle_CharSequence() {
         Assertions.assertNotNull(parent_1);
-        final UnionLogger logger = UnionLogger.create(parent_1);
+        final UnionLogger logger = new UnionLogger.Builder().add(parent_1).build();
         final String tag = UUID.randomUUID().toString();
         final String message = UUID.randomUUID().toString();
         final Throwable throwable = new RuntimeException();
@@ -139,7 +139,7 @@ class UnionLoggerTest_Propagation {
     void testDuo_CharSequence() {
         Assertions.assertNotNull(parent_1);
         Assertions.assertNotNull(parent_2);
-        final UnionLogger logger = UnionLogger.create(parent_1, parent_2);
+        final UnionLogger logger = new UnionLogger.Builder().add(parent_1, parent_2).build();
         final String tag = UUID.randomUUID().toString();
         final String message = UUID.randomUUID().toString();
         final Throwable throwable = new RuntimeException();
