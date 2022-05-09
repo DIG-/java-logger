@@ -6,14 +6,13 @@ import android.os.Looper
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import br.dev.dig.logger.BaseLogger
 import br.dev.dig.logger.Logger
+import br.dev.dig.logger.Union
 import br.dev.dig.logger.builder.LoggerBuilder
 import br.dev.dig.logger.printer.android_log.AndroidLogLogger
 import br.dev.dig.logger.printer.firebase.FirebaseCrashlyticsLogger
 import br.dev.dig.logger.printer.stub.StubLogger
 import br.dev.dig.logger.printer.timber.TimberLogger
-import br.dev.dig.logger.union.UnionLogger
 import com.google.firebase.FirebaseApp
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 
@@ -70,9 +69,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val builder: LoggerBuilder
         get() = if (_isAndroidLog.value == true && _isTimberLog.value == true && _isFirebaseLog.value == true) {
-            object : LoggerBuilder() {
-                override fun getBaseLogger(): BaseLogger {
-                    return UnionLogger.create(
+            LoggerBuilder {
+                Union {
+                    add(
                         AndroidLogLogger(),
                         TimberLogger(),
                         FirebaseCrashlyticsLogger(FirebaseCrashlytics.getInstance())
@@ -80,61 +79,48 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
         } else if (_isAndroidLog.value == true && _isTimberLog.value != true && _isFirebaseLog.value == true) {
-            object : LoggerBuilder() {
-                override fun getBaseLogger(): BaseLogger {
-                    return UnionLogger.create(
+            LoggerBuilder {
+                Union {
+                    add(
                         AndroidLogLogger(),
                         FirebaseCrashlyticsLogger(FirebaseCrashlytics.getInstance())
                     )
                 }
             }
         } else if (_isAndroidLog.value != true && _isTimberLog.value == true && _isFirebaseLog.value == true) {
-            object : LoggerBuilder() {
-                override fun getBaseLogger(): BaseLogger {
-                    return UnionLogger.create(
+            LoggerBuilder {
+                Union {
+                    add(
                         TimberLogger(),
                         FirebaseCrashlyticsLogger(FirebaseCrashlytics.getInstance())
                     )
                 }
             }
         } else if (_isAndroidLog.value != true && _isTimberLog.value != true && _isFirebaseLog.value == true) {
-            builderCrashlytics
+            LoggerBuilder {
+                FirebaseCrashlyticsLogger(FirebaseCrashlytics.getInstance())
+            }
         } else if (_isAndroidLog.value == true && _isTimberLog.value == true && _isFirebaseLog.value != true) {
-            object : LoggerBuilder() {
-                override fun getBaseLogger(): BaseLogger {
-                    return UnionLogger.create(AndroidLogLogger(), TimberLogger())
+            LoggerBuilder {
+                Union {
+                    add(
+                        AndroidLogLogger(),
+                        TimberLogger()
+                    )
                 }
             }
         } else if (_isAndroidLog.value == true && _isTimberLog.value != true && _isFirebaseLog.value != true) {
-            builderAndroid
+            LoggerBuilder {
+                AndroidLogLogger()
+            }
         } else if (_isAndroidLog.value != true && _isTimberLog.value == true && _isFirebaseLog.value != true) {
-            builderTimber
+            LoggerBuilder {
+                TimberLogger()
+            }
         } else {
-            builderStub
-        }
-
-
-    private val builderStub = object : LoggerBuilder() {
-        override fun getBaseLogger(): BaseLogger {
-            return StubLogger()
-        }
-    }
-    private val builderCrashlytics:LoggerBuilder by lazy {
-        object : LoggerBuilder() {
-            override fun getBaseLogger(): BaseLogger {
-                return FirebaseCrashlyticsLogger(FirebaseCrashlytics.getInstance())
+            LoggerBuilder {
+                StubLogger()
             }
         }
-    }
-    private val builderTimber = object : LoggerBuilder() {
-        override fun getBaseLogger(): BaseLogger {
-            return TimberLogger()
-        }
-    }
-    private val builderAndroid = object : LoggerBuilder() {
-        override fun getBaseLogger(): BaseLogger {
-            return AndroidLogLogger()
-        }
-    }
 
 }

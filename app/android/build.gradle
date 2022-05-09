@@ -46,6 +46,7 @@ dependencies {
     implementation project(":printer:stub")
     implementation project(":printer:timber")
     implementation project(":printer:firebase")
-    implementation project(":union")
+    implementation project(":union-ktx")
+    implementation project(":logger-ktx")
     implementation "com.google.firebase:firebase-crashlytics"
 }
