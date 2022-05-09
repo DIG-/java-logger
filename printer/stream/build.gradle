@@ -1,0 +1,73 @@
+plugins {
+    id "java-library"
+    id "maven-publish"
+    id "signing"
+}
+apply from: rootDir.toString() + "/pom.gradle"
+
+group "br.dev.dig.logger.printer"
+version versions.logger.pkg + "0"
+java {
+    withSourcesJar()
+    sourceCompatibility versions.java
+    targetCompatibility versions.java
+}
+test {
+    useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        //noinspection GroovyAssignabilityCheck
+        java(MavenPublication) {
+            //noinspection GroovyAssignabilityCheck
+            from components.java
+            pom { pom ->
+                //noinspection GroovyAssignabilityCheck
+                applyPom(pom, "Simple Logger Stream Log", "Printer for Simple Logger, using Stream")
+            }
+        }
+    }
+    repositories {
+        if (deploy.central.enabled) {
+            maven {
+                name = "Central"
+                url = "https://s01.oss.sonatype.org/content/repositories/releases/"
+                credentials {
+                    username = deploy.central.username
+                    password = deploy.central.password
+                }
+            }
+        }
+    }
+    if (deploy.signing.enabled) {
+        signing {
+            useInMemoryPgpKeys((String) deploy.signing.key_id, (String) deploy.signing.secret, (String) deploy.signing.password)
+            sign publishing.publications.java
+        }
+    }
+}
+
+task deployJavaToLocal {
+    group = "deploy local"
+    dependsOn ":printer:stream:publishJavaPublicationToMavenLocal"
+}
+
+task _deployJavaToMavenCentral {
+    dependsOn ":printer:stream:publishJavaPublicationToCentralRepository"
+}
+
+task deployJavaToMavenCentral {
+    group = "deploy central"
+    dependsOn "checkMavenCentral"
+    finalizedBy "_deployJavaToMavenCentral"
+}
+
+dependencies {
+    api lib.annotations
+    api project(":logger")
+    implementation project(":printer:formatter")
+    implementation project(":intrinsics")
+
+    testImplementation lib.test.junit
+}
