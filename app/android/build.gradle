@@ -1,6 +1,8 @@
 plugins {
     id "com.android.application"
     id "org.jetbrains.kotlin.android"
+    id "com.google.gms.google-services"
+    id "com.google.firebase.crashlytics"
 }
 
 // ==================================
@@ -43,5 +45,7 @@ dependencies {
     implementation project(":printer:android-log")
     implementation project(":printer:stub")
     implementation project(":printer:timber")
+    implementation project(":printer:firebase")
     implementation project(":union")
+    implementation "com.google.firebase:firebase-crashlytics"
 }

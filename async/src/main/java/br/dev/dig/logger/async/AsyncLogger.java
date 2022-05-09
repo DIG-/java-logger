@@ -23,6 +23,46 @@ public final class AsyncLogger implements BaseLogger {
         this.executor = Intrinsics.parameterNotNull(executor, "Executor must not be null");
     }
 
+    @SuppressWarnings("unused")
+    public static class Builder {
+        @Nullable
+        BaseLogger target;
+        @Nullable
+        Executor executor;
+
+        public Builder() {
+        }
+
+        public Builder(@NotNull final BaseLogger target) {
+            this.target = target;
+        }
+
+        @Nullable
+        public BaseLogger getTarget() {
+            return target;
+        }
+
+        public Builder setTarget(@NotNull final BaseLogger target) {
+            this.target = target;
+            return this;
+        }
+
+        @Nullable
+        public Executor getExecutor() {
+            return executor;
+        }
+
+        public Builder setExecutor(@NotNull final Executor executor) {
+            this.executor = executor;
+            return this;
+        }
+
+        @SuppressWarnings("ConstantConditions")
+        public AsyncLogger build() {
+            return new AsyncLogger(target, executor);
+        }
+    }
+
     @Override
     public void log(int level, @Nullable String tag, @NotNull Message message, @Nullable Throwable throwable) {
         executor.execute(() -> target.log(level, tag, message, throwable));

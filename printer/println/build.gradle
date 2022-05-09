@@ -67,6 +67,7 @@ dependencies {
     api lib.annotations
     api project(":logger")
     implementation project(":intrinsics")
+    implementation project(":printer:formatter")
 
     testImplementation platform(lib.test.mockito.bom)
     testImplementation lib.test.junit

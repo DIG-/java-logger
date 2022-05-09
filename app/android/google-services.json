@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "975990819009",
+    "project_id": "temp-project-5c8b8",
+    "storage_bucket": "temp-project-5c8b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:975990819009:android:077de02c53e31cc4082c40",
+        "android_client_info": {
+          "package_name": "br.dev.dig.logger.app.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "975990819009-5anpqg9k0j95to7ojbdh1b1f5bankre7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQfzklz3ZlR9xigosIMQ8plhOcnxWHWtQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "975990819009-5anpqg9k0j95to7ojbdh1b1f5bankre7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -22,6 +22,44 @@ public final class FilterLogger implements BaseLogger {
         this.target = Intrinsics.parameterNotNull(target, "Target BaseLogger must not be null");
     }
 
+    @SuppressWarnings("unused")
+    public static class Builder {
+        @Nullable
+        BaseLogger target;
+        int level = Logger.LEVEL_NONE;
+
+        public Builder() {
+        }
+
+        public Builder(@NotNull final BaseLogger target) {
+            this.target = target;
+        }
+
+        @Nullable
+        public BaseLogger getTarget() {
+            return target;
+        }
+
+        public Builder setTarget(@NotNull final BaseLogger target) {
+            this.target = target;
+            return this;
+        }
+
+        public int getLevel() {
+            return level;
+        }
+
+        public Builder setLevel(final int level) {
+            this.level = level;
+            return this;
+        }
+
+        @SuppressWarnings("ConstantConditions")
+        public FilterLogger build() {
+            return new FilterLogger(level, target);
+        }
+    }
+
     @Override
     public void log(int level, @Nullable final String tag, @NotNull final Message message, @Nullable final Throwable throwable) {
         if (level >= this.level) {

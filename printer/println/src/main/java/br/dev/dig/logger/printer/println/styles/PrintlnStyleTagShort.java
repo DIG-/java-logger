@@ -8,9 +8,11 @@ import java.time.LocalDateTime;
 import br.dev.dig.logger.Logger;
 import br.dev.dig.logger.printer.println.PrintlnFormatter;
 
+@Deprecated
+// Use LoggerFormatter
 public final class PrintlnStyleTagShort implements PrintlnFormatter.Style {
     @Override
-    public @NotNull String print(int level, @Nullable String tag, @NotNull LocalDateTime start, @Nullable CharSequence message, @Nullable Throwable t) {
+    public @NotNull String print(@NotNull LocalDateTime start, int level, @Nullable String tag, @Nullable CharSequence message, @Nullable Throwable t) {
         switch (level) {
             case Logger.LEVEL_VERBOSE:
                 return "V";

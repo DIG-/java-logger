@@ -1,4 +1,4 @@
-package br.dev.dig.logger.printer.println.styles;
+package br.dev.dig.logger.printer.formatter.styles;
 
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
@@ -8,12 +8,12 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.regex.Pattern;
 
-class PrintlnStyleCurrentDateTest extends PrintlnStyleCommon<PrintlnStyleCurrentDate> {
+class LoggerFormatStyleCurrentDateTest extends LoggerFormatStyleCommon<LoggerFormatStyleCurrentDate> {
 
     @Override
     @NotNull
-    PrintlnStyleCurrentDate create() {
-        return new PrintlnStyleCurrentDate();
+    LoggerFormatStyleCurrentDate create() {
+        return new LoggerFormatStyleCurrentDate();
     }
 
     @Test

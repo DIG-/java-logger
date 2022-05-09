@@ -1,4 +1,4 @@
-package br.dev.dig.logger.printer.println.styles;
+package br.dev.dig.logger.printer.formatter.styles;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.UUID;
 
-import br.dev.dig.logger.printer.println.PrintlnFormatter;
+import br.dev.dig.logger.printer.formatter.LoggerFormatter;
 
-abstract class PrintlnStyleCommon<S extends PrintlnFormatter.Style> {
+abstract class LoggerFormatStyleCommon<S extends LoggerFormatter.Style> {
 
     static final Random rand = new Random();
 
@@ -26,8 +26,8 @@ abstract class PrintlnStyleCommon<S extends PrintlnFormatter.Style> {
     }
 
     @NotNull
-    String randomPrint(PrintlnFormatter.Style style) {
-        return style.print(randInt(), randString(), LocalDateTime.now(), randString(), randThrowable());
+    String randomPrint(LoggerFormatter.Style style) {
+        return style.print(LocalDateTime.now(), randInt(), randString(), randString(), randThrowable());
     }
 
     int randInt() {
