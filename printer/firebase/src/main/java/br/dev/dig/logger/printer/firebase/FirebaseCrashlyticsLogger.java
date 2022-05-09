@@ -1,5 +1,6 @@
 package br.dev.dig.logger.printer.firebase;
 
+import com.google.android.gms.common.annotation.KeepName;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import org.jetbrains.annotations.NotNull;
@@ -112,36 +113,42 @@ public class FirebaseCrashlyticsLogger implements BaseLogger {
         return throwable;
     }
 
+    @KeepName
     final static class Verbose extends RuntimeException {
         Verbose(@Nullable final String message, @Nullable final Throwable throwable) {
             super(message, throwable);
         }
     }
 
+    @KeepName
     final static class Debug extends RuntimeException {
         Debug(@Nullable final String message, @Nullable final Throwable throwable) {
             super(message, throwable);
         }
     }
 
+    @KeepName
     final static class Info extends RuntimeException {
         Info(@Nullable final String message, @Nullable final Throwable throwable) {
             super(message, throwable);
         }
     }
 
+    @KeepName
     final static class Warning extends RuntimeException {
         Warning(@Nullable final String message, @Nullable final Throwable throwable) {
             super(message, throwable);
         }
     }
 
+    @KeepName
     final static class Error extends RuntimeException {
         Error(@Nullable final String message, @Nullable final Throwable throwable) {
             super(message, throwable);
         }
     }
 
+    @KeepName
     final static class Assert extends RuntimeException {
         Assert(@Nullable final String message, @Nullable final Throwable throwable) {
             super(message, throwable);

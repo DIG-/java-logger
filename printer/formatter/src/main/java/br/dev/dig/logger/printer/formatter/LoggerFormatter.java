@@ -33,48 +33,80 @@ public class LoggerFormatter {
         this.styles = Intrinsics.parameterNotNull(styles, "Styles list must not be null");
     }
 
-    public static LoggerFormatter parse(@NotNull final String format) {
-        Intrinsics.parameterNotNull(format, "Format must not be null");
+    @SuppressWarnings("unused")
+    public static class Builder {
         final LinkedList<Style> styles = new LinkedList<>();
-        final Pattern pattern = Pattern.compile("(\\$\\{[a-z\\-]+})");
-        final Matcher matches = pattern.matcher(format);
-        int lastEnd = 0;
-        while (matches.find()) {
-            if (lastEnd < matches.start()) {
-                styles.add(new LoggerFormatStyleConstant(format.substring(lastEnd, matches.start())));
+
+        public Builder add(@NotNull final Style... styles) {
+            for (final Style style : styles) {
+                this.styles.add(Intrinsics.parameterNotNull(style, "Style must not be null"));
             }
-            lastEnd = matches.end();
-            switch (matches.group()) {
-                case "${tag}":
-                    styles.add(new LoggerFormatStyleTag());
-                    break;
-                case "${tag-short}":
-                    styles.add(new LoggerFormatStyleTagShort());
-                    break;
-                case "${date}":
-                    styles.add(new LoggerFormatStyleCurrentDate());
-                    break;
-                case "${time}":
-                    styles.add(new LoggerFormatStyleCurrentTime());
-                    break;
-                case "${elapsed}":
-                    styles.add(new LoggerFormatStyleElapsedTime());
-                    break;
-                case "${message}":
-                    styles.add(new LoggerFormatStyleMessage());
-                    break;
-                case "${throwable}":
-                    styles.add(new LoggerFormatStyleThrowableMessage());
-                    break;
-                case "${stacktrace}":
-                    styles.add(new LoggerFormatStyleStackTrace());
-                    break;
+            return this;
+        }
+
+        public Builder add(@NotNull final Iterable<Style> styles) {
+            for (final Style style : styles) {
+                this.styles.add(Intrinsics.parameterNotNull(style, "Style must not be null"));
+            }
+            return this;
+        }
+
+        public Builder add(@NotNull final String format) {
+            Intrinsics.parameterNotNull(format, "Format must not be null");
+            parse(styles, format);
+            return this;
+        }
+
+        protected void parse(@NotNull final LinkedList<Style> styles, @NotNull final String format) {
+            final Pattern pattern = Pattern.compile("(\\$\\{[a-z\\-]+})");
+            final Matcher matches = pattern.matcher(format);
+            int lastEnd = 0;
+            while (matches.find()) {
+                if (lastEnd < matches.start()) {
+                    styles.add(new LoggerFormatStyleConstant(format.substring(lastEnd, matches.start())));
+                }
+                lastEnd = matches.end();
+                switch (matches.group()) {
+                    case "${tag}":
+                        styles.add(new LoggerFormatStyleTag());
+                        break;
+                    case "${tag-short}":
+                        styles.add(new LoggerFormatStyleTagShort());
+                        break;
+                    case "${date}":
+                        styles.add(new LoggerFormatStyleCurrentDate());
+                        break;
+                    case "${time}":
+                        styles.add(new LoggerFormatStyleCurrentTime());
+                        break;
+                    case "${elapsed}":
+                        styles.add(new LoggerFormatStyleElapsedTime());
+                        break;
+                    case "${message}":
+                        styles.add(new LoggerFormatStyleMessage());
+                        break;
+                    case "${throwable}":
+                        styles.add(new LoggerFormatStyleThrowableMessage());
+                        break;
+                    case "${stacktrace}":
+                        styles.add(new LoggerFormatStyleStackTrace());
+                        break;
+                }
+            }
+            if (lastEnd < format.length()) {
+                styles.add(new LoggerFormatStyleConstant(format.substring(lastEnd)));
             }
         }
-        if (lastEnd < format.length()) {
-            styles.add(new LoggerFormatStyleConstant(format.substring(lastEnd)));
+
+        public LoggerFormatter build() {
+            return new LoggerFormatter(new ArrayList<>(styles));
         }
-        return new LoggerFormatter(new ArrayList<>(styles));
+    }
+
+    @Deprecated
+    // Use Builder
+    public static LoggerFormatter parse(@NotNull final String format) {
+        return new Builder().add(format).build();
     }
 
     @NotNull

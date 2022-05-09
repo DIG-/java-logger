@@ -28,6 +28,9 @@ class MainActivity : AppCompatActivity() {
         bind.optTimber.setOnCheckedChangeListener { _, isChecked ->
             model.updateTimberCheck(isChecked)
         }
+        bind.optFirebase.setOnCheckedChangeListener { _, isChecked ->
+            model.updateFirebaseCheck(isChecked)
+        }
         bind.triggerLog.setOnClickListener {
             model.dispatchEvents()
         }
