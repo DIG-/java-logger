@@ -21,6 +21,9 @@ class MainActivity : AppCompatActivity() {
         model.isTimberLog.observe(this) {
             bind.optTimber.isChecked = it
         }
+        model.isFirebaseLog.observe(this) {
+            bind.optFirebase.isChecked = it
+        }
 
         bind.optAndroidLog.setOnCheckedChangeListener { _, isChecked ->
             model.updateAndroidLogCheck(isChecked)
