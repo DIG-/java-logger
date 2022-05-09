@@ -4,9 +4,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import br.dev.dig.logger.builder.LoggerBuilder;
+import br.dev.dig.logger.style.LongLogger;
+import br.dev.dig.logger.style.SmallLogger;
 
 @SuppressWarnings("unused")
-public abstract class Logger {
+public abstract class Logger implements SmallLogger, LongLogger {
 
     public static final int LEVEL_VERBOSE = 1;
     public static final int LEVEL_DEBUG = 2;
