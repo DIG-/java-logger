@@ -13,6 +13,7 @@ include ":printer:stream"; findProject(":printer:stream")?.name = "stream"
 include ":printer:stub"; findProject(":printer:stub")?.name = "stub"
 include ":printer:system-log"; findProject(":printer:system-log")?.name = "system-log"
 include ":union"
+include ":union-ktx"
 
 def isAndroidEnabled = !(new File(rootDir, "disable-android.gradle")).exists()
 if (isAndroidEnabled) {
