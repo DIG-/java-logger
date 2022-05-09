@@ -1,5 +1,6 @@
-package br.dev.dig.logger.async
+package br.dev.dig.logger
 
+import br.dev.dig.logger.async.AsyncLogger
 import br.dev.dig.logger.builder.LoggerBuilder
 
 @Suppress("unused", "FunctionName")
