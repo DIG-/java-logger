@@ -1,10 +1,9 @@
-version: "1.0.0-{build}"
+version: "1.2.0-{build}"
 skip_tags: true
 clone_depth: 1
 branches:
   only:
     - main
-    - develop
     - /rc\/([\d\w\-\.]+)/
 skip_branch_with_pr: true
 image: Ubuntu2004

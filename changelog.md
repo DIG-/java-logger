@@ -1,7 +1,11 @@
 Changelog
 =========
-x.y.z
+1.2.0
 -----
+- Move PrintlnFormatter to exclusive package
+- Builder pattern in most constructors
+- Small and Longer methods name logger interfaces
+- Created StreamLogger
 
 1.1.0
 -----
