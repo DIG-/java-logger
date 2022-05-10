@@ -22,5 +22,6 @@ if (isAndroidEnabled) {
     include ":printer:android-log"; findProject(":printer:android-log")?.name = "android-log"
     include ":printer:android-log-ktx"; findProject(":printer:android-log-ktx")?.name = "android-log-ktx"
     include ":printer:firebase"; findProject(":printer:firebase")?.name = "firebase"
+    include ":printer:firebase-ktx"; findProject(":printer:firebase-ktx")?.name = "firebase-ktx"
     include ":printer:timber"; findProject(":printer:timber")?.name = "timber"
 }
