@@ -1,0 +1,105 @@
+plugins {
+    id "com.android.library"
+    id "maven-publish"
+    id "signing"
+    id "de.mannodermaus.android-junit5"
+}
+apply from: "$rootDir/pom.gradle"
+
+// ==================================
+// Patch
+def patch = 0
+// ==================================
+
+def vName = versions.logger.pkg + patch
+android {
+    compileSdk versions.android.compile
+
+    defaultConfig {
+        minSdk versions.android.minimum
+        targetSdk versions.android.target
+
+        versionCode patch + 100 * (Integer.valueOf(versions.logger.minor) + 10 * Integer.valueOf(versions.logger.major))
+        versionName vName
+        buildConfigField "String", "br_dev_dig_logger_printer_timber_ktx_version", "\"" + versionName + "\""
+
+        consumerProguardFiles "consumer-rules.pro"
+    }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+    }
+    compileOptions {
+        sourceCompatibility versions.java
+        targetCompatibility versions.java
+    }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
+}
+
+
+afterEvaluate {
+    publishing {
+        publications {
+            //noinspection GroovyAssignabilityCheck
+            android(MavenPublication) {
+                //noinspection GroovyAssignabilityCheck
+                from components.release
+                groupId "br.dev.dig.logger.printer"
+                version vName
+                artifactId "timber-ktx"
+                pom { pom ->
+                    //noinspection GroovyAssignabilityCheck
+                    applyPom(pom, "Simple Logger Timber KTX", "Kotlin support/extensioons for SimpleLogger Timber")
+                }
+            }
+        }
+        repositories {
+            if (deploy.central.enabled) {
+                maven {
+                    name = "Central"
+                    url = "https://s01.oss.sonatype.org/content/repositories/releases/"
+                    credentials {
+                        username = deploy.central.username
+                        password = deploy.central.password
+                    }
+                }
+            }
+        }
+        if (deploy.signing.enabled) {
+            signing {
+                useInMemoryPgpKeys((String) deploy.signing.key_id, (String) deploy.signing.secret, (String) deploy.signing.password)
+                sign publishing.publications.android
+            }
+        }
+    }
+}
+
+task deployAndroidKotlinToLocal {
+    group = "deploy local"
+    dependsOn ":printer:timber-ktx:publishAndroidPublicationToMavenLocal"
+}
+
+task _deployAndroidKotlinToMavenCentral {
+    dependsOn ":printer:timber-ktx:publishAndroidPublicationToCentralRepository"
+}
+
+task deployAndroidToMavenCentral {
+    group = "deploy central"
+    dependsOn "checkMavenCentral"
+    finalizedBy "_deployAndroidToMavenCentral"
+}
+
+dependencies {
+    api project(":logger-ktx")
+    api project(":printer:timber")
+}

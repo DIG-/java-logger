@@ -1,0 +1,77 @@
+plugins {
+    id "java-library"
+    id "org.jetbrains.kotlin.jvm"
+    id "maven-publish"
+    id "signing"
+}
+apply from: rootDir.toString() + "/pom.gradle"
+
+group "br.dev.dig.logger"
+version versions.logger.pkg + "0"
+java {
+    withSourcesJar()
+    sourceCompatibility versions.java
+    targetCompatibility versions.java
+}
+compileKotlin {
+    kotlinOptions.jvmTarget = versions.java
+}
+test {
+    useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        //noinspection GroovyAssignabilityCheck
+        java(MavenPublication) {
+            //noinspection GroovyAssignabilityCheck
+            from components.java
+            pom { pom ->
+                //noinspection GroovyAssignabilityCheck
+                applyPom(pom, "Simple Logger KTX", "Kotlin support/extensioons for SimpleLogger")
+            }
+        }
+    }
+    repositories {
+        if (deploy.central.enabled) {
+            maven {
+                name = "Central"
+                url = "https://s01.oss.sonatype.org/content/repositories/releases/"
+                credentials {
+                    username = deploy.central.username
+                    password = deploy.central.password
+                }
+            }
+        }
+    }
+    if (deploy.signing.enabled) {
+        signing {
+            useInMemoryPgpKeys((String) deploy.signing.key_id, (String) deploy.signing.secret, (String) deploy.signing.password)
+            sign publishing.publications.java
+        }
+    }
+}
+
+task deployKotlinToLocal {
+    group = "deploy local"
+    dependsOn ":logger-ktx:publishJavaPublicationToMavenLocal"
+}
+
+task _deployKotlinToMavenCentral {
+    dependsOn ":logger-ktx:publishJavaPublicationToCentralRepository"
+}
+
+task deployKotlinToMavenCentral {
+    group = "deploy central"
+    dependsOn "checkMavenCentral"
+    finalizedBy "_deployKotlinToMavenCentral"
+}
+
+dependencies {
+    api lib.annotations
+    api project(":logger")
+
+    testImplementation platform(lib.test.mockito.bom)
+    testImplementation lib.test.junit
+    testImplementation lib.test.mockito.junit
+}
