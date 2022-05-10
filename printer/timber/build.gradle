@@ -52,7 +52,7 @@ afterEvaluate {
                 from components.release
                 groupId "br.dev.dig.logger.printer"
                 version vName
-                artifactId "timber-ktx"
+                artifactId "timber"
                 pom { pom ->
                     //noinspection GroovyAssignabilityCheck
                     applyPom(pom, "Simple Logger Timber", "Printer for Simple Logger, using Timber library")
