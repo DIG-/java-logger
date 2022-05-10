@@ -1,5 +1,10 @@
 Changelog
 =========
+1.2.0-a
+-----
+- Added kotlin extensions
+- Update readme
+
 1.2.0
 -----
 - Move PrintlnFormatter to exclusive package

@@ -61,7 +61,11 @@ Can be found in folder `printer` or doing some [maven search](https://search.mav
 |---------------|-----------------------|-------------|
 | `stub`        | `StubLogger`          | Do nothing. |
 | `println`     | `PrintLnLogger`       | Use `println` as output. Format can be customized. |
+| `stream`      | `StreamLogger`        | Use `OutputStream` as output. Format can be customized. |
+| `system-log`  | `SystemLogLogger`     | Use platform native log system |
+|---------------|-----------------------|-------------|
 | `android-log` | `AndroidLogLogger`    | Use Android native Log as output. |
+| `firebase`    | `FirebaseLogger`      | Use Firebase Crashlytics as output (non-fatal). |
 | `timber`      | `TimberLogger`        | Use Timber as output. |
 
 Utilities
@@ -75,6 +79,10 @@ Utilities are chainable. Comparing to tree structure, Printers are leafs and Uti
 | `async`       | `AsyncLogger`         | Propagate log in other `Executor`|
 | `filter`      | `FilterLogger`        | Propagate log with level above desired level |
 | `union`       | `UnionLogger`         | Propagate log to more than one `BaseLogger` |
+
+Kotlin extension
+================
+All package has its own kotlin extension, some are just alias, but if have builder, will have extension.
 
 License
 =======
