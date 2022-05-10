@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import br.dev.dig.logger.Logger
-import br.dev.dig.logger.Union
+import br.dev.dig.logger.UnionLogger
 import br.dev.dig.logger.builder.LoggerBuilder
 import br.dev.dig.logger.printer.android_log.AndroidLogLogger
 import br.dev.dig.logger.printer.firebase.FirebaseCrashlyticsLogger
@@ -70,7 +70,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val builder: LoggerBuilder
         get() = if (_isAndroidLog.value == true && _isTimberLog.value == true && _isFirebaseLog.value == true) {
             LoggerBuilder {
-                Union {
+                UnionLogger {
                     add(
                         AndroidLogLogger(),
                         TimberLogger(),
@@ -80,7 +80,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
         } else if (_isAndroidLog.value == true && _isTimberLog.value != true && _isFirebaseLog.value == true) {
             LoggerBuilder {
-                Union {
+                UnionLogger {
                     add(
                         AndroidLogLogger(),
                         FirebaseCrashlyticsLogger(FirebaseCrashlytics.getInstance())
@@ -89,7 +89,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
         } else if (_isAndroidLog.value != true && _isTimberLog.value == true && _isFirebaseLog.value == true) {
             LoggerBuilder {
-                Union {
+                UnionLogger {
                     add(
                         TimberLogger(),
                         FirebaseCrashlyticsLogger(FirebaseCrashlytics.getInstance())
@@ -102,7 +102,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
         } else if (_isAndroidLog.value == true && _isTimberLog.value == true && _isFirebaseLog.value != true) {
             LoggerBuilder {
-                Union {
+                UnionLogger {
                     add(
                         AndroidLogLogger(),
                         TimberLogger()
