@@ -52,7 +52,7 @@ afterEvaluate {
                 from components.release
                 groupId "br.dev.dig.logger.printer"
                 version vName
-                artifactId "timber"
+                artifactId "timber-ktx"
                 pom { pom ->
                     //noinspection GroovyAssignabilityCheck
                     applyPom(pom, "Simple Logger Timber", "Printer for Simple Logger, using Timber library")
@@ -85,14 +85,14 @@ task deployAndroidToLocal {
     dependsOn ":printer:timber:publishAndroidPublicationToMavenLocal"
 }
 
-task _deployAndroidToMavenCentral {
+task _deployAndroidKotlinToMavenCentral {
     dependsOn ":printer:timber:publishAndroidPublicationToCentralRepository"
 }
 
-task deployAndroidToMavenCentral {
+task deployAndroidKotlinToMavenCentral {
     group = "deploy central"
     dependsOn "checkMavenCentral"
-    finalizedBy "_deployAndroidToMavenCentral"
+    finalizedBy "_deployAndroidKotlinToMavenCentral"
 }
 
 dependencies {

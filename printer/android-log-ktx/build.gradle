@@ -93,10 +93,10 @@ task _deployAndroidKotlinToMavenCentral {
     dependsOn ":printer:android-log-ktx:publishAndroidPublicationToCentralRepository"
 }
 
-task deployAndroidToMavenCentral {
+task deployAndroidKotlinToMavenCentral {
     group = "deploy central"
     dependsOn "checkMavenCentral"
-    finalizedBy "_deployAndroidToMavenCentral"
+    finalizedBy "_deployAndroidKotlinToMavenCentral"
 }
 
 dependencies {
