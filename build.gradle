@@ -94,7 +94,7 @@ Pattern regex = Pattern.compile("'([a-zA-Z0-9\\-_:]+)'")
 task deploy_ToLocal {
     group = "deploy local"
     allprojects { pj ->
-        for (tsk in ["deployJavaToLocal", "deployAndroidToLocal"]) {
+        for (tsk in ["deployJavaToLocal", "deployAndroidToLocal", "deployKotlinToLocal", "deployAndroidKotlinToLocal"]) {
             if (pj.getTasksByName(tsk, false).isEmpty()) {
                 continue
             }
@@ -142,7 +142,7 @@ task deploy_ToMavenCentral {
     group = "deploy central"
     dependsOn "checkMavenCentral"
     allprojects { pj ->
-        for (tsk in ["deployJavaToMavenCentral", "deployAndroidToMavenCentral"]) {
+        for (tsk in ["deployJavaToMavenCentral", "deployAndroidToMavenCentral", "deployKotlinToMavenCentral", "deployAndroidKotlinToMavenCentral"]) {
             if (pj.getTasksByName(tsk, false).isEmpty()) {
                 continue
             }
