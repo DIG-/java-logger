@@ -28,4 +28,5 @@ if (isAndroidEnabled) {
     include ":printer:firebase"; findProject(":printer:firebase")?.name = "firebase"
     include ":printer:firebase-ktx"; findProject(":printer:firebase-ktx")?.name = "firebase-ktx"
     include ":printer:timber"; findProject(":printer:timber")?.name = "timber"
+    include ":printer:timber-ktx"; findProject(":printer:timber-ktx")?.name = "timber-ktx"
 }
