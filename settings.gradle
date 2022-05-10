@@ -14,6 +14,7 @@ include ":printer:println-ktx"; findProject(":printer:println-ktx")?.name = "pri
 include ":printer:stream"; findProject(":printer:stream")?.name = "stream"
 include ":printer:stream-ktx"; findProject(":printer:stream-ktx")?.name = "stream-ktx"
 include ":printer:stub"; findProject(":printer:stub")?.name = "stub"
+include ":printer:stub-ktx"; findProject(":printer:stub-ktx")?.name = "stub-ktx"
 include ":printer:system-log"; findProject(":printer:system-log")?.name = "system-log"
 include ":union"
 include ":union-ktx"
