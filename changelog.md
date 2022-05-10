@@ -1,5 +1,8 @@
 Changelog
 =========
+1.2.0-a
+-----
+
 1.2.0
 -----
 - Move PrintlnFormatter to exclusive package
