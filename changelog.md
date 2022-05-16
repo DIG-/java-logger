@@ -1,5 +1,10 @@
 Changelog
 =========
+1.2.1-logger
+-----
+- Default log tag can be changed
+- Added option to cascade tag
+
 1.2.0-a
 -----
 - Added kotlin extensions

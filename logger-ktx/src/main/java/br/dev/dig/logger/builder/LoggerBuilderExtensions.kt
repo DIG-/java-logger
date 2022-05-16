@@ -3,6 +3,7 @@
 package br.dev.dig.logger.builder
 
 import br.dev.dig.logger.BaseLogger
+import br.dev.dig.logger.Logger
 import br.dev.dig.logger.style.LongLogger
 import br.dev.dig.logger.style.SmallLogger
 
@@ -33,3 +34,15 @@ inline fun <Builder : LoggerBuilder> Builder.getLongLogger(tag: String? = null):
 
 val <Builder : LoggerBuilder> Builder.longLogger: LongLogger
     inline get() = logger
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun <Builder : LoggerBuilder> Builder.logger(tag: String? = null): Logger =
+    getLogger(tag)
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun <Builder : LoggerBuilder> Builder.logger(tag: String, vararg tags: String): Logger =
+    getLogger(tag, *tags)
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun <Builder : LoggerBuilder> Builder.logger(logger: Logger, vararg tags: String): Logger =
+    getLogger(logger, *tags)

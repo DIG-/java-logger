@@ -70,7 +70,7 @@ class LoggerBuilderTest {
         final Logger last = Logger.getInstance(builder);
         Assertions.assertNotNull(last);
         Assertions.assertEquals(first, last);
-        Assertions.assertEquals(LoggerBuilder.DEFAULT_LOGGER_TAG, ((TaggedLogger) last).getTag());
+        Assertions.assertEquals(builder.DEFAULT_LOGGER_TAG, ((TaggedLogger) last).getTag());
     }
 
     @Test

@@ -9,8 +9,8 @@ import br.dev.dig.logger.Logger;
 
 public abstract class LoggerBuilder {
 
-    @VisibleForTesting
-    final protected static String DEFAULT_LOGGER_TAG = "Log";
+    protected String DEFAULT_LOGGER_TAG = "Log";
+    protected String DEFAULT_LOGGER_TAG_SEPARATOR = "/";
 
     @NotNull
     final private BaseLogger base = getBaseLogger();
@@ -33,6 +33,25 @@ public abstract class LoggerBuilder {
             return getLogger();
         }
         return createLogger(tag);
+    }
+
+    @NotNull
+    public final synchronized Logger getLogger(@NotNull final String tag, @NotNull final String... tags) {
+        StringBuilder sb = new StringBuilder(tag);
+        for (final String it : tags) {
+            sb.append(DEFAULT_LOGGER_TAG_SEPARATOR);
+            sb.append(it);
+        }
+        return getLogger(sb.toString());
+    }
+
+    @NotNull
+    public final synchronized Logger getLogger(@NotNull final Logger logger, @NotNull final String... tags) {
+        final String tag = logger.getTag();
+        if (tag == null) {
+            return getLogger(DEFAULT_LOGGER_TAG, tags);
+        }
+        return getLogger(tag, tags);
     }
 
     @NotNull
