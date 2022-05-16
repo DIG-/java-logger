@@ -1,5 +1,9 @@
 Changelog
 =========
+x.y.z
+-----
+- Default log tag can be changed
+
 1.2.0-a
 -----
 - Added kotlin extensions
