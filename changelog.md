@@ -1,6 +1,6 @@
 Changelog
 =========
-x.y.z
+1.2.1-logger
 -----
 - Default log tag can be changed
 - Added option to cascade tag
