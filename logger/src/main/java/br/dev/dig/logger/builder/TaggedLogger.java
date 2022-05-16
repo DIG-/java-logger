@@ -23,7 +23,7 @@ class TaggedLogger extends Logger {
     }
 
     @Override
-    protected final @Nullable String getTag() {
+    public final @Nullable String getTag() {
         return tag;
     }
 

@@ -35,7 +35,8 @@ class LoggerTest_Message {
         MockitoAnnotations.openMocks(this);
         log = new Logger() {
             @Override
-            protected @Nullable String getTag() {
+            @Nullable
+            public String getTag() {
                 return null;
             }
 
