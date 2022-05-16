@@ -3,6 +3,7 @@ Changelog
 x.y.z
 -----
 - Default log tag can be changed
+- Added option to cascade tag
 
 1.2.0-a
 -----
