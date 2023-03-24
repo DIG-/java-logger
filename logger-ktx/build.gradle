@@ -7,7 +7,7 @@ plugins {
 apply from: rootDir.toString() + "/pom.gradle"
 
 group "br.dev.dig.logger"
-version versions.logger.pkg + "1"
+version versions.logger.pkg + "0"
 java {
     withSourcesJar()
     sourceCompatibility versions.java
