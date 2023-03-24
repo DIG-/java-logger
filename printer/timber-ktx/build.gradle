@@ -97,7 +97,7 @@ task _deployAndroidKotlinToMavenCentral {
 task deployAndroidToMavenCentral {
     group = "deploy central"
     dependsOn "checkMavenCentral"
-    finalizedBy "_deployAndroidToMavenCentral"
+    finalizedBy "_deployAndroidKotlinToMavenCentral"
 }
 
 dependencies {
