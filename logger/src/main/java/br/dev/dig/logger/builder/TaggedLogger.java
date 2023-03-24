@@ -9,6 +9,9 @@ import br.dev.dig.logger.Logger;
 
 class TaggedLogger extends Logger {
 
+    @NotNull
+    @VisibleForTesting
+    final LoggerBuilder builder;
     @Nullable
     @VisibleForTesting
     final String tag;
@@ -16,8 +19,9 @@ class TaggedLogger extends Logger {
     @VisibleForTesting
     final BaseLogger base;
 
-    TaggedLogger(@Nullable final String tag, @NotNull final BaseLogger base) {
+    TaggedLogger(@NotNull LoggerBuilder builder, @Nullable final String tag, @NotNull final BaseLogger base) {
         super();
+        this.builder = builder;
         this.tag = tag;
         this.base = base;
     }
@@ -25,6 +29,11 @@ class TaggedLogger extends Logger {
     @Override
     public final @Nullable String getTag() {
         return tag;
+    }
+
+    @Override
+    public @NotNull Logger tag(@NotNull final String... tags) {
+        return builder.getLogger(this, tags);
     }
 
     @Override

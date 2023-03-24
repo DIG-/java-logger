@@ -1,5 +1,13 @@
 Changelog
 =========
+1.3.0
+-----
+- Upgraded kotlin version
+- Better method to cascade tag
+- More filter options: Allowed/Blocked Throwable
+- Fix StreamLogger write method
+- Removed Deprecated PrintlnFormatter
+
 1.2.1-logger
 -----
 - Default log tag can be changed

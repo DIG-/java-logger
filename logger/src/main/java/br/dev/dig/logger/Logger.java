@@ -279,6 +279,11 @@ public abstract class Logger implements SmallLogger, LongLogger {
     public abstract String getTag();
 
     @NotNull
+    public Logger tag(@NotNull final String... tags) {
+        return this;
+    }
+
+    @NotNull
     protected abstract BaseLogger getLogger();
 
 }

@@ -16,6 +16,9 @@ import br.dev.dig.logger.BaseLogger;
 class TaggedLoggerTest {
 
     @Mock
+    private LoggerBuilder builder;
+
+    @Mock
     private BaseLogger base;
 
     @BeforeEach
@@ -26,7 +29,8 @@ class TaggedLoggerTest {
     @Test
     void creator() {
         final String tag = UUID.randomUUID().toString();
-        final TaggedLogger logger = new TaggedLogger(tag, base);
+        final TaggedLogger logger = new TaggedLogger(builder, tag, base);
+        Assertions.assertEquals(builder, logger.builder);
         Assertions.assertEquals(tag, logger.tag);
         Assertions.assertEquals(base, logger.base);
     }
@@ -34,7 +38,7 @@ class TaggedLoggerTest {
     @Test
     void getter() {
         final String tag = UUID.randomUUID().toString();
-        final TaggedLogger logger = new TaggedLogger(tag, base);
+        final TaggedLogger logger = new TaggedLogger(builder, tag, base);
         Assertions.assertEquals(tag, logger.getTag());
         Assertions.assertEquals(base, logger.getLogger());
     }

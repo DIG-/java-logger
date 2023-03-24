@@ -12,6 +12,7 @@ def patch = 0
 
 def vName = versions.logger.pkg + patch
 android {
+    namespace "br.dev.dig.logger.app.android"
     compileSdk versions.android.compile
 
     defaultConfig {

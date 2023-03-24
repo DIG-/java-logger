@@ -36,7 +36,7 @@ class PrintlnLoggerTest {
     private final Throwable throwable = new RuntimeException();
 
     @Mock
-    private PrintlnFormatter formatter;
+    private LoggerFormatter formatter;
     @NotNull
     private PrintlnLogger logger;
 
