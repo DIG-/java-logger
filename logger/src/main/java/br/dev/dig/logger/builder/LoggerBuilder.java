@@ -59,7 +59,7 @@ public abstract class LoggerBuilder {
 
     @NotNull
     protected Logger createLogger(@Nullable final String tag) {
-        return new TaggedLogger(tag, base);
+        return new TaggedLogger(this, tag, base);
     }
 
 }
