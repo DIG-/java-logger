@@ -2,7 +2,7 @@ Simple Logger for Java and Android
 ==================================
 [![AppVeyor](https://img.shields.io/appveyor/build/DIG-/java-logger/main?logo=appveyor&logoColor=dddddd)](https://ci.appveyor.com/project/DIG-/java-logger/branch/main)
 [![AppVeyor tests](https://img.shields.io/appveyor/tests/DIG-/java-logger/main?logo=appveyor&logoColor=dddddd)](https://ci.appveyor.com/project/DIG-/java-logger/branch/main)
-[![Maven Central](https://img.shields.io/maven-central/v/br.dev.dig.logger/logger?label=maven)](https://search.maven.org/search?q=g:br.dev.dig.logger*)
+[![Maven Central](https://img.shields.io/maven-central/v/br.dev.dig.logger/logger?label=maven)](https://central.sonatype.com/search?q=br.dev.dig.logger)
 [![License](https://img.shields.io/static/v1?label=license&message=CC%20BY-ND%204.0&color=blue)](https://creativecommons.org/licenses/by-nd/4.0/)
 
 ![Windows - Supported](https://img.shields.io/badge/windows-supported-success?logo=windows&logoColor=dddddd)
