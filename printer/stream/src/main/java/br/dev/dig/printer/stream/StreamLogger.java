@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
+import java.nio.channels.Channels;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -21,6 +22,7 @@ import br.dev.dig.logger.printer.formatter.styles.LoggerFormatStyleMessage;
 import br.dev.dig.logger.printer.formatter.styles.LoggerFormatStyleTag;
 import br.dev.dig.logger.printer.formatter.styles.LoggerFormatStyleThrowableMessage;
 
+@SuppressWarnings("unused")
 public class StreamLogger implements BaseLogger {
 
     @FunctionalInterface
@@ -109,7 +111,8 @@ public class StreamLogger implements BaseLogger {
                 new LoggerFormatStyleConstant("]: "),
                 new LoggerFormatStyleMessage(),
                 new LoggerFormatStyleConstant(" "),
-                new LoggerFormatStyleThrowableMessage()
+                new LoggerFormatStyleThrowableMessage(),
+                new LoggerFormatStyleConstant("\n")
             ));
         }
     }
@@ -124,7 +127,7 @@ public class StreamLogger implements BaseLogger {
         final CharSequence formatted = formatter.format(start, level, tag, message, throwable);
         final ByteBuffer buffer = StandardCharsets.UTF_8.encode(CharBuffer.wrap(formatted));
         try {
-            stream.write(buffer.array());
+            Channels.newChannel(stream).write(buffer);
         } catch (IOException exception) {
             if (catcher != null) {
                 catcher.onException(exception, formatted);
