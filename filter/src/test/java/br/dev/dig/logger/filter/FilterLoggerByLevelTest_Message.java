@@ -18,7 +18,7 @@ import br.dev.dig.logger.BaseLogger;
 import br.dev.dig.logger.Logger;
 
 @ExtendWith(MockitoExtension.class)
-class FilterLoggerTest_CharSequence {
+class FilterLoggerByLevelTest_Message {
 
     @Mock
     private BaseLogger parent;
@@ -32,25 +32,25 @@ class FilterLoggerTest_CharSequence {
     void assertTag() {
         Assertions.assertNotNull(parent);
         final String tag = UUID.randomUUID().toString();
-        final String message = UUID.randomUUID().toString();
+        final Logger.Message message = () -> UUID.randomUUID().toString();
 
-        final FilterLogger logger = new FilterLogger(Logger.LEVEL_VERBOSE, parent);
+        final FilterLoggerByLevel logger = new FilterLoggerByLevel(Logger.LEVEL_VERBOSE, parent);
         logger.log(Logger.LEVEL_VERBOSE, tag, message, null);
         logger.log(Logger.LEVEL_DEBUG, tag, message, null);
         logger.log(Logger.LEVEL_INFO, tag, message, null);
         logger.log(Logger.LEVEL_WARNING, tag, message, null);
         logger.log(Logger.LEVEL_ERROR, tag, message, null);
         logger.log(Logger.LEVEL_ASSERT, tag, message, null);
-        Mockito.verify(parent, Mockito.times(6)).log(Mockito.anyInt(), Mockito.eq(tag), Mockito.anyString(), Mockito.any());
+        Mockito.verify(parent, Mockito.times(6)).log(Mockito.anyInt(), Mockito.eq(tag), Mockito.any(BaseLogger.Message.class), Mockito.any());
     }
 
     @Test
     void assertMessage() {
         Assertions.assertNotNull(parent);
         final String tag = UUID.randomUUID().toString();
-        final String message = UUID.randomUUID().toString();
+        final Logger.Message message = () -> UUID.randomUUID().toString();
 
-        final FilterLogger logger = new FilterLogger(Logger.LEVEL_VERBOSE, parent);
+        final FilterLoggerByLevel logger = new FilterLoggerByLevel(Logger.LEVEL_VERBOSE, parent);
         logger.log(Logger.LEVEL_VERBOSE, tag, message, null);
         logger.log(Logger.LEVEL_DEBUG, tag, message, null);
         logger.log(Logger.LEVEL_INFO, tag, message, null);
@@ -64,78 +64,78 @@ class FilterLoggerTest_CharSequence {
     void assertThrowable() {
         Assertions.assertNotNull(parent);
         final String tag = UUID.randomUUID().toString();
-        final String message = UUID.randomUUID().toString();
+        final Logger.Message message = () -> UUID.randomUUID().toString();
         final Throwable throwable = new RuntimeException();
 
-        final FilterLogger logger = new FilterLogger(Logger.LEVEL_VERBOSE, parent);
+        final FilterLoggerByLevel logger = new FilterLoggerByLevel(Logger.LEVEL_VERBOSE, parent);
         logger.log(Logger.LEVEL_VERBOSE, tag, message, throwable);
         logger.log(Logger.LEVEL_DEBUG, tag, message, throwable);
         logger.log(Logger.LEVEL_INFO, tag, message, throwable);
         logger.log(Logger.LEVEL_WARNING, tag, message, throwable);
         logger.log(Logger.LEVEL_ERROR, tag, message, throwable);
         logger.log(Logger.LEVEL_ASSERT, tag, message, throwable);
-        Mockito.verify(parent, Mockito.times(6)).log(Mockito.anyInt(), Mockito.anyString(), Mockito.anyString(), Mockito.eq(throwable));
+        Mockito.verify(parent, Mockito.times(6)).log(Mockito.anyInt(), Mockito.anyString(), Mockito.any(BaseLogger.Message.class), Mockito.eq(throwable));
     }
 
     @Test
     void FilterVerbose() {
         Assertions.assertNotNull(parent);
-        final FilterLogger logger = new FilterLogger(Logger.LEVEL_VERBOSE, parent);
+        final FilterLoggerByLevel logger = new FilterLoggerByLevel(Logger.LEVEL_VERBOSE, parent);
         log(logger, true, true, true, true, true, true);
-        Mockito.verify(parent, Mockito.times(6)).log(Mockito.anyInt(), Mockito.anyString(), Mockito.anyString(), Mockito.any(Throwable.class));
+        Mockito.verify(parent, Mockito.times(6)).log(Mockito.anyInt(), Mockito.anyString(), Mockito.any(BaseLogger.Message.class), Mockito.any(Throwable.class));
     }
 
     @Test
     void FilterDebug() {
         Assertions.assertNotNull(parent);
-        final FilterLogger logger = new FilterLogger(Logger.LEVEL_DEBUG, parent);
+        final FilterLoggerByLevel logger = new FilterLoggerByLevel(Logger.LEVEL_DEBUG, parent);
         log(logger, false, true, true, true, true, true);
-        Mockito.verify(parent, Mockito.times(5)).log(Mockito.anyInt(), Mockito.anyString(), Mockito.anyString(), Mockito.any(Throwable.class));
+        Mockito.verify(parent, Mockito.times(5)).log(Mockito.anyInt(), Mockito.anyString(), Mockito.any(BaseLogger.Message.class), Mockito.any(Throwable.class));
     }
 
     @Test
     void FilterInfo() {
         Assertions.assertNotNull(parent);
-        final FilterLogger logger = new FilterLogger(Logger.LEVEL_INFO, parent);
+        final FilterLoggerByLevel logger = new FilterLoggerByLevel(Logger.LEVEL_INFO, parent);
         log(logger, false, false, true, true, true, true);
-        Mockito.verify(parent, Mockito.times(4)).log(Mockito.anyInt(), Mockito.anyString(), Mockito.anyString(), Mockito.any(Throwable.class));
+        Mockito.verify(parent, Mockito.times(4)).log(Mockito.anyInt(), Mockito.anyString(), Mockito.any(BaseLogger.Message.class), Mockito.any(Throwable.class));
     }
 
     @Test
     void FilterWarning() {
         Assertions.assertNotNull(parent);
-        final FilterLogger logger = new FilterLogger(Logger.LEVEL_WARNING, parent);
+        final FilterLoggerByLevel logger = new FilterLoggerByLevel(Logger.LEVEL_WARNING, parent);
         log(logger, false, false, false, true, true, true);
-        Mockito.verify(parent, Mockito.times(3)).log(Mockito.anyInt(), Mockito.anyString(), Mockito.anyString(), Mockito.any(Throwable.class));
+        Mockito.verify(parent, Mockito.times(3)).log(Mockito.anyInt(), Mockito.anyString(), Mockito.any(BaseLogger.Message.class), Mockito.any(Throwable.class));
     }
 
     @Test
     void FilterError() {
         Assertions.assertNotNull(parent);
-        final FilterLogger logger = new FilterLogger(Logger.LEVEL_ERROR, parent);
+        final FilterLoggerByLevel logger = new FilterLoggerByLevel(Logger.LEVEL_ERROR, parent);
         log(logger, false, false, false, false, true, true);
-        Mockito.verify(parent, Mockito.times(2)).log(Mockito.anyInt(), Mockito.anyString(), Mockito.anyString(), Mockito.any(Throwable.class));
+        Mockito.verify(parent, Mockito.times(2)).log(Mockito.anyInt(), Mockito.anyString(), Mockito.any(BaseLogger.Message.class), Mockito.any(Throwable.class));
     }
 
     @Test
     void FilterAssert() {
         Assertions.assertNotNull(parent);
-        final FilterLogger logger = new FilterLogger(Logger.LEVEL_ASSERT, parent);
+        final FilterLoggerByLevel logger = new FilterLoggerByLevel(Logger.LEVEL_ASSERT, parent);
         log(logger, false, false, false, false, false, true);
-        Mockito.verify(parent, Mockito.times(1)).log(Mockito.anyInt(), Mockito.anyString(), Mockito.anyString(), Mockito.any(Throwable.class));
+        Mockito.verify(parent, Mockito.times(1)).log(Mockito.anyInt(), Mockito.anyString(), Mockito.any(BaseLogger.Message.class), Mockito.any(Throwable.class));
     }
 
     @Test
     void FilterNone() {
         Assertions.assertNotNull(parent);
-        final FilterLogger logger = new FilterLogger(Logger.LEVEL_NONE, parent);
+        final FilterLoggerByLevel logger = new FilterLoggerByLevel(Logger.LEVEL_NONE, parent);
         log(logger, false, false, false, false, false, false);
-        Mockito.verify(parent, Mockito.never()).log(Mockito.anyInt(), Mockito.anyString(), Mockito.anyString(), Mockito.any(Throwable.class));
+        Mockito.verify(parent, Mockito.never()).log(Mockito.anyInt(), Mockito.anyString(), Mockito.any(BaseLogger.Message.class), Mockito.any(Throwable.class));
     }
 
     private void log(@NotNull final BaseLogger logger, boolean verbose, boolean debug, boolean info, boolean warning, boolean error, boolean wtf) {
         final String tag = UUID.randomUUID().toString();
-        final String message = UUID.randomUUID().toString();
+        final Logger.Message message = () -> UUID.randomUUID().toString();
         final Throwable throwable = new RuntimeException();
 
         logger.log(Logger.LEVEL_VERBOSE, tag, message, throwable);
