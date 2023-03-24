@@ -68,25 +68,21 @@ buildscript {
                     ],
             ]
     ]
-    repositories {
-        mavenCentral()
-        google()
-    }
-    dependencies {
-        if (isAndroidEnabled) {
-            classpath "com.android.tools.build:gradle:7.3.1"
-            classpath "de.mannodermaus.gradle.plugins:android-junit5:1.8.2.0"
-            classpath "com.google.gms:google-services:4.3.10"
-            classpath "com.google.firebase:firebase-crashlytics-gradle:2.8.1"
-        }
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
-    }
     allprojects {
         repositories {
             mavenCentral()
             google()
         }
     }
+}
+
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.8.10" apply false
+    id "org.jetbrains.kotlin.android" version "1.8.10" apply false
+    id "com.android.application" version "7.3.1" apply false
+    id "com.google.gms.google-services" version "4.3.13" apply false
+    id "com.google.firebase.crashlytics" version "2.9.2" apply false
+    id "de.mannodermaus.android-junit5" version "1.8.2.0" apply false
 }
 
 Pattern regex = Pattern.compile("'([a-zA-Z0-9\\-_:]+)'")
